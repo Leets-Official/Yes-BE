@@ -1,6 +1,7 @@
 package site.yourevents.response
 
-import site.yourevents.error.ErrorCode
+import site.yourevents.type.ErrorCode
+import site.yourevents.type.SuccessCode
 
 data class ApiResponse<T>(
     val status: Int,

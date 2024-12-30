@@ -1,4 +1,4 @@
-package site.yourevents.error
+package site.yourevents.type
 
 enum class ErrorCode(
     val httpStatus: Int,
