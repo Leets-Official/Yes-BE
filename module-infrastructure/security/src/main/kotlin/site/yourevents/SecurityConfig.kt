@@ -7,6 +7,8 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.web.cors.CorsConfiguration
+import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 
 @Configuration
@@ -25,8 +27,23 @@ class SecurityConfig(
             sessionManagement { SessionCreationPolicy.STATELESS }
             // TODO: OAuth 설정
             // TODO: JJWT 설정
-            // TODO: CORS 설정
         }
         return http.build()
+    }
+
+    @Bean
+    fun corsConfigurationSource(): UrlBasedCorsConfigurationSource {
+        val configuration = CorsConfiguration()
+        configuration.allowedOrigins = listOf(
+            "http://localhost:3000",
+            "https://www.yourevents.site",
+            "https://yourevents.site",
+            "http://localhost:8080")
+        configuration.allowedMethods = listOf("POST", "GET", "PATCH", "DELETE", "OPTIONS")
+        configuration.allowedHeaders = listOf("*")
+
+        val source = UrlBasedCorsConfigurationSource()
+        source.registerCorsConfiguration("/**", configuration)
+        return source
     }
 }
