@@ -54,8 +54,7 @@ class SecurityConfig(
             "http://localhost:3000",
             "https://www.yourevents.site",
             "https://yourevents.site",
-            serverUrl
-        )
+            serverUrl)
         configuration.allowedMethods = listOf("POST", "GET", "PATCH", "DELETE", "OPTIONS")
         configuration.allowedHeaders = listOf("*")
 
