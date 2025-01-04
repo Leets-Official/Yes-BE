@@ -12,5 +12,5 @@ interface HealthApi {
     @DisableSwaggerSecurity
     @GetMapping("/health-check")
     @Operation(summary = "서버 상태 확인")
-    fun healthCheck(): ApiResponse<String>
+    fun healthCheck(): ApiResponse<Unit>
 }

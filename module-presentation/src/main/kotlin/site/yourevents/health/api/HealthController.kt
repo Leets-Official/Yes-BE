@@ -8,7 +8,7 @@ import site.yourevents.type.SuccessCode
 @RestController
 class HealthController : HealthApi {
 
-    override fun healthCheck(): ApiResponse<String> {
-        return ApiResponse.success(SuccessCode.REQUEST_OK, "ok")
+    override fun healthCheck(): ApiResponse<Unit> {
+        return ApiResponse.success(SuccessCode.REQUEST_OK)
     }
 }
