@@ -15,10 +15,10 @@ import org.springframework.context.annotation.Configuration
 import org.springframework.web.method.HandlerMethod
 
 @Configuration
-class SwaggerConfig {
-
+class SwaggerConfig(
     @Value("\${app.server.url}")
-    private lateinit var serverUrl: String
+    private val serverUrl: String
+) {
 
     @Bean
     fun openAPI(): OpenAPI {

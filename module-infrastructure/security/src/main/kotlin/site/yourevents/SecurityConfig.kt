@@ -15,9 +15,10 @@ import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
 
 @Configuration
 @EnableWebSecurity
-class SecurityConfig {
+class SecurityConfig(
     @Value("\${app.server.url}")
-    private lateinit var serverUrl: String
+    private val serverUrl: String
+) {
 
     @Bean
     fun SecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
