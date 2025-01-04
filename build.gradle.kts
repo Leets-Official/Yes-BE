@@ -1,3 +1,5 @@
+import org.springframework.boot.gradle.tasks.bundling.BootJar
+
 plugins {
     kotlin("jvm") version "2.1.0"
     kotlin("plugin.spring") version "2.1.0" apply false
@@ -44,6 +46,14 @@ subprojects {
 
         // mockk
         testImplementation("io.mockk:mockk:1.13.13")
+    }
+
+    tasks.withType<BootJar> {
+        enabled = project.name != "module-presentation"
+    }
+
+    tasks.withType<Jar> {
+        enabled = project.name == "module-presentation"
     }
 }
 
