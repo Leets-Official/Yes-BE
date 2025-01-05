@@ -9,6 +9,7 @@ jar.enabled = false
 
 dependencies {
     implementation(project(":module-domain"))
+    implementation(project(":module-infrastructure:monitoring"))
     implementation(project(":module-infrastructure:persistence-db"))
     implementation(project(":module-independent"))
 
