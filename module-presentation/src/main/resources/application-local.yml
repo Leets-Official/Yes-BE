@@ -17,3 +17,16 @@ spring:
 app:
   server:
     url: http://localhost:8080
+
+sentry:
+  dsn: ENC(p3USktYJhoxYtz0GFLCVpu4fki0u0eN424zqg6rE3vKH5DjjWfqFRN+Enj/rLkCFAhYwlwFtT++KW62gqtm1CnnHxeJfrAki+FdAnWO3JRj29aXea/N8xrE7h/MoZ58Tapyi+wWH5eM=)
+  environment: ENC(FVBHvqTsvv2ytyUnt6i2lw==)
+  servername: ENC(cGNqcZ4YnA0ufysvNrAyVzDz1/w6/vUi)
+
+logging:
+  config: classpath:logback-spring.xml
+  sentry:
+    repository-uri: ENC(Ql7eE0mWdzUcjepLC2Eq7e2PyXyNaG0V2onethHlafhcJ5t9pLBZmeroj3+vkM9zp88YIwxcvMks69YZrEeXBT0MX7C028pAJsxCM54G+wF/uXclw0xOXM9DgWaEkBheAuav6C5Mwqg=)
+    environment: ENC(qaAYY+h/ALoN3KDILvoV+g==)
+  slack:
+    webhook-url: ENC(WHEGoh730wj5KIl+MTr2LTifDVemTwX9+LimiJRRsEnynVGHb7ev0jqY55Su8FfeX6IAh17LRa6NeM42h/tJFR1trqv0iflQZFDKi0/l+VSGBhTBg39s4K0O1bjmeEHN)
