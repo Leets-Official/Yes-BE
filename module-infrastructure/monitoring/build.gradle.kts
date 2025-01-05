@@ -13,6 +13,6 @@ plugins {
 dependencies {
 
     // Sentry
-    api("io.sentry:sentry-logback:7.17.0")
-    api("com.github.maricn:logback-slack-appender:1.6.1")
+    implementation("io.sentry:sentry-logback:7.17.0")
+    implementation("com.github.maricn:logback-slack-appender:1.6.1")
 }
