@@ -8,7 +8,6 @@ import site.yourevents.response.ApiResponse
 
 @Tag(name = "상태 확인")
 interface HealthApi {
-
     @DisableSwaggerSecurity
     @GetMapping("/health-check")
     @Operation(summary = "서버 상태 확인")

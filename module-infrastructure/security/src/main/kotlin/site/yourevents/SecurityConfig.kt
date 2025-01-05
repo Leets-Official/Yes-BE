@@ -19,7 +19,6 @@ class SecurityConfig(
     @Value("\${app.server.url}")
     private val serverUrl: String
 ) {
-
     @Bean
     fun SecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
