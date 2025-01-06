@@ -11,5 +11,7 @@ plugins {
 }
 
 dependencies {
+    implementation(project(":module-independent"))
+    
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 }

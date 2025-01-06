@@ -9,10 +9,8 @@ import kotlin.jvm.optionals.getOrNull
 class MemberRepository(
     private val memberJPARepository: MemberJPARepository
 ) : MemberPersistencePort {
-    override fun findByEmail(email: String): Member {
+    override fun findByEmail(email: String): Member? {
         return memberJPARepository.findByEmail(email)
-            .getOrNull()
-            ?.toDomain()
-            ?: throw IllegalArgumentException()
+            .getOrNull()?.toDomain()
     }
 }

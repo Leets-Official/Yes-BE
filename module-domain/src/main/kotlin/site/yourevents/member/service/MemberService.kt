@@ -9,7 +9,7 @@ import site.yourevents.member.port.out.persistence.MemberPersistencePort
 class MemberService(
     private val memberPersistencePort: MemberPersistencePort
 ) : MemberUseCase {
-    override fun findByEmail(email: String): Member {
+    override fun findByEmail(email: String): Member? {
         return memberPersistencePort.findByEmail(email)
     }
 }
