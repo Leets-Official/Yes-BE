@@ -2,12 +2,14 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 val jar: Jar by tasks
 val bootJar: BootJar by tasks
+val jarName = "app.jar"
 
 bootJar.enabled = true
 jar.enabled = false
 
 dependencies {
     implementation(project(":module-domain"))
+    implementation(project(":module-infrastructure:monitoring"))
     implementation(project(":module-infrastructure:persistence-db"))
     implementation(project(":module-independent"))
 
@@ -24,4 +26,15 @@ dependencies {
 
 tasks.getByName<BootJar>("bootJar") {
     mainClass.set("site.yourevents.YourEventsApplicationKt")
+}
+
+tasks.named<BootJar>("bootJar") {
+    archiveFileName.set(jarName)
+
+    doLast {
+        copy {
+            from("build/libs/$jarName")
+            into("../build/libs")
+        }
+    }
 }
