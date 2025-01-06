@@ -36,8 +36,8 @@
         <include resource="console-appender.xml"/>
         <root level="INFO">
             <appender-ref ref="CONSOLE"/>
-            <appender-ref ref="Sentry"/>
-            <appender-ref ref="ASYNC_SLACK"/>
+<!--            <appender-ref ref="Sentry"/>-->
+<!--            <appender-ref ref="ASYNC_SLACK"/>-->
         </root>
     </springProfile>
 
