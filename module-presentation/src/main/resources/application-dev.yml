@@ -26,7 +26,7 @@ sentry:
 logging:
   config: classpath:logback-spring.xml
   sentry:
-    repository-uri: ENC(g0Krw6t6uRDttMcJbvX50G2tfUmi+5R+jH6C40Q6Je2kLfCArJNWdSG/YBoIq0+E1zsJamVrVfqG3tOgLWqPMppT9zVlHC60z4Mw9VrXPBFzaZrkXDb+UnAL+WggMg2SzzN0iapM7xo=)
-    environment: ENC(GWw5mEHTRfd0Ngg/p8uZ7Q==)
+    repository-uri: ${SENTRY_REPOSITORY_URI}
+    environment:  ${SENTRY_ENVIRONMENT}
   slack:
-    webhook-url: ENC(2V14VMxtr6ga6VYnVumgqqYDdzRfcUzO0+QXJl26W0bfHoVW7APdzecmMuA6/KWENMB3M1SFw5bqwOsI0hdYtzOX6aKicOBAadZ1ESN8fcPsB7b5GaTI1TI/wUdMjTEc)
+    webhook-url: ${SLACK_WEBHOOK_URL}
