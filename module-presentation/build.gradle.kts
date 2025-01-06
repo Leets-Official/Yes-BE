@@ -7,6 +7,10 @@ val jarName = "app.jar"
 bootJar.enabled = true
 jar.enabled = false
 
+plugins {
+    kotlin("plugin.jpa") version "2.1.0"
+}
+
 dependencies {
     implementation(project(":module-domain"))
     implementation(project(":module-infrastructure:monitoring"))
@@ -15,6 +19,7 @@ dependencies {
 
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springframework.boot:spring-boot-starter-security")
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
     // Jasypt

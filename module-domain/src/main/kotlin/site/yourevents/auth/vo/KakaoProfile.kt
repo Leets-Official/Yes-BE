@@ -8,8 +8,6 @@ data class KakaoProfile(
         fun of(
             nickname: String,
             email: String
-        ): KakaoProfile {
-            return KakaoProfile(nickname, email)
-        }
+        ): KakaoProfile = KakaoProfile(nickname, email)
     }
 }

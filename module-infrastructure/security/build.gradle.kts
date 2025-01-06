@@ -24,4 +24,7 @@ dependencies {
 
     // Spring Security Test
     testImplementation("org.springframework.security:spring-security-test")
+
+    // JSON
+    implementation("com.google.code.gson:gson:2.11.0")
 }
