@@ -2,7 +2,7 @@ name: CI with Test Results
 
 on:
   pull_request:
-    branches-ignore: [ "main" ]
+    branches: [ "main" ]
 
 jobs:
   dev-build-TEST:

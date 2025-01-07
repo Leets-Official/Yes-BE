@@ -71,7 +71,6 @@ class SecurityConfig(
         return http.build()
     }
 
-
     @Bean
     fun webSecurityCustomizer(): (WebSecurity) -> Unit {
         return { web ->
