@@ -16,6 +16,9 @@ class MemberEntity(
     private val id: UUID? = null,
 
     @Column
+    private val socialId: String,
+
+    @Column
     private val nickname: String,
 
     @Column
@@ -24,6 +27,7 @@ class MemberEntity(
     fun toDomain(): Member {
         return Member(
             id = id!!,
+            socialId = socialId,
             nickname = nickname,
             email = email,
         )
@@ -32,6 +36,7 @@ class MemberEntity(
     companion object {
         fun from(memberVO: MemberVO): MemberEntity {
             return MemberEntity(
+                socialId = memberVO.socialId,
                 nickname = memberVO.nickname,
                 email = memberVO.email,
             )

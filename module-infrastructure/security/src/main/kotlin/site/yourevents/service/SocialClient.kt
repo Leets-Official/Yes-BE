@@ -68,10 +68,14 @@ class SocialClient(
         val profileRequest = HttpEntity(null, headers)
 
         val response: ResponseEntity<String> =
-        restTemplate.postForEntity(userInfoUri, profileRequest, String::class.java)
+            restTemplate.postForEntity(userInfoUri, profileRequest, String::class.java)
 
-        val profileResponse =  KakaoProfileResponse.from(response.body!!)
+        val profileResponse = KakaoProfileResponse.from(response.body!!)
 
-        return KakaoProfile.of(profileResponse.nickname, profileResponse.email)
+        return KakaoProfile.of(
+            profileResponse.socialId,
+            profileResponse.nickname,
+            profileResponse.email,
+        )
     }
 }
