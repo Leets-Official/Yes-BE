@@ -26,7 +26,7 @@ class JwtAuthorizationFilter(
     ) {
         val accessToken: String? = extractToken(request)
 
-        if (null != accessToken) {
+        if (accessToken != null && jwtProvider.isValidToken(accessToken)) {
             val authentication: Authentication = jwtProvider.getAuthentication(accessToken)
             SecurityContextHolder.getContext().authentication = authentication
         }

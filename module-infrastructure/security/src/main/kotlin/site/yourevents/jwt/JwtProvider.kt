@@ -108,7 +108,7 @@ class JwtProvider(
         }
     }
 
-    fun isInvalidToken(token: String): Boolean {
+    fun isValidToken(token: String): Boolean {
         return runCatching { validateToken(token) }
             .onFailure { e ->
                 if (e is InvalidTokenException ||
@@ -116,9 +116,9 @@ class JwtProvider(
                     e is MalformedTokenException ||
                     e is UnsupportedTokenException
                 ) {
-                    return true
+                    return false
                 }
             }
-            .isFailure
+            .isSuccess
     }
 }
