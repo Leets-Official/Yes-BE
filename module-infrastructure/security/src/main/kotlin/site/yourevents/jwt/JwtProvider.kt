@@ -11,6 +11,7 @@ import org.springframework.security.core.Authentication
 import org.springframework.security.core.GrantedAuthority
 import org.springframework.security.core.authority.SimpleGrantedAuthority
 import org.springframework.stereotype.Service
+import site.yourevents.auth.port.out.SecurityPort
 import site.yourevents.jwt.exception.ExpiredTokenException
 import site.yourevents.jwt.exception.InvalidTokenException
 import site.yourevents.jwt.exception.MalformedTokenException
@@ -30,7 +31,7 @@ class JwtProvider(
     @Value("\${jwt.secret_key}")
     private val secret: String,
     private val authDetailsService: AuthDetailsService,
-) {
+) : SecurityPort {
     companion object {
         private val ACCESS_TOKEN_DURATION: Duration = 7.days
     }
@@ -41,7 +42,7 @@ class JwtProvider(
             return SecretKeySpec(keyBytes, "HmacSHA256")
         }
 
-    fun generateAccessToken(memberId: UUID, email: String, role: String): String {
+    override fun generateAccessToken(memberId: UUID, email: String, role: String): String {
         return generateToken(memberId, email, ACCESS_TOKEN_DURATION, role)
     }
 
