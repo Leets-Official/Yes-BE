@@ -5,14 +5,15 @@ import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
 import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
-import site.yourevents.member.Member
+import site.yourevents.member.domain.Member
+import site.yourevents.member.domain.MemberVO
 import java.util.UUID
 
 @Entity(name = "member")
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID,
+    private val id: UUID? = null,
 
     @Column
     private val nickname: String,
@@ -22,18 +23,17 @@ class MemberEntity(
 ) {
     fun toDomain(): Member {
         return Member(
-            id = id,
+            id = id!!,
             nickname = nickname,
             email = email,
         )
     }
 
     companion object {
-        fun from(member: Member): MemberEntity {
+        fun from(memberVO: MemberVO): MemberEntity {
             return MemberEntity(
-                id = member.getId(),
-                nickname = member.getNickname(),
-                email = member.getEmail(),
+                nickname = memberVO.nickname,
+                email = memberVO.email,
             )
         }
     }

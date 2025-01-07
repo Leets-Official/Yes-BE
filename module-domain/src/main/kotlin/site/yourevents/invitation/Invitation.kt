@@ -1,6 +1,6 @@
 package site.yourevents.invitation
 
-import site.yourevents.member.Member
+import site.yourevents.member.domain.Member
 import java.util.UUID
 
 class Invitation(

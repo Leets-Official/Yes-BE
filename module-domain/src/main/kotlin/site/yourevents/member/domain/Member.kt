@@ -1,4 +1,4 @@
-package site.yourevents.member
+package site.yourevents.member.domain
 
 import java.util.UUID
 
