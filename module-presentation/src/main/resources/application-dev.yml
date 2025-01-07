@@ -30,17 +30,18 @@ spring:
             redirect-uri: http://localhost:3000/login/oauth
             authorization-grant-type: authorization_code
             scope:
+              - profile
               - email
 
 jwt:
-  secret_key: ENC(7lgXugZgh5UxA+EJTS0qxPYZUoeOsOTgqZoLXtn0UQI=)
+  secret_key: ENC(mGMgmCyPl7Gw4ungaWJ5B8iHFNsJft59DjR9fNnDmLAk7QfobVjwYyfNXNw4YhWAyBNS8OFMFnSr4aaHSSMWyXPQgRLowW0W)
 
 app:
   server:
     url: ENC(uN3Diby1cLKgQIKPznbuLr/9mQrqzUFhTlzKRp4ZCSxovF26NNCo+A==)
 
 sentry:
-  dsn: ENC(UefOk3EHvOlzQ+99rApWCWoEMEbTlVbECMRxnRLgtNzuWJa0PmWL1pBtfGRpRK6qWsOSGlmWlJsP7PI7JVaLOnHG3CDLM2bChy61gXTkqYiTs2I1Axf8SW/rxMmcEkH7PLOqEY/TI5I=
+  dsn: ENC(UefOk3EHvOlzQ+99rApWCWoEMEbTlVbECMRxnRLgtNzuWJa0PmWL1pBtfGRpRK6qWsOSGlmWlJsP7PI7JVaLOnHG3CDLM2bChy61gXTkqYiTs2I1Axf8SW/rxMmcEkH7PLOqEY/TI5I=)
   environment: ENC(5Nbdf/7y1sF9NAU0jw0SCg==)
   servername: ENC(Tf/+6HqlCb8m17xkhfHjhw==)
 

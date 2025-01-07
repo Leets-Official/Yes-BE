@@ -7,7 +7,6 @@ import site.yourevents.auth.dto.response.LoginResponse
 import site.yourevents.auth.port.`in`.usecase.AuthUseCase
 import site.yourevents.auth.port.`in`.usecase.TokenUseCase
 import site.yourevents.auth.vo.KakaoProfile
-import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
 
 @Service
@@ -25,11 +24,8 @@ class AuthFacade(
     }
 
     private fun getTokenResponse(kakaoProfile: KakaoProfile): LoginResponse {
-        var member: Member? = memberUseCase.findBySocialId(kakaoProfile.socialId)
-
-        if (member == null) {
-            member = memberUseCase.createMember(kakaoProfile)
-        }
+        val member = memberUseCase.findBySocialId(kakaoProfile.socialId)
+            ?: memberUseCase.createMember(kakaoProfile)
 
         val accessToken: String = tokenUseCase.generateAccessToken(
             member.getId(),
@@ -40,6 +36,7 @@ class AuthFacade(
         return LoginResponse.of(
             member.getId(),
             member.getSocialId(),
+            member.getNickname(),
             accessToken,
         )
     }

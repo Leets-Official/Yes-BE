@@ -38,7 +38,7 @@ class JwtProvider(
 
     private val secretKey: SecretKeySpec
         get() {
-            val keyBytes: ByteArray = Base64.getDecoder().decode(secret)
+            val keyBytes: ByteArray = Base64.getUrlDecoder().decode(secret)
             return SecretKeySpec(keyBytes, "HmacSHA256")
         }
 
