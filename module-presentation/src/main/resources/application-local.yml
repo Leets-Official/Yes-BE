@@ -27,7 +27,7 @@ spring:
           kakao:
             client-name: kakao
             client-id: ENC(hUMHbWie9KAHtBWcInSZruPtxz5F+RaJPwdN9i9b7GGB+g/aDjEUfqMyPWabTJaH)
-            redirect-uri: http://localhost:8080/oauth
+            redirect-uri: http://localhost:8080/login/oauth
             authorization-grant-type: authorization_code
             scope:
               - email
