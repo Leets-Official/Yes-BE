@@ -16,5 +16,4 @@ class AuthController(
     override fun login(request: LoginRequest): ApiResponse<LoginResponse> {
         return ApiResponse.success(SuccessCode.LOGIN_SUCCESS, authFacade.login(request))
     }
-
 }
