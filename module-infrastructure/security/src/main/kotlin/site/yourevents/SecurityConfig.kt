@@ -9,15 +9,25 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.invoke
 import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
 import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
+import site.yourevents.filter.CustomExceptionHandleFilter
+import site.yourevents.filter.JwtAuthenticationEntryPoint
+import site.yourevents.filter.JwtAuthorizationFilter
+import site.yourevents.jwt.CustomAccessDeniedHandler
+import site.yourevents.jwt.JwtProvider
 
 
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(
     @Value("\${app.server.url}")
-    private val serverUrl: String
+    private val serverUrl: String,
+
+    private val jwtProvider: JwtProvider,
+    private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
+    private val customAccessDeniedHandler: CustomAccessDeniedHandler,
 ) {
     @Bean
     fun SecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
@@ -28,15 +38,38 @@ class SecurityConfig(
                 authorize("/health-check", permitAll)
                 authorize(anyRequest, permitAll)
             }
+        }
+
+        http {
             csrf { disable() }
             formLogin { disable() }
             httpBasic { disable() }
             sessionManagement { SessionCreationPolicy.STATELESS }
-            // TODO: OAuth 설정
-            // TODO: JJWT 설정
+            cors { corsConfigurationSource() }
+        }
+
+        http {
+            exceptionHandling {
+                accessDeniedHandler = customAccessDeniedHandler
+                authenticationEntryPoint = jwtAuthenticationEntryPoint
+            }
+        }
+
+        http {
+            oauth2Login { }
+        }
+
+        http {
+            addFilterBefore<UsernamePasswordAuthenticationFilter>(
+                filter = JwtAuthorizationFilter(jwtProvider)
+            )
+            addFilterBefore<JwtAuthorizationFilter>(
+                filter = CustomExceptionHandleFilter()
+            )
         }
         return http.build()
     }
+
 
     @Bean
     fun webSecurityCustomizer(): (WebSecurity) -> Unit {
@@ -53,7 +86,8 @@ class SecurityConfig(
             "http://localhost:3000",
             "https://www.yourevents.site",
             "https://yourevents.site",
-            serverUrl)
+            serverUrl
+        )
         configuration.allowedMethods = listOf("POST", "GET", "PATCH", "DELETE", "OPTIONS")
         configuration.allowedHeaders = listOf("*")
 
