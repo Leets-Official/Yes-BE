@@ -34,9 +34,8 @@ class JwtAuthorizationFilter(
     }
 
     private fun extractToken(request: HttpServletRequest): String? {
-        val authorizationHeader: String = request.getHeader(HEADER_PREFIX)
-
-        if (authorizationHeader.startsWith(TOKEN_PREFIX)) {
+        val authorizationHeader: String? = request.getHeader(HEADER_PREFIX)
+        if (authorizationHeader != null && authorizationHeader.startsWith(TOKEN_PREFIX)) {
             return authorizationHeader.substringAfter(TOKEN_PREFIX)
         }
         return null

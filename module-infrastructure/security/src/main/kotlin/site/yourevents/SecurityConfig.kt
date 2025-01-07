@@ -11,7 +11,8 @@ import org.springframework.security.config.http.SessionCreationPolicy
 import org.springframework.security.web.SecurityFilterChain
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter
 import org.springframework.web.cors.CorsConfiguration
-import org.springframework.web.cors.reactive.UrlBasedCorsConfigurationSource
+import org.springframework.web.cors.CorsConfigurationSource
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 import site.yourevents.filter.CustomExceptionHandleFilter
 import site.yourevents.filter.JwtAuthenticationEntryPoint
 import site.yourevents.filter.JwtAuthorizationFilter
@@ -80,19 +81,20 @@ class SecurityConfig(
     }
 
     @Bean
-    fun corsConfigurationSource(): UrlBasedCorsConfigurationSource {
-        val configuration = CorsConfiguration()
-        configuration.allowedOrigins = listOf(
-            "http://localhost:3000",
-            "https://www.yourevents.site",
-            "https://yourevents.site",
-            serverUrl
-        )
-        configuration.allowedMethods = listOf("POST", "GET", "PATCH", "DELETE", "OPTIONS")
-        configuration.allowedHeaders = listOf("*")
+    fun corsConfigurationSource(): CorsConfigurationSource {
+        val configuration = CorsConfiguration().apply {
+            allowedOrigins = listOf(
+                "http://localhost:3000",
+                "https://www.yourevents.site",
+                "https://yourevents.site",
+                serverUrl
+            )
+            allowedMethods = listOf("POST", "GET", "PATCH", "DELETE", "OPTIONS")
+            allowedHeaders = listOf("*")
+        }
 
-        val source = UrlBasedCorsConfigurationSource()
-        source.registerCorsConfiguration("/**", configuration)
-        return source
+        return UrlBasedCorsConfigurationSource().apply {
+            registerCorsConfiguration("/**", configuration)
+        }
     }
 }

@@ -17,7 +17,7 @@ class SocialClient(
     @Value("\${spring.security.oauth2.client.registration.kakao.client-id}")
     private val clientId: String,
 
-    @Value("\${spring.security.oauth2.client.registration.kakao.client-redirect-uri}")
+    @Value("\${spring.security.oauth2.client.registration.kakao.redirect-uri}")
     private val redirectUri: String,
 
     @Value("\${spring.security.oauth2.client.registration.kakao.authorization-grant-type}")
