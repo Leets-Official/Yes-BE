@@ -42,21 +42,30 @@ class JwtProvider(
             return SecretKeySpec(keyBytes, "HmacSHA256")
         }
 
-    override fun generateAccessToken(memberId: UUID, email: String, role: String): String {
-        return generateToken(memberId, email, ACCESS_TOKEN_DURATION, role)
+    override fun generateAccessToken(
+        memberId: UUID,
+        socialId: String,
+        role: String,
+    ): String {
+        return generateToken(
+            memberId,
+            socialId,
+            ACCESS_TOKEN_DURATION,
+            role,
+        )
     }
 
     private fun generateToken(
         memberId: UUID,
-        email: String,
+        socialId: String,
         duration: Duration,
-        role: String
+        role: String,
     ): String {
         val now = Date()
         val expiry = Date(now.time + duration.inWholeMilliseconds)
 
         return Jwts.builder()
-            .subject(email)
+            .subject(socialId)
             .claim("id", memberId)
             .claim("role", role)
             .expiration(expiry)
@@ -64,7 +73,7 @@ class JwtProvider(
             .compact()
     }
 
-    fun getAuthentication(token: String) : Authentication {
+    fun getAuthentication(token: String): Authentication {
         val claims = validateToken(token)
         val authorities: Collection<GrantedAuthority?>? = Collections.singletonList(
             SimpleGrantedAuthority(claims["role"].toString())

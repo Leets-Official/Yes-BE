@@ -10,10 +10,14 @@ import site.yourevents.principal.AuthDetails
 class AuthDetailsService(
     private val memberUseCase: MemberUseCase
 ) : UserDetailsService {
-    override fun loadUserByUsername(email: String): AuthDetails {
-        val member = memberUseCase.findByEmail(email)
+    override fun loadUserByUsername(socialId: String): AuthDetails {
+        val member = memberUseCase.findBySocialId(socialId)
             ?: throw MemberNotFountException()
 
-        return AuthDetails(member.getId(), member.getNickname(), "ROLE_USER")
+        return AuthDetails(
+            member.getId(),
+            member.getSocialId(),
+            "ROLE_USER",
+        )
     }
 }

@@ -4,7 +4,7 @@ import site.yourevents.member.domain.Member
 import site.yourevents.member.domain.MemberVO
 
 interface MemberPersistencePort {
-    fun findByEmail(email: String): Member?
+    fun findBySocialId(socialId: String): Member?
 
     fun save(memberVO: MemberVO): Member
 }

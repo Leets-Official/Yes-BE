@@ -9,7 +9,15 @@ import java.util.UUID
 class TokenService(
     private val securityPort: SecurityPort,
 ) : TokenUseCase {
-    override fun generateAccessToken(id: UUID, email: String, role: String): String {
-        return securityPort.generateAccessToken(id, email, role)
+    override fun generateAccessToken(
+        id: UUID,
+        socialId: String,
+        role: String,
+    ): String {
+        return securityPort.generateAccessToken(
+            id,
+            socialId,
+            role,
+        )
     }
 }

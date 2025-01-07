@@ -8,7 +8,7 @@ import java.util.UUID
 
 class AuthDetails(
     private val uuid: UUID,
-    private val email: String,
+    private val socialId: String,
     private val role: String,
 ) : UserDetails {
     override fun getAuthorities(): Collection<GrantedAuthority?>? {
@@ -20,6 +20,6 @@ class AuthDetails(
     }
 
     override fun getUsername(): String? {
-        return email
+        return socialId
     }
 }

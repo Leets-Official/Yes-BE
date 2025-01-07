@@ -11,8 +11,8 @@ import kotlin.jvm.optionals.getOrNull
 class MemberRepository(
     private val memberJPARepository: MemberJPARepository
 ) : MemberPersistencePort {
-    override fun findByEmail(email: String): Member? {
-        return memberJPARepository.findByEmail(email)
+    override fun findBySocialId(socialId: String): Member? {
+        return memberJPARepository.findBySocialId(socialId)
             .getOrNull()?.toDomain()
     }
 

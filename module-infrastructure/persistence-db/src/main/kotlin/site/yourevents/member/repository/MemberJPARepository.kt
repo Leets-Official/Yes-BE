@@ -6,5 +6,5 @@ import java.util.Optional
 import java.util.UUID
 
 interface MemberJPARepository : JpaRepository<MemberEntity, UUID> {
-    fun findByEmail(email: String): Optional<MemberEntity>
+    fun findBySocialId(socialId: String): Optional<MemberEntity>
 }

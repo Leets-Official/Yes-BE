@@ -25,7 +25,7 @@ class AuthFacade(
     }
 
     private fun getTokenResponse(kakaoProfile: KakaoProfile): LoginResponse {
-        var member: Member? = memberUseCase.findByEmail(kakaoProfile.email)
+        var member: Member? = memberUseCase.findBySocialId(kakaoProfile.socialId)
 
         if (member == null) {
             member = memberUseCase.createMember(kakaoProfile)
@@ -33,10 +33,14 @@ class AuthFacade(
 
         val accessToken: String = tokenUseCase.generateAccessToken(
             member.getId(),
-            member.getEmail(),
-            "ROLE_USER"
+            member.getSocialId(),
+            "ROLE_USER",
         )
 
-        return LoginResponse.of(member.getId(), member.getEmail(), accessToken)
+        return LoginResponse.of(
+            member.getId(),
+            member.getSocialId(),
+            accessToken,
+        )
     }
 }
