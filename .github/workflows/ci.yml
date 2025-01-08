@@ -5,9 +5,8 @@ on:
     branches: [ "main" ]
 
 jobs:
-  runs-on: ubuntu-22.04
-
   build:
+    runs-on: ubuntu-22.04
     steps:
       - name: GitHub Checkout
         uses: actions/checkout@v4
@@ -25,6 +24,7 @@ jobs:
         run: ./gradlew --info test
 
   show-test:
+    runs-on: ubuntu-22.04
     steps:
       - name: Test 결과 출력
         uses: EnricoMi/publish-unit-test-result-action@v2
