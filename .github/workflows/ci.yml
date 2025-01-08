@@ -1,13 +1,13 @@
-name: CI with Test Results
+name: 테스트 통과 여부 검사
 
 on:
   pull_request:
     branches: [ "main" ]
 
 jobs:
-  dev-build-TEST:
-    runs-on: ubuntu-22.04
+  runs-on: ubuntu-22.04
 
+  build:
     steps:
       - name: GitHub Checkout
         uses: actions/checkout@v4
@@ -24,6 +24,8 @@ jobs:
       - name: Gradle 테스트
         run: ./gradlew --info test
 
+  show-test:
+    steps:
       - name: Test 결과 출력
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
