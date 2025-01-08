@@ -5,7 +5,7 @@ on:
     branches: [ "main" ]
 
 jobs:
-  build:
+  test-result:
     runs-on: ubuntu-22.04
     steps:
       - name: GitHub Checkout
@@ -23,9 +23,6 @@ jobs:
       - name: Gradle 테스트
         run: ./gradlew --info test
 
-  show-test:
-    runs-on: ubuntu-22.04
-    steps:
       - name: Test 결과 출력
         uses: EnricoMi/publish-unit-test-result-action@v2
         if: always()
