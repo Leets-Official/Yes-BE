@@ -23,4 +23,7 @@ dependencies {
 
     // MySQL
     runtimeOnly("com.mysql:mysql-connector-j")
+
+    //H2 Database for Test
+    testImplementation("com.h2database:h2:2.3.232")
 }
