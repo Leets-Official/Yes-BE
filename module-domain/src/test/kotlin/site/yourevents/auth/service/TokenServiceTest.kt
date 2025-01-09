@@ -30,7 +30,13 @@ class TokenServiceTest : DescribeSpec({
     describe("TokenService") {
         context("올바른 인자가 주어졌을 때") {
             it("SecurityPort를 통해 토큰을 String 형식으로 반환받아야 한다.") {
-                every { securityPort.generateAccessToken(id, socialId, role) } returns accessToken
+                every {
+                    securityPort.generateAccessToken(
+                        id,
+                        socialId,
+                        role
+                    )
+                } returns accessToken
 
                 val result = tokenService.generateAccessToken(
                     id,

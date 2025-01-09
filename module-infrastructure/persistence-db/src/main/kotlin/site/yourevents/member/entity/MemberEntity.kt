@@ -24,22 +24,18 @@ class MemberEntity(
     @Column
     private val email: String,
 ) {
-    fun toDomain(): Member {
-        return Member(
-            id = id!!,
-            socialId = socialId,
-            nickname = nickname,
-            email = email,
-        )
-    }
+    fun toDomain(): Member = Member(
+        id = id!!,
+        socialId = socialId,
+        nickname = nickname,
+        email = email,
+    )
 
     companion object {
-        fun from(memberVO: MemberVO): MemberEntity {
-            return MemberEntity(
-                socialId = memberVO.socialId,
-                nickname = memberVO.nickname,
-                email = memberVO.email,
-            )
-        }
+        fun from(memberVO: MemberVO): MemberEntity = MemberEntity(
+            socialId = memberVO.socialId,
+            nickname = memberVO.nickname,
+            email = memberVO.email,
+        )
     }
 }

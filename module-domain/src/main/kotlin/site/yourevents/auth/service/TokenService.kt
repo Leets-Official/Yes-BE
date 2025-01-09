@@ -13,11 +13,9 @@ class TokenService(
         id: UUID,
         socialId: String,
         role: String,
-    ): String {
-        return securityPort.generateAccessToken(
-            id,
-            socialId,
-            role,
-        )
-    }
+    ): String = securityPort.generateAccessToken(
+        id,
+        socialId,
+        role,
+    )
 }
