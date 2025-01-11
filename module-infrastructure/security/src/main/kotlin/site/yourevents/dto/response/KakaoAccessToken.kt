@@ -6,11 +6,9 @@ data class KakaoAccessToken(
     val accessToken: String
 ) {
     companion object {
-        fun from(jsonResponseBody: String): KakaoAccessToken {
-            val response = JsonParser.parseString(jsonResponseBody).asJsonObject
-            val accessToken = response.get("access_token").asString
-
-            return KakaoAccessToken(accessToken)
-        }
+        fun from(jsonResponseBody: String) = KakaoAccessToken(
+            JsonParser.parseString(jsonResponseBody)
+                .asJsonObject["access_token"].asString
+        )
     }
 }

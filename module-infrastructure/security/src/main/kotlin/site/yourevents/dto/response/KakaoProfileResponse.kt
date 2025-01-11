@@ -12,15 +12,14 @@ data class KakaoProfileResponse(
         fun from(jsonResponseBody: String): KakaoProfileResponse {
             val jsonObject: JsonObject =
                 JsonParser.parseString(jsonResponseBody).asJsonObject
-            val socialId: String = jsonObject.get("id").asString
+            val socialId: String = jsonObject["id"].asString
 
-            val kakaoAccount: JsonObject = jsonObject.get("kakao_account").asJsonObject
+            val kakaoAccount: JsonObject = jsonObject["kakao_account"].asJsonObject
 
-            val email: String = kakaoAccount.get("email").asString
+            val email: String = kakaoAccount["email"].asString
 
-            val profile: JsonObject = kakaoAccount.get("profile").asJsonObject
-            val nickname: String = profile.get("nickname").asString
-
+            val profile: JsonObject = kakaoAccount["profile"].asJsonObject
+            val nickname: String = profile["nickname"].asString
 
             return KakaoProfileResponse(
                 socialId,

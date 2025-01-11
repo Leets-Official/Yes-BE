@@ -13,7 +13,6 @@ class AuthController(
     private val authFacade: AuthFacade
 ) : AuthApi {
     @PostMapping("/login")
-    override fun login(request: LoginRequest): ApiResponse<LoginResponse> {
-        return ApiResponse.success(SuccessCode.LOGIN_SUCCESS, authFacade.login(request))
-    }
+    override fun login(request: LoginRequest): ApiResponse<LoginResponse> =
+        ApiResponse.success(SuccessCode.LOGIN_SUCCESS, authFacade.login(request))
 }
