@@ -1,13 +1,12 @@
-name: CI with Test Results
+name: 테스트 통과 여부 검사
 
 on:
   pull_request:
-    branches-ignore: [ "main" ]
+    branches: [ "main" ]
 
 jobs:
-  dev-build-TEST:
+  test-result:
     runs-on: ubuntu-22.04
-
     steps:
       - name: GitHub Checkout
         uses: actions/checkout@v4

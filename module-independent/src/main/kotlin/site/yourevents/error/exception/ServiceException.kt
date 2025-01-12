@@ -2,7 +2,7 @@ package site.yourevents.error.exception
 
 import site.yourevents.type.ErrorCode
 
-class ServiceException(
-    private val errorCode: ErrorCode
+open class ServiceException(
+    val errorCode: ErrorCode
 ) : RuntimeException() {
 }

@@ -7,6 +7,9 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
+    implementation(project(":module-independent"))
+    implementation(project(":module-domain"))
+
     //Spring Security
     implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web")
@@ -21,4 +24,7 @@ dependencies {
 
     // Spring Security Test
     testImplementation("org.springframework.security:spring-security-test")
+
+    // JSON
+    implementation("com.google.code.gson:gson:2.11.0")
 }
