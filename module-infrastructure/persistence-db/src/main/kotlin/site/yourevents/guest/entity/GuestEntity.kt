@@ -1,4 +1,4 @@
-package site.yourevents.invitation
+package site.yourevents.guest.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -7,29 +7,28 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
-import java.time.LocalDateTime
+import site.yourevents.invitation.entity.InvitationEntity
+import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
 
-@Entity(name = "invitation_information")
-class InvitationInformationEntity(
+@Entity(name = "guest")
+class GuestEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID,
+
+    @ManyToOne
+    @JoinColumn(name = "member_id", nullable = false)
+    val member: MemberEntity,
 
     @ManyToOne
     @JoinColumn(name = "invitation_id", nullable = false)
     val invitation: InvitationEntity,
 
     @Column
-    var title: String,
+    val nickname: String,
 
-    @Column
-    var schedule: LocalDateTime,
-
-    @Column
-    var location: String,
-
-    @Column
-    var remark: String,
+    @Column(nullable = false)
+    val attendance: Boolean,
 ) {
 }
