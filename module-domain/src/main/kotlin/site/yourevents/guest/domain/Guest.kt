@@ -1,5 +1,6 @@
-package site.yourevents.invitation
+package site.yourevents.guest.domain
 
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
 import java.util.UUID
 
