@@ -17,6 +17,7 @@ class InvitationService(
         val member = Member(memberId, socialId= "", nickname= "", email= "")//socialId, nickname,email은 사용 안하기 때문에 빈값 사용.
 
         val invitation = Invitation(
+            id = UUID.randomUUID(),
             member = member,
             qrUrl = qrUrl
         )
