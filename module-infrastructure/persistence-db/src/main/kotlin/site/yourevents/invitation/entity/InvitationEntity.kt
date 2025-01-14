@@ -1,4 +1,4 @@
-package site.yourevents.invitation
+package site.yourevents.invitation.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -10,8 +10,8 @@ import jakarta.persistence.ManyToOne
 import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
 
-@Entity(name = "guest")
-class GuestEntity(
+@Entity(name = "invitation")
+class InvitationEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID,
@@ -20,14 +20,7 @@ class GuestEntity(
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
-    @ManyToOne
-    @JoinColumn(name = "invitation_id", nullable = false)
-    val invitation: InvitationEntity,
-
     @Column
-    val nickname: String,
-
-    @Column(nullable = false)
-    val attendance: Boolean,
+    val qrUrl: String,
 ) {
 }
