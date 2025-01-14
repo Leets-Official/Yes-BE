@@ -1,5 +1,6 @@
-package site.yourevents.invitation
+package site.yourevents.invitationinformation.domain
 
+import site.yourevents.invitation.domain.Invitation
 import java.time.LocalDateTime
 import java.util.UUID
 
