@@ -5,5 +5,5 @@ import site.yourevents.member.domain.Member
 import java.util.*
 
 interface InvitationUseCase {
-    fun createInvitation(memberId: UUID): Invitation
+    fun createInvitation(memberId: UUID, qrUrl: String): Invitation
 }

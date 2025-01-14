@@ -25,24 +25,21 @@ class InvitationEntity(
     val qrUrl: String,
 ) {
     fun toDomain(): Invitation = Invitation(
-        id = this.id,
+        id = id,
         member = member.toDomain(),
         qrUrl = qrUrl
     )
 
     companion object {
-        fun from(invitation: Invitation): InvitationEntity{
-            val memberEntity = MemberEntity(
+        fun from(invitation: Invitation): InvitationEntity = InvitationEntity(
+            id = invitation.id,
+            member = MemberEntity(
+                id = invitation.member.getId(),
                 socialId = invitation.member.getSocialId(),
                 nickname = invitation.member.getNickname(),
                 email = invitation.member.getEmail()
-            )
-
-            return InvitationEntity(
-                id = invitation.id,
-                member = memberEntity,
-                qrUrl = invitation.qrUrl
-            )
-        }
+            ),
+            qrUrl = invitation.qrUrl
+        )
     }
 }

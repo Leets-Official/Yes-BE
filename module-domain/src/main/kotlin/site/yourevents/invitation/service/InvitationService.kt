@@ -4,20 +4,21 @@ import org.springframework.stereotype.Service
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitation.port.out.InvitationPersistencePort
-import site.yourevents.member.domain.Member
+import site.yourevents.member.exception.MemberNotFountException
+import site.yourevents.member.port.`in`.MemberUseCase
 import java.util.UUID
 
 @Service
 class InvitationService(
-    private val invitationPersistencePort: InvitationPersistencePort
+    private val invitationPersistencePort: InvitationPersistencePort,
+    private val memberUseCase: MemberUseCase
 ) : InvitationUseCase {
-    override fun createInvitation(memberId: UUID): Invitation {
-        val qrUrl = "http://example.com/qr/${UUID.randomUUID()}"//qr은 일단 임시 값을 사용
-
-        val member = Member(memberId, socialId= "", nickname= "", email= "")//socialId, nickname,email은 사용 안하기 때문에 빈값 사용.
+    override fun createInvitation(memberId: UUID, qrUrl: String): Invitation {
+        val member = memberUseCase.findById(memberId)
+            ?: throw MemberNotFountException()
 
         val invitation = Invitation(
-            id = UUID.randomUUID(),
+            id = UUID.randomUUID(),//자동 생성되기에 그냥 명시적인 할당임.
             member = member,
             qrUrl = qrUrl
         )
