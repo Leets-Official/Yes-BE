@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
 
@@ -23,4 +24,25 @@ class InvitationEntity(
     @Column
     val qrUrl: String,
 ) {
+    fun toDomain(): Invitation = Invitation(
+        id = this.id,
+        member = member.toDomain(),
+        qrUrl = qrUrl
+    )
+
+    companion object {
+        fun from(invitation: Invitation): InvitationEntity{
+            val memberEntity = MemberEntity(
+                socialId = invitation.member.getSocialId(),
+                nickname = invitation.member.getNickname(),
+                email = invitation.member.getEmail()
+            )
+
+            return InvitationEntity(
+                id = invitation.id,
+                member = memberEntity,
+                qrUrl = invitation.qrUrl
+            )
+        }
+    }
 }

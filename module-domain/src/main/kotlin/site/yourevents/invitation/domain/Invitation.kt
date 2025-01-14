@@ -4,8 +4,8 @@ import site.yourevents.member.domain.Member
 import java.util.UUID
 
 class Invitation(
-    private val id: UUID? = null,
-    private val member: Member,
-    private val qrUrl: String,
+    val id: UUID,
+    val member: Member,
+    val qrUrl: String,
 ) {
 }
