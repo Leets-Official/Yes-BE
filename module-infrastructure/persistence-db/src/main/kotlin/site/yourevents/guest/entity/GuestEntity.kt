@@ -1,5 +1,6 @@
 package site.yourevents.guest.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -22,7 +23,7 @@ class GuestEntity(
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.PERSIST])//cascade를 설정해야 GuestEntity 저장 시 연결된 InvitationEntity가 저장된 상태로 진행이 이루어집니다.
     @JoinColumn(name = "invitation_id", nullable = false)
     val invitation: InvitationEntity,
 
