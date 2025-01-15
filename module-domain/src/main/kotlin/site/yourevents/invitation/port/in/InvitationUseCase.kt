@@ -6,4 +6,6 @@ import java.util.*
 
 interface InvitationUseCase {
     fun createInvitation(memberId: UUID, qrUrl: String): Invitation
+
+    fun findById(id: UUID): Invitation?
 }
