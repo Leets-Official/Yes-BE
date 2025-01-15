@@ -3,7 +3,7 @@ package site.yourevents.guest.dto.response
 import site.yourevents.guest.domain.Guest
 import java.util.UUID
 
-data class OwnerNicknameResponse(
+data class CreateOwnerNicknameResponse(
     val guestId: UUID,
     val memberId: UUID,
     val invitationId: UUID,
@@ -11,8 +11,8 @@ data class OwnerNicknameResponse(
     val attendance: Boolean = true
 ) {
     companion object{
-        fun of(ownerNickname: Guest): OwnerNicknameResponse =
-            OwnerNicknameResponse(
+        fun of(ownerNickname: Guest): CreateOwnerNicknameResponse =
+            CreateOwnerNicknameResponse(
                 guestId = ownerNickname.getId()!!,
                 memberId = ownerNickname.getMember().getId(),
                 invitationId = ownerNickname.getInvitation().id!!,

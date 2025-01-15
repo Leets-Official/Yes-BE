@@ -2,7 +2,7 @@ package site.yourevents.guest.dto.request
 
 import java.util.UUID
 
-data class OwnerNicknameRequest(
+data class CreateOwnerNicknameRequest(
     val invitationId: UUID,
     val nickname: String
 ) {

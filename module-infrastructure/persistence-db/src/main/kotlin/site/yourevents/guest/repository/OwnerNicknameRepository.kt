@@ -9,8 +9,8 @@ import site.yourevents.guest.port.out.OwnerNicknamePersistencePort
 class OwnerNicknameRepository(
     private val ownerNicknameJPARepository: OwnerNicknameJPARepository
 ) : OwnerNicknamePersistencePort {
-    override fun saveOwnerNickname(ownerNickname: Guest): Guest {
-        return ownerNicknameJPARepository.save(GuestEntity.from(ownerNickname))
+    override fun saveOwnerNickname(guest: Guest): Guest {
+        return ownerNicknameJPARepository.save(GuestEntity.from(guest))
             .toDomain()
     }
 }
