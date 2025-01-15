@@ -5,7 +5,7 @@ import site.yourevents.member.domain.Member
 import java.util.UUID
 
 class Guest(
-    private val id: UUID,
+    private val id: UUID?,
     private val member: Member,
     private val invitation: Invitation,
     private val nickname: String,
