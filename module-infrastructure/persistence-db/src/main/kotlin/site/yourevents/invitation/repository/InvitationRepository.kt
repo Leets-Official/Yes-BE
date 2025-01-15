@@ -4,6 +4,8 @@ import org.springframework.stereotype.Repository
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.invitation.port.out.InvitationPersistencePort
+import java.util.*
+import kotlin.jvm.optionals.getOrNull
 
 @Repository
 class InvitationRepository(
@@ -12,5 +14,10 @@ class InvitationRepository(
     override fun saveInvitation(invitation: Invitation): Invitation{
         return invitationJPARepository.save(InvitationEntity.from(invitation))
             .toDomain()
+    }
+
+    override fun findById(id: UUID): Invitation? {
+        return invitationJPARepository.findById(id)
+            .getOrNull()?.toDomain()
     }
 }
