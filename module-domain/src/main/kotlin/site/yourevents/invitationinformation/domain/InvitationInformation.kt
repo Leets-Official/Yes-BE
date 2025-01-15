@@ -12,4 +12,15 @@ class InvitationInformation(
     private var location: String,
     private var remark: String,
 ) {
+    fun getId(): UUID? = id
+
+    fun getInvitation(): Invitation = invitation
+
+    fun getTitle(): String = title
+
+    fun getSchedule(): LocalDateTime = schedule
+
+    fun getLocation(): String = location
+
+    fun getRemark(): String = remark
 }
