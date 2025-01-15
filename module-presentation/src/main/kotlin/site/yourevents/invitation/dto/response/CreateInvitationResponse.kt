@@ -10,7 +10,7 @@ data class CreateInvitationResponse(
 ) {
     companion object{
         fun from(invitation: Invitation): CreateInvitationResponse = CreateInvitationResponse(
-            invitationId = invitation.id,
+            invitationId = invitation.id!!,
             memberId = invitation.member.getId(),
             qrUrl = invitation.qrUrl
         )
