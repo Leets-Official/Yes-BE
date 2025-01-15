@@ -17,8 +17,9 @@ class InvitationService(
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
+        //println("Creating invitation for member: ${member.getId()}, qrUrl: $qrUrl") // 트러블 슈팅 때문에 로그 찍기 위해 넣어두었습니다.
+
         val invitation = Invitation(
-            id = UUID.randomUUID(),//자동 생성되기에 그냥 명시적인 할당임.
             member = member,
             qrUrl = qrUrl
         )

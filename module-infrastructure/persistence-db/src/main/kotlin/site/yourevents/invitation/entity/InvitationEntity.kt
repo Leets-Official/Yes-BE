@@ -15,7 +15,7 @@ import java.util.UUID
 class InvitationEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    val id: UUID,
+    val id: UUID? = null,
 
     @ManyToOne
     @JoinColumn(name = "member_id", nullable = false)
@@ -24,21 +24,19 @@ class InvitationEntity(
     @Column
     val qrUrl: String,
 ) {
-    fun toDomain(): Invitation = Invitation(
-        id = id,
-        member = member.toDomain(),
-        qrUrl = qrUrl
-    )
+    fun toDomain(): Invitation{
+
+        val domain = Invitation(
+            member = this.member.toDomain(),
+            qrUrl = this.qrUrl
+        )
+        domain.id = this.id
+        return domain
+    }
 
     companion object {
         fun from(invitation: Invitation): InvitationEntity = InvitationEntity(
-            id = invitation.id,
-            member = MemberEntity(
-                id = invitation.member.getId(),
-                socialId = invitation.member.getSocialId(),
-                nickname = invitation.member.getNickname(),
-                email = invitation.member.getEmail()
-            ),
+            member = MemberEntity.from(invitation.member),
             qrUrl = invitation.qrUrl
         )
     }

@@ -9,7 +9,7 @@ import site.yourevents.invitation.port.out.InvitationPersistencePort
 class InvitationRepository(
     private val invitationJPARepository: InvitationJPARepository
 ) : InvitationPersistencePort {
-    override fun saveInvitation(invitation: Invitation): Invitation {
+    override fun saveInvitation(invitation: Invitation): Invitation{
         return invitationJPARepository.save(InvitationEntity.from(invitation))
             .toDomain()
     }
