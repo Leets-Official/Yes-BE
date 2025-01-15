@@ -1,5 +1,6 @@
-package site.yourevents.invitation
+package site.yourevents.invitationthumnail.domain
 
+import site.yourevents.invitation.domain.Invitation
 import java.util.UUID
 
 class InvitationThumbnail(

@@ -6,6 +6,7 @@ import site.yourevents.member.domain.Member
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.port.`in`.MemberUseCase
 import site.yourevents.member.port.out.persistence.MemberPersistencePort
+import java.util.*
 
 @Service
 class MemberService(
@@ -17,5 +18,9 @@ class MemberService(
 
     override fun createMember(kakaoProfile: KakaoProfile): Member {
         return memberPersistencePort.save(MemberVO.from(kakaoProfile))
+    }
+
+    override fun findById(id: UUID): Member? {
+        return memberPersistencePort.findById(id)
     }
 }

@@ -37,5 +37,11 @@ class MemberEntity(
             nickname = memberVO.nickname,
             email = memberVO.email,
         )
+        fun from(member: Member): MemberEntity = MemberEntity(
+            id = member.getId(),
+            socialId = member.getSocialId(),
+            nickname = member.getNickname(),
+            email = member.getEmail()
+        )
     }
 }

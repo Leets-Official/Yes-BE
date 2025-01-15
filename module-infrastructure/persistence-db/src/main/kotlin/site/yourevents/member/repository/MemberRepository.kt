@@ -5,6 +5,7 @@ import site.yourevents.member.domain.Member
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
 import site.yourevents.member.port.out.persistence.MemberPersistencePort
+import java.util.*
 import kotlin.jvm.optionals.getOrNull
 
 @Repository
@@ -19,5 +20,10 @@ class MemberRepository(
     override fun save(memberVO: MemberVO): Member {
         return memberJPARepository.save(MemberEntity.from(memberVO))
             .toDomain()
+    }
+
+    override fun findById(id: UUID): Member? {
+        return memberJPARepository.findById(id)
+            .getOrNull()?.toDomain()
     }
 }

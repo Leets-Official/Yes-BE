@@ -6,7 +6,7 @@ import org.springframework.security.core.userdetails.UserDetails
 import java.util.UUID
 
 class AuthDetails(
-    private val uuid: UUID,
+    val uuid: UUID,
     private val socialId: String,
     private val role: String,
 ) : UserDetails {

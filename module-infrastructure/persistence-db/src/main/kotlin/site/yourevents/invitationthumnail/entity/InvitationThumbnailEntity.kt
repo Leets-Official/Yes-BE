@@ -1,4 +1,4 @@
-package site.yourevents.invitation
+package site.yourevents.invitationthumnail.entity
 
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import site.yourevents.invitation.entity.InvitationEntity
 import java.util.UUID
 
 @Entity(name = "invitation_thumbnail")
