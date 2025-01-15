@@ -24,4 +24,8 @@ class InvitationService(
 
         return invitationPersistencePort.saveInvitation(invitation)
     }
+
+    override fun findById(id: UUID): Invitation? {
+        return invitationPersistencePort.findById(id)
+    }
 }
