@@ -1,5 +1,6 @@
 package site.yourevents.invitationinformation.entity
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -18,7 +19,7 @@ class InvitationInformationEntity(
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
 
-    @ManyToOne
+    @ManyToOne(cascade = [CascadeType.PERSIST])
     @JoinColumn(name = "invitation_id", nullable = false)
     val invitation: InvitationEntity,
 

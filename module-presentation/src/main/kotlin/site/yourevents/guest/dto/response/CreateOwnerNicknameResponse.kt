@@ -10,7 +10,7 @@ data class CreateOwnerNicknameResponse(
     val nickname: String,
     val attendance: Boolean = true
 ) {
-    companion object{
+    companion object {
         fun of(ownerNickname: Guest): CreateOwnerNicknameResponse =
             CreateOwnerNicknameResponse(
                 guestId = ownerNickname.getId()!!,
