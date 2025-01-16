@@ -9,7 +9,7 @@ data class CreateInvitationResponse(
     val qrUrl: String
 ) {
     companion object{
-        fun from(invitation: Invitation): CreateInvitationResponse = CreateInvitationResponse(
+        fun of(invitation: Invitation): CreateInvitationResponse = CreateInvitationResponse(
             invitationId = invitation.id!!,
             memberId = invitation.member.getId(),
             qrUrl = invitation.qrUrl
