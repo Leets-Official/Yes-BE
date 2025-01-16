@@ -9,6 +9,7 @@ import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
+import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.principal.AuthDetails
 import java.util.UUID
 
@@ -17,6 +18,7 @@ import java.util.UUID
 class InvitationFacade(
     private val invitationUseCase: InvitationUseCase,
     private val ownerNicknameUseCase: OwnerNicknameUseCase,
+    private val invitationThumbnailUseCase: InvitationThumbnailUseCase,
     private val invitationInformationUseCase: InvitationInformationUseCase,
 ) {
     fun createInvitation(
@@ -29,6 +31,8 @@ class InvitationFacade(
 
         val nickname = createInvitationRequest.owner.nickname
 
+        val thumbnailUrl = createInvitationRequest.invitationThumbnail.thumbnailUrl
+
         val title = createInvitationRequest.invitationInformation.title
         val schedule = createInvitationRequest.invitationInformation.schedule
         val location = createInvitationRequest.invitationInformation.location
@@ -40,6 +44,10 @@ class InvitationFacade(
             invitationId = invitation.id!!,
             nickname = nickname
         )
+        val invitationThumbnail = invitationThumbnailUseCase.createInvitationThumbnail(
+            invitationId = invitation.id!!,
+            url = thumbnailUrl
+        )
         val invitationInformation = invitationInformationUseCase.createInvitationInformation(
             invitationId = invitation.id!!,
             title = title,
@@ -48,6 +56,6 @@ class InvitationFacade(
             remark = remark
         )
 
-        return CreateInvitationResponse.of(invitation, owner, invitationInformation)
+        return CreateInvitationResponse.of(invitation, owner, invitationThumbnail, invitationInformation)
     }
 }

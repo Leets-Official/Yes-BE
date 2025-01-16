@@ -5,7 +5,7 @@ import java.time.LocalDateTime
 data class CreateInvitationRequest(
     val invitation: InvitationRequestDto,
     val owner: GuestRequestDto,
-    //val invitationThumbnail: InvitationThumbnailRequestDto,
+    val invitationThumbnail: InvitationThumbnailRequestDto,
     val invitationInformation: InvitationInformationRequestDto
 ) {
 
@@ -17,7 +17,7 @@ data class CreateInvitationRequest(
     )
 
     data class InvitationThumbnailRequestDto(
-        val url: String
+        val thumbnailUrl: String
     )
 
     data class InvitationInformationRequestDto(

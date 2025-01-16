@@ -10,7 +10,7 @@ import java.util.UUID
 data class CreateInvitationResponse(
     val invitation: InvitationResponseDto,
     val owner: OwnerResponseDto,
-    //val invitationThumbnail: InvitationThumbnailResponseDto,
+    val invitationThumbnail: InvitationThumbnailResponseDto,
     val invitationInformation: InvitationInformationResponseDto
 ) {
     data class InvitationResponseDto(
@@ -28,6 +28,7 @@ data class CreateInvitationResponse(
 
     data class InvitationThumbnailResponseDto(
         val thumbnailId: UUID,
+        val invitationId: UUID,
         val thumbnailUrl: String
     )
 
@@ -42,7 +43,7 @@ data class CreateInvitationResponse(
     companion object{
         fun of(invitation: Invitation,
                owner: Guest,
-               //invitationThumbnail: InvitationThumbnail,
+               invitationThumbnail: InvitationThumbnail,
                invitationInformation: InvitationInformation
                ): CreateInvitationResponse {
 
@@ -59,10 +60,11 @@ data class CreateInvitationResponse(
                 attendance = owner.isAttendance()
             )
 
-            /*val thumbnailResponse = InvitationThumbnailResponseDto(
+            val thumbnailResponse = InvitationThumbnailResponseDto(
                 thumbnailId = invitationThumbnail.id!!,
+                invitationId = invitationThumbnail.invitation.id!!,
                 thumbnailUrl = invitationThumbnail.url
-            )*/
+            )
 
             val informationResponse = InvitationInformationResponseDto(
                 informationId = invitationInformation.getId()!!,
@@ -76,7 +78,7 @@ data class CreateInvitationResponse(
             return CreateInvitationResponse(
                 invitation = invitationResponse,
                 owner = ownerResponse,
-                //invitationThumbnail = thumbnailResponse,
+                invitationThumbnail = thumbnailResponse,
                 invitationInformation = informationResponse
             )
         }
