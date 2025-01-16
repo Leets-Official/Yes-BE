@@ -17,10 +17,10 @@ class InvitationFacade(
     fun createInvitation(
         createInvitationRequest: CreateInvitationRequest,
         authDetails: AuthDetails
-    ): CreateInvitationResponse{
-        val memberId: UUID = authDetails.uuid
-
-        val invitation: Invitation = invitationUseCase.createInvitation(memberId,createInvitationRequest.qrUrl)
-        return CreateInvitationResponse.from(invitation)
-    }
+    ): CreateInvitationResponse = CreateInvitationResponse.of(
+        invitationUseCase.createInvitation(
+            memberId = authDetails.uuid,
+            qrUrl = createInvitationRequest.qrUrl
+        )
+    )
 }
