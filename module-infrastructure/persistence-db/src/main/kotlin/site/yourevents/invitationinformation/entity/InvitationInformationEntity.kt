@@ -37,7 +37,7 @@ class InvitationInformationEntity(
 ) {
     fun toDomain(): InvitationInformation =
         InvitationInformation(
-            id= id,
+            id = id,
             invitation = invitation.toDomain(),
             title = title,
             schedule = schedule,
