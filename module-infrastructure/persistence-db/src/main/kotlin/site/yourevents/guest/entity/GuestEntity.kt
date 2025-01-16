@@ -23,7 +23,7 @@ class GuestEntity(
     @JoinColumn(name = "member_id", nullable = false)
     val member: MemberEntity,
 
-    @ManyToOne(cascade = [CascadeType.PERSIST])//cascade를 설정해야 GuestEntity 저장 시 연결된 InvitationEntity가 저장된 상태로 진행이 이루어집니다.
+    @ManyToOne//(cascade = [CascadeType.PERSIST])//cascade를 설정해야 GuestEntity 저장 시 연결된 InvitationEntity가 저장된 상태로 진행이 이루어집니다.
     @JoinColumn(name = "invitation_id", nullable = false)
     val invitation: InvitationEntity,
 
