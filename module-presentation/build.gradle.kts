@@ -16,6 +16,7 @@ dependencies {
     implementation(project(":module-infrastructure:monitoring"))
     implementation(project(":module-infrastructure:persistence-db"))
     implementation(project(":module-infrastructure:security"))
+    implementation(project(":module-infrastructure:s3"))//이거 발견하는데 3시간 썼다....
     implementation(project(":module-independent"))
 
     implementation("org.springframework.boot:spring-boot-starter-web")
