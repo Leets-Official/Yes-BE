@@ -45,11 +45,11 @@ class GuestEntity(
     companion object {
         fun from(guest: Guest): GuestEntity =
             GuestEntity(
-                id = guest.getId(),
-                member = MemberEntity.from(guest.getMember()),
-                invitation = InvitationEntity.from(guest.getInvitation()),
-                nickname = guest.getNickname(),
-                attendance = guest.isAttendance()
+                id = guest.id,
+                member = MemberEntity.from(guest.member),
+                invitation = InvitationEntity.from(guest.invitation),
+                nickname = guest.nickname,
+                attendance = guest.attendance
             )
     }
 }

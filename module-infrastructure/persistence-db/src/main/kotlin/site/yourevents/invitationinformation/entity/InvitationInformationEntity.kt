@@ -48,12 +48,12 @@ class InvitationInformationEntity(
     companion object {
         fun from(invitationInformation: InvitationInformation): InvitationInformationEntity =
             InvitationInformationEntity(
-                id = invitationInformation.getId(),
-                invitation = InvitationEntity.from(invitationInformation.getInvitation()),
-                title = invitationInformation.getTitle(),
-                schedule = invitationInformation.getSchedule(),
-                location = invitationInformation.getLocation(),
-                remark = invitationInformation.getRemark()
+                id = invitationInformation.id,
+                invitation = InvitationEntity.from(invitationInformation.invitation),
+                title = invitationInformation.title,
+                schedule = invitationInformation.schedule,
+                location = invitationInformation.location,
+                remark = invitationInformation.remark
             )
     }
 }

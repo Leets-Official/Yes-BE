@@ -7,7 +7,6 @@ import site.yourevents.guest.port.`in`.OwnerNicknameUseCase
 import site.yourevents.guest.port.out.OwnerNicknamePersistencePort
 import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
-import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.exception.MemberNotFountException
 import site.yourevents.member.port.`in`.MemberUseCase
 import java.util.*
@@ -17,13 +16,13 @@ import java.util.*
 class OwnerNicknameService(
     private val ownerNicknamePersistencePort: OwnerNicknamePersistencePort,
     private val memberUseCase: MemberUseCase,
-    private val invitationPersistencePort: InvitationPersistencePort
+    private val invitationUseCase: InvitationUseCase
 ) : OwnerNicknameUseCase {
     override fun createOwnerNickname(memberId: UUID, invitationId: UUID, nickname: String): Guest {
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
-        val invitation = invitationPersistencePort.findById(invitationId)
+        val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
 
         val ownerNickname = Guest(
