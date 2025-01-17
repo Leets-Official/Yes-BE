@@ -5,14 +5,14 @@ import java.time.LocalDateTime
 import java.util.UUID
 
 class InvitationInformation(
-    private val id: UUID?,
-    private val invitation: Invitation,
-    private var title: String,
-    private var schedule: LocalDateTime,
-    private var location: String,
-    private var remark: String,
+    val id: UUID?,
+    val invitation: Invitation,
+    var title: String,
+    var schedule: LocalDateTime,
+    var location: String,
+    var remark: String,
 ) {
-    fun getId(): UUID? = id
+    /*fun getId(): UUID? = id
 
     fun getInvitation(): Invitation = invitation
 
@@ -22,5 +22,5 @@ class InvitationInformation(
 
     fun getLocation(): String = location
 
-    fun getRemark(): String = remark
+    fun getRemark(): String = remark*/
 }
