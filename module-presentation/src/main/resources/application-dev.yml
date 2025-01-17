@@ -53,6 +53,15 @@ management:
     jmx:
       exposure:
         exclude: "*"
+  endpoint:
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    info:
+      access: unrestricted
+    health:
+      access: unrestricted
   metrics:
     tags:
       application: ${spring.application.name}
