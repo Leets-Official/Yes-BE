@@ -59,10 +59,9 @@ class InvitationInformationServiceTest : DescribeSpec({
     describe("InvitationInformationService") {
         context("createInvitationInformation() 메서드 호출 시") {
             it("정상적으로 InvitationInformation이 생성되어 반환되어야 한다") {
-                // invitationUseCase.findById 설정
+
                 every { invitationUseCase.findById(invitationId) } returns invitation
 
-                // InvitationInformationPersistencePort.save() 설정
                 val savedInfoId = UUID.randomUUID()
                 val savedInfo = InvitationInformation(
                     id = savedInfoId,
@@ -83,15 +82,12 @@ class InvitationInformationServiceTest : DescribeSpec({
                     })
                 } returns savedInfo
 
-                // 서비스 메서드 호출
                 val result = invitationInformationService.createInvitationInformation(
                     invitationId, title, schedule, location, remark
                 )
 
-                // 결과 검증
                 result shouldBe savedInfo
 
-                // 호출 검증
                 verify(exactly = 1) { invitationUseCase.findById(invitationId) }
                 verify(exactly = 1) {
                     invitationInformationPersistencePort.save(match {
