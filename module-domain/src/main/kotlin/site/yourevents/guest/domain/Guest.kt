@@ -11,13 +11,4 @@ class Guest(
     val nickname: String,
     val attendance: Boolean,
 ) {
-    //fun getId(): UUID? = id
-
-    //fun getMember(): Member = member
-
-    //fun getInvitation(): Invitation = invitation
-
-    //fun getNickname(): String = nickname
-
-    //fun isAttendance(): Boolean = attendance
 }
