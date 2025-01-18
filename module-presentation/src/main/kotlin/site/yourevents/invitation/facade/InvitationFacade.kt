@@ -1,23 +1,20 @@
 package site.yourevents.invitation.facade
 
-import jakarta.persistence.EntityManager
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
-import site.yourevents.guest.port.`in`.OwnerNicknameUseCase
-import site.yourevents.invitation.domain.Invitation
+import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.principal.AuthDetails
-import java.util.UUID
 
 @Service
 @Transactional
 class InvitationFacade(
     private val invitationUseCase: InvitationUseCase,
-    private val ownerNicknameUseCase: OwnerNicknameUseCase,
+    private val guestUseCase: GuestUseCase,
     private val invitationThumbnailUseCase: InvitationThumbnailUseCase,
     private val invitationInformationUseCase: InvitationInformationUseCase,
 ) {
@@ -39,7 +36,7 @@ class InvitationFacade(
         val remark = createInvitationRequest.invitationInformation.remark
 
         val invitation = invitationUseCase.createInvitation(memberId,qrUrl)
-        val owner = ownerNicknameUseCase.createOwnerNickname(
+        val owner = guestUseCase.createGuest(
             memberId = memberId,
             invitationId = invitation.id!!,
             nickname = nickname

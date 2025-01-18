@@ -18,8 +18,10 @@ import software.amazon.awssdk.services.s3.S3Configuration
 class S3Config(
     @Value("\${aws.s3.accessKey}")
     private val accessKey: String,
+
     @Value("\${aws.s3.secretKey}")
     private val secretKey: String,
+
     @Value("\${aws.s3.region}")
     private val region: String
 ) {

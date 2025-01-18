@@ -3,8 +3,8 @@ package site.yourevents.guest.port.`in`
 import site.yourevents.guest.domain.Guest
 import java.util.UUID
 
-interface OwnerNicknameUseCase {
-    fun createOwnerNickname(
+interface GuestUseCase {
+    fun createGuest(
         memberId: UUID,
         invitationId: UUID,
         nickname: String

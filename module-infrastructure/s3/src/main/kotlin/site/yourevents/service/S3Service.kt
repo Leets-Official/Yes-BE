@@ -4,15 +4,13 @@ import com.amazonaws.HttpMethod
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.context.annotation.ComponentScan
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Service
 import site.yourevents.s3.port.out.PreSignedUrlPort
 import java.net.URL
 import java.util.Date
 import java.util.UUID
 
-@Component
+@Service
 class S3Service(
     private val amazonS3: AmazonS3,
 
