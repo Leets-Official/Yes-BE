@@ -1,6 +1,10 @@
 spring:
   application:
     name: YES-BE
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
   datasource:
     url: ENC(C/rNVsNH63ZMFsmaFQGBP8VACCRppRxYVUW4OGoNuTus8JVcJK63EjzIaXR8AeGZhVQcIuREbmkiwRJ2nrnuMtaDc7Elh2y/heJ5njeCEQKNDNIfGRSiRw==)
     username: ENC(kettemDgjE+NwOvxxl6N6Q==)
@@ -78,3 +82,10 @@ logging:
     environment:  ${SENTRY_ENVIRONMENT}
   slack:
     webhook-url: ${SLACK_WEBHOOK_URL}
+
+aws:
+  s3:
+    accessKey: ENC(LLpiZsh2SzFDH66FgY6osWY+uCEreNK1PVyoMfzdOTg=)
+    secretKey: ENC(LJQwQXZmEK2a6tL3FTB0iRwhQIuseQUbhPKC0FOCfkjotzZ5lRpp73dt22OoCJG71CBFI7BD/4I=)
+    bucketName: exerciseburket
+    region: ap-northeast-2
