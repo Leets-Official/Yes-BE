@@ -9,6 +9,7 @@ import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.principal.AuthDetails
+import java.util.*
 
 @Service
 @Transactional
@@ -24,35 +25,39 @@ class InvitationFacade(
     ): CreateInvitationResponse {
         val memberId = authDetails.uuid
 
-        val qrUrl = createInvitationRequest.invitation.qrUrl
+        val invitation = generateInvitation(memberId, createInvitationRequest)
 
-        val nickname = createInvitationRequest.owner.nickname
+        val owner = generateOwner(memberId, invitation.id, createInvitationRequest)
 
-        val thumbnailUrl = createInvitationRequest.invitationThumbnail.thumbnailUrl
+        val invitationThumbnail = generateInvitationThumbnail(invitation.id, createInvitationRequest)
 
-        val title = createInvitationRequest.invitationInformation.title
-        val schedule = createInvitationRequest.invitationInformation.schedule
-        val location = createInvitationRequest.invitationInformation.location
-        val remark = createInvitationRequest.invitationInformation.remark
-
-        val invitation = invitationUseCase.createInvitation(memberId,qrUrl)
-        val owner = guestUseCase.createGuest(
-            memberId = memberId,
-            invitationId = invitation.id!!,
-            nickname = nickname
-        )
-        val invitationThumbnail = invitationThumbnailUseCase.createInvitationThumbnail(
-            invitationId = invitation.id!!,
-            url = thumbnailUrl
-        )
-        val invitationInformation = invitationInformationUseCase.createInvitationInformation(
-            invitationId = invitation.id!!,
-            title = title,
-            schedule = schedule,
-            location = location,
-            remark = remark
-        )
+        val invitationInformation = generateInvitationInformation(invitation.id, createInvitationRequest)
 
         return CreateInvitationResponse.of(invitation, owner, invitationThumbnail, invitationInformation)
     }
+
+    private fun generateInvitation(memberId: UUID, request: CreateInvitationRequest) =
+        invitationUseCase.createInvitation(memberId,request.invitation.qrUrl)
+
+    private fun generateOwner(memberId: UUID, invitationId: UUID, request: CreateInvitationRequest) =
+        guestUseCase.createGuest(
+            memberId = memberId,
+            invitationId = invitationId,
+            nickname = request.owner.nickname
+        )
+
+    private fun generateInvitationThumbnail(invitationId: UUID, request: CreateInvitationRequest) =
+        invitationThumbnailUseCase.createInvitationThumbnail(
+            invitationId = invitationId,
+            url = request.invitationThumbnail.thumbnailUrl
+        )
+
+    private fun generateInvitationInformation(invitationId: UUID, request: CreateInvitationRequest) =
+        invitationInformationUseCase.createInvitationInformation(
+            invitationId = invitationId,
+            title = request.invitationInformation.title,
+            schedule = request.invitationInformation.schedule,
+            location = request.invitationInformation.location,
+            remark = request.invitationInformation.remark
+        )
 }
