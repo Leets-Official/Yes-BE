@@ -2,6 +2,7 @@ package site.yourevents.invitation.service
 
 import org.springframework.stereotype.Service
 import site.yourevents.invitation.domain.Invitation
+import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.exception.MemberNotFountException
@@ -17,12 +18,13 @@ class InvitationService(
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
-        val invitation = Invitation(
-            member = member,
-            qrUrl = qrUrl
-        )
 
-        return invitationPersistencePort.save(invitation)
+        return invitationPersistencePort.save(
+            InvitationVO.from(InvitationVO(
+                member = member,
+                qrUrl = qrUrl
+            ))
+        )
     }
 
     override fun findById(id: UUID): Invitation? {

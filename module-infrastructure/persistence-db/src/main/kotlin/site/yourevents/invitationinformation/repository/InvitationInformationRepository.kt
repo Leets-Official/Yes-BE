@@ -2,6 +2,7 @@ package site.yourevents.invitationinformation.repository
 
 import org.springframework.stereotype.Repository
 import site.yourevents.invitationinformation.domain.InvitationInformation
+import site.yourevents.invitationinformation.domain.InvitationInformationVO
 import site.yourevents.invitationinformation.entity.InvitationInformationEntity
 import site.yourevents.invitationinformation.port.out.InvitationInformationPersistencePort
 
@@ -9,9 +10,9 @@ import site.yourevents.invitationinformation.port.out.InvitationInformationPersi
 class InvitationInformationRepository(
     private val invitationInformationJPARepository: InvitationInformationJPARepository
 ) : InvitationInformationPersistencePort {
-    override fun save(invitationInformation: InvitationInformation): InvitationInformation {
+    override fun save(invitationInformationVO: InvitationInformationVO): InvitationInformation {
         return invitationInformationJPARepository.save(
-            InvitationInformationEntity.from(invitationInformation))
+            InvitationInformationEntity.from(invitationInformationVO))
             .toDomain()
     }
 }
