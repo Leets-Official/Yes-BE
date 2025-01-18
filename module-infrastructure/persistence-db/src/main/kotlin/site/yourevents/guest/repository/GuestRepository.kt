@@ -9,7 +9,7 @@ import site.yourevents.guest.port.out.GuestPersistencePort
 class GuestRepository(
     private val guestRepository: GuestJPARepository
 ) : GuestPersistencePort {
-    override fun saveGuest(guest: Guest): Guest {
+    override fun save(guest: Guest): Guest {
         return guestRepository.save(GuestEntity.from(guest))
             .toDomain()
     }

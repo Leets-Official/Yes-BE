@@ -9,7 +9,7 @@ import site.yourevents.invitationthumnail.port.out.InvitationThumbnailPersistenc
 class InvitationThumbnailRepository(
     private val invitationThumbnailJPARepository: InvitationThumbnailJPARepository
 ) : InvitationThumbnailPersistencePort {
-    override fun saveInvitationThumbnail(invitationThumbnail: InvitationThumbnail): InvitationThumbnail {
+    override fun save(invitationThumbnail: InvitationThumbnail): InvitationThumbnail {
         return invitationThumbnailJPARepository.save(InvitationThumbnailEntity.from(invitationThumbnail))
             .toDomain()
     }

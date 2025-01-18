@@ -11,7 +11,7 @@ import kotlin.jvm.optionals.getOrNull
 class InvitationRepository(
     private val invitationJPARepository: InvitationJPARepository
 ) : InvitationPersistencePort {
-    override fun saveInvitation(invitation: Invitation): Invitation{
+    override fun save(invitation: Invitation): Invitation{
         return invitationJPARepository.save(InvitationEntity.from(invitation))
             .toDomain()
     }

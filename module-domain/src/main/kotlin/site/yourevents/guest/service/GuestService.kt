@@ -36,6 +36,6 @@ class GuestService(
             nickname = nickname,
             attendance = true
         )
-        return guestPersistencePort.saveGuest(guest)
+        return guestPersistencePort.save(guest)
     }
 }

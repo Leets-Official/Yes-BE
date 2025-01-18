@@ -24,6 +24,6 @@ class InvitationThumbnailService(
             invitation = invitation,
             url = url
         )
-        return invitationThumbnailPersistencePort.saveInvitationThumbnail(invitationThumbnail)
+        return invitationThumbnailPersistencePort.save(invitationThumbnail)
     }
 }
