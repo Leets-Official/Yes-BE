@@ -9,7 +9,7 @@ import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.principal.AuthDetails
-import java.util.*
+import java.util.UUID
 
 @Service
 @Transactional
