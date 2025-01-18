@@ -9,6 +9,7 @@ import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import site.yourevents.guest.domain.Guest
+import site.yourevents.guest.domain.GuestVO
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
@@ -35,7 +36,7 @@ class GuestEntity(
 ) {
     fun toDomain(): Guest =
         Guest(
-            id = id,
+            id = id!!,
             member = member.toDomain(),
             invitation = invitation.toDomain(),
             nickname = nickname,
@@ -43,6 +44,14 @@ class GuestEntity(
         )
 
     companion object {
+        fun from(guestVO: GuestVO): GuestEntity =
+            GuestEntity(
+                member = MemberEntity.from(guestVO.member),
+                invitation = InvitationEntity.from(guestVO.invitation),
+                nickname = guestVO.nickname,
+                attendance = guestVO.attendance
+            )
+
         fun from(guest: Guest): GuestEntity =
             GuestEntity(
                 id = guest.id,

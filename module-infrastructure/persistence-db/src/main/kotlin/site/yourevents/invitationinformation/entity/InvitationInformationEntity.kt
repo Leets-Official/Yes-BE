@@ -10,6 +10,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.invitationinformation.domain.InvitationInformation
+import site.yourevents.invitationinformation.domain.InvitationInformationVO
 import java.time.LocalDateTime
 import java.util.UUID
 
@@ -37,7 +38,7 @@ class InvitationInformationEntity(
 ) {
     fun toDomain(): InvitationInformation =
         InvitationInformation(
-            id = id,
+            id = id!!,
             invitation = invitation.toDomain(),
             title = title,
             schedule = schedule,
@@ -46,14 +47,13 @@ class InvitationInformationEntity(
         )
 
     companion object {
-        fun from(invitationInformation: InvitationInformation): InvitationInformationEntity =
+        fun from(invitationInformationVO: InvitationInformationVO): InvitationInformationEntity =
             InvitationInformationEntity(
-                id = invitationInformation.id,
-                invitation = InvitationEntity.from(invitationInformation.invitation),
-                title = invitationInformation.title,
-                schedule = invitationInformation.schedule,
-                location = invitationInformation.location,
-                remark = invitationInformation.remark
+                invitation = InvitationEntity.from(invitationInformationVO.invitation),
+                title = invitationInformationVO.title,
+                schedule = invitationInformationVO.schedule,
+                location = invitationInformationVO.location,
+                remark = invitationInformationVO.remark
             )
     }
 }

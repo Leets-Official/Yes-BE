@@ -3,6 +3,7 @@ package site.yourevents.guest.service
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.guest.domain.Guest
+import site.yourevents.guest.domain.GuestVO
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.guest.port.out.GuestPersistencePort
 import site.yourevents.invitation.exception.InvitationNotFoundException
@@ -29,13 +30,13 @@ class GuestService(
         val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
 
-        val guest = Guest(
-            id = null,
-            member = member,
-            invitation = invitation,
-            nickname = nickname,
-            attendance = true
+
+        return guestPersistencePort.save(
+            GuestVO.from(GuestVO(
+                member = member,
+                invitation = invitation,
+                nickname = nickname,
+                attendance = true))
         )
-        return guestPersistencePort.save(guest)
     }
 }

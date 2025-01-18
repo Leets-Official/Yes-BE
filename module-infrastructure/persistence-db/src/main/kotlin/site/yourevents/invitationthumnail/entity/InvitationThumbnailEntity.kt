@@ -9,6 +9,7 @@ import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
+import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
 import java.util.UUID
 
 @Entity(name = "invitation_thumbnail")
@@ -26,17 +27,16 @@ class InvitationThumbnailEntity(
 ) {
     fun toDomain(): InvitationThumbnail =
         InvitationThumbnail(
-            id = id,
+            id = id!!,
             invitation = invitation.toDomain(),
             url = url
         )
 
     companion object {
-        fun from(invitationThumbnail: InvitationThumbnail): InvitationThumbnailEntity =
+        fun from(invitationThumbnailVO: InvitationThumbnailVO): InvitationThumbnailEntity =
             InvitationThumbnailEntity(
-                id = invitationThumbnail.id,
-                invitation = InvitationEntity.from(invitationThumbnail.invitation),
-                url = invitationThumbnail.url
+                invitation = InvitationEntity.from(invitationThumbnailVO.invitation),
+                url = invitationThumbnailVO.url
             )
     }
 }

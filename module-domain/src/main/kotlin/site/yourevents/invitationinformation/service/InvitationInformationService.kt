@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.domain.InvitationInformation
+import site.yourevents.invitationinformation.domain.InvitationInformationVO
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationinformation.port.out.InvitationInformationPersistencePort
 import java.time.LocalDateTime
@@ -22,17 +23,18 @@ class InvitationInformationService(
         schedule: LocalDateTime,
         location: String,
         remark: String): InvitationInformation {
+
         val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
 
-        val invitationInformation = InvitationInformation(
-            id = null,
-            invitation = invitation,
-            title = title,
-            schedule = schedule,
-            location = location,
-            remark = remark
+        return invitationInformationPersistencePort.save(
+            InvitationInformationVO.from(InvitationInformationVO(
+                invitation = invitation,
+                title = title,
+                schedule = schedule,
+                location = location,
+                remark = remark
+            ))
         )
-        return invitationInformationPersistencePort.save(invitationInformation)
     }
 }
