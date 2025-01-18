@@ -11,7 +11,6 @@ class InvitationThumbnailTest : DescribeSpec({
     describe("InvitationThumbnail 도메인") {
         context("InvitationThumbnail이 생성될 때") {
             it("올바른 필드 값이 반환되어야 한다") {
-                // 테스트를 위한 Member, Invitation 객체 생성
                 val memberId = UUID.randomUUID()
                 val socialId = "6316"
                 val nickname = "seunghyun"
@@ -22,7 +21,6 @@ class InvitationThumbnailTest : DescribeSpec({
                 val qrUrl = "http://example.com"
                 val invitation = Invitation(invitationId, member, qrUrl)
 
-                // InvitationThumbnail 객체 생성
                 val thumbnailId = UUID.randomUUID()
                 val url = "http://example.com/"
                 val invitationThumbnail = InvitationThumbnail(
@@ -31,7 +29,6 @@ class InvitationThumbnailTest : DescribeSpec({
                     url = url
                 )
 
-                // 필드 검증
                 invitationThumbnail.apply {
                     this.id shouldBe thumbnailId
                     this.invitation shouldBe invitation
