@@ -33,6 +33,6 @@ class InvitationInformationService(
             location = location,
             remark = remark
         )
-        return invitationInformationPersistencePort.saveInvitationInformation(invitationInformation)
+        return invitationInformationPersistencePort.save(invitationInformation)
     }
 }

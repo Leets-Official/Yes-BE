@@ -22,7 +22,7 @@ class InvitationService(
             qrUrl = qrUrl
         )
 
-        return invitationPersistencePort.saveInvitation(invitation)
+        return invitationPersistencePort.save(invitation)
     }
 
     override fun findById(id: UUID): Invitation? {

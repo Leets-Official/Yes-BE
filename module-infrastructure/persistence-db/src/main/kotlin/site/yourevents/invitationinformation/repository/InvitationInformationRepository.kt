@@ -9,7 +9,7 @@ import site.yourevents.invitationinformation.port.out.InvitationInformationPersi
 class InvitationInformationRepository(
     private val invitationInformationJPARepository: InvitationInformationJPARepository
 ) : InvitationInformationPersistencePort {
-    override fun saveInvitationInformation(invitationInformation: InvitationInformation): InvitationInformation {
+    override fun save(invitationInformation: InvitationInformation): InvitationInformation {
         return invitationInformationJPARepository.save(
             InvitationInformationEntity.from(invitationInformation))
             .toDomain()
