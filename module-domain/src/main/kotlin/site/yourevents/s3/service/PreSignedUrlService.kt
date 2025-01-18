@@ -13,7 +13,7 @@ class PreSignedUrlService(
     private val preSignedUrlPort: PreSignedUrlPort
 ) : PreSignedUrlUseCase {
     override fun getPreSignedUrl(imageName: String): PreSignedUrlVO =
-        PreSignedUrlVO.of(
+        PreSignedUrlVO.from(
             preSignedUrlPort.getPreSignedUrl(imageName)
         )
 }

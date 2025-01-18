@@ -4,6 +4,6 @@ data class PreSignedUrlVO(
     val preSignedUrl: String
 ) {
     companion object {
-        fun of(url: String): PreSignedUrlVO = PreSignedUrlVO(url)
+        fun from(url: String): PreSignedUrlVO = PreSignedUrlVO(url)
     }
 }

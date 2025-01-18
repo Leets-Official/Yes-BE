@@ -19,7 +19,7 @@ class InvitationInformationEntity(
     @GeneratedValue(strategy = GenerationType.UUID)
     val id: UUID? = null,
 
-    @ManyToOne//(cascade = [CascadeType.PERSIST])
+    @ManyToOne
     @JoinColumn(name = "invitation_id", nullable = false)
     val invitation: InvitationEntity,
 

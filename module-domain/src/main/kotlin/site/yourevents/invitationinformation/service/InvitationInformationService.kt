@@ -8,7 +8,7 @@ import site.yourevents.invitationinformation.domain.InvitationInformation
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationinformation.port.out.InvitationInformationPersistencePort
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 @Service
 @Transactional
@@ -16,7 +16,12 @@ class InvitationInformationService(
     private val invitationInformationPersistencePort: InvitationInformationPersistencePort,
     private val invitationUseCase: InvitationUseCase
 ) : InvitationInformationUseCase {
-    override fun createInvitationInformation(invitationId: UUID, title: String, schedule: LocalDateTime, location: String, remark: String): InvitationInformation {
+    override fun createInvitationInformation(
+        invitationId: UUID,
+        title: String,
+        schedule: LocalDateTime,
+        location: String,
+        remark: String): InvitationInformation {
         val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
 
