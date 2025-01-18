@@ -48,27 +48,27 @@ data class CreateInvitationResponse(
                ): CreateInvitationResponse {
 
             val invitationResponse = InvitationResponseDto(
-                invitationId = invitation.id!!,
+                invitationId = invitation.id,
                 memberId = invitation.member.getId(),
                 qrUrl = invitation.qrUrl
             )
 
             val ownerResponse = OwnerResponseDto(
-                ownerId = owner.id!!,
-                invitationId = owner.invitation.id!!,
+                ownerId = owner.id,
+                invitationId = owner.invitation.id,
                 ownerNickname = owner.nickname,
                 attendance = owner.attendance
             )
 
             val thumbnailResponse = InvitationThumbnailResponseDto(
-                thumbnailId = invitationThumbnail.id!!,
-                invitationId = invitationThumbnail.invitation.id!!,
+                thumbnailId = invitationThumbnail.id,
+                invitationId = invitationThumbnail.invitation.id,
                 thumbnailUrl = invitationThumbnail.url
             )
 
             val informationResponse = InvitationInformationResponseDto(
-                informationId = invitationInformation.id!!,
-                invitationId = invitationInformation.invitation.id!!,
+                informationId = invitationInformation.id,
+                invitationId = invitationInformation.invitation.id,
                 title = invitationInformation.title,
                 schedule = invitationInformation.schedule,
                 location = invitationInformation.location,
