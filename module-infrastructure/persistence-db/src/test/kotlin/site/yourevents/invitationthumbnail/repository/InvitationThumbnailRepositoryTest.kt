@@ -64,7 +64,7 @@ class InvitationThumbnailRepositoryTest(
             val savedThumbnail = invitationThumbnailRepository.save(invitationThumbnailVO)
 
             savedThumbnail.url shouldBe invitationThumbnailVO.url
-            savedThumbnail.id shouldBe invitationEntity.id
+            savedThumbnail.invitation.id shouldBe invitationThumbnailVO.invitation.id
             savedThumbnail.invitation.member.getSocialId() shouldBe memberEntity.toDomain().getSocialId()
             savedThumbnail.invitation.member.getEmail() shouldBe memberEntity.toDomain().getEmail()
             savedThumbnail.invitation.member.getNickname() shouldBe memberEntity.toDomain().getNickname()
