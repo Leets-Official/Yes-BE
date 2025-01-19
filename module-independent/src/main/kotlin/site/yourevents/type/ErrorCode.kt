@@ -11,6 +11,7 @@ enum class ErrorCode(
     UNSUPPORTED_TOKEN(401, "UNSUPPORTED_TOKEN", "지원하지 않는 토큰입니다."),
     EMPTY_AUTHENTICATION(401, "EMPTY_AUTHENTICATION", "인증정보가 존재하지 않습니다."),
     ROLE_FORBIDDEN(403, "ROLE_FORBIDDEN", "접근할 수 있는 권한이 아닙니다."),
+    INVITATION_NOT_FOUND(404, "INVITATION_NOT_FOUND", "존재하지 않는 초대장입니다."),
     MEMBER_NOT_FOUND(404, "MEMBER_NOT_FOUND", "존재하지 않는 사용자입니다."),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다."),
 }

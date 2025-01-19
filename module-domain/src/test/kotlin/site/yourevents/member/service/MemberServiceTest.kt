@@ -26,7 +26,6 @@ class MemberServiceTest : DescribeSpec({
         email = "yes@yes.com"
     }
 
-    // Mockk을 통해 DB 의존성을 제거
     beforeAny {
         memberPersistencePort = mockk<MemberPersistencePort>()
         memberService = MemberService(memberPersistencePort)

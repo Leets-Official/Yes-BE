@@ -1,4 +1,8 @@
 spring:
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
   datasource:
     url: jdbc:mysql://localhost:3306/yourevents
     username: ${DB_USER}
@@ -52,3 +56,10 @@ logging:
     environment:  ${SENTRY_ENVIRONMENT}
   slack:
     webhook-url: ${SLACK_WEBHOOK_URL}
+
+aws:
+  s3:
+    accessKey: ENC(shkw2HS3Dise/qwXXa/OlJ8HSbT1fzWiRKD827qIXyg=)
+    secretKey: ENC(wf8u8zJDoC+naTFmCqg6pyG28BcSjVLAid/S+vPzXr7qo5IYuhpR972I0zEWlf5C+6bPeMAyGgU=)
+    bucketName: exerciseburket
+    region: ap-northeast-2
