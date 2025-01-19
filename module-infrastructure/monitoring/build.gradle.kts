@@ -7,6 +7,10 @@ bootJar.enabled = false
 jar.enabled = true
 
 dependencies {
+    implementation("org.springframework.boot:spring-boot-starter-actuator")
+
+    // Prometheus
+    implementation("io.micrometer:micrometer-registry-prometheus:1.14.2")
 
     // Sentry
     implementation("io.sentry:sentry-logback:7.17.0")

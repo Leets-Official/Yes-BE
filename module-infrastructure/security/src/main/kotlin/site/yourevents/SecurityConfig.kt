@@ -26,6 +26,9 @@ class SecurityConfig(
     @Value("\${app.server.url}")
     private val serverUrl: String,
 
+    @Value("\${management.endpoints.web.base-path}")
+    private val actuatorEndPoint: String,
+
     private val jwtProvider: JwtProvider,
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val customAccessDeniedHandler: CustomAccessDeniedHandler,
@@ -37,6 +40,7 @@ class SecurityConfig(
                 authorize("/swagger-ui/**", permitAll)
                 authorize("/v3/**", permitAll)
                 authorize("/health-check", permitAll)
+                authorize("$actuatorEndPoint/**", permitAll)
                 authorize(anyRequest, permitAll)
             }
         }

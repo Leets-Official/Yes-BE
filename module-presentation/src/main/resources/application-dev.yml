@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: YES-BE
   cloud:
     aws:
       region:
@@ -11,7 +13,7 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -43,6 +45,30 @@ jwt:
 app:
   server:
     url: ENC(uN3Diby1cLKgQIKPznbuLr/9mQrqzUFhTlzKRp4ZCSxovF26NNCo+A==)
+
+management:
+  endpoints:
+    access:
+      default: none
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+      base-path: ENC(cQ5URPVoxD85Noap7xjvpu/KMMq3RuUZ7lcoHGsr4Ojhq6LKHOFiRShTarLoZF76CVckUbNJHCM=)
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    info:
+      access: unrestricted
+    health:
+      access: unrestricted
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 sentry:
   dsn: ENC(UefOk3EHvOlzQ+99rApWCWoEMEbTlVbECMRxnRLgtNzuWJa0PmWL1pBtfGRpRK6qWsOSGlmWlJsP7PI7JVaLOnHG3CDLM2bChy61gXTkqYiTs2I1Axf8SW/rxMmcEkH7PLOqEY/TI5I=)

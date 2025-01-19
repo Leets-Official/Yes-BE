@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: YES-BE
   cloud:
     aws:
       region:
@@ -43,6 +45,30 @@ jwt:
 app:
   server:
     url: http://localhost:8080
+
+management:
+  endpoints:
+    access:
+      default: none
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+      base-path: ENC(Fbz8BPD8thSTJdUInezuxnlyy5HCeqB1++CUaz+1ZZcLdIqfWeJNf/+wLskzAEGZvdW6EYFx3SM=)
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    info:
+      access: unrestricted
+    health:
+      access: unrestricted
+  metrics:
+    tags:
+      application: ${spring.application.name}
 
 sentry:
   dsn: ENC(p3USktYJhoxYtz0GFLCVpu4fki0u0eN424zqg6rE3vKH5DjjWfqFRN+Enj/rLkCFAhYwlwFtT++KW62gqtm1CnnHxeJfrAki+FdAnWO3JRj29aXea/N8xrE7h/MoZ58Tapyi+wWH5eM=)
