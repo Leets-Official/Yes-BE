@@ -39,4 +39,14 @@ class GuestService(
                 attendance = true))
         )
     }
+
+    override fun respondInvitation(
+        guestId: UUID?,
+        invitationId: UUID,
+        memberId: UUID,
+        nickname: String,
+        attendance: Boolean
+    ) {
+        TODO("Not yet implemented")
+    }
 }
