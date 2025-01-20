@@ -13,5 +13,6 @@ enum class ErrorCode(
     ROLE_FORBIDDEN(403, "ROLE_FORBIDDEN", "접근할 수 있는 권한이 아닙니다."),
     INVITATION_NOT_FOUND(404, "INVITATION_NOT_FOUND", "존재하지 않는 초대장입니다."),
     MEMBER_NOT_FOUND(404, "MEMBER_NOT_FOUND", "존재하지 않는 사용자입니다."),
+    GUEST_NOT_FOUND(404, "GUEST_NOT_FOUND", "존재하지 않는 참가자입니다."),
     INTERNAL_SERVER_ERROR(500, "INTERNAL_SERVER_ERROR", "서버 오류가 발생했습니다."),
 }
