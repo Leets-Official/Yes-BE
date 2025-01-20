@@ -22,7 +22,6 @@ class GuestRepositoryTest(
     @Autowired private val memberJPARepository: MemberJPARepository,
     @Autowired private val invitationJPARepository: InvitationJPARepository
 ) : DescribeSpec({
-
     val guestRepository = GuestRepository(guestJPARepository)
 
     lateinit var guestVO: GuestVO
@@ -60,14 +59,16 @@ class GuestRepositoryTest(
     }
 
     describe("GuestRepository") {
-        it("save() 메서드를 통해 Guest를 저장하고 반환해야 한다") {
-            val savedGuest = guestRepository.save(guestVO)
+        context("save() 메서드에서") {
+            it("GuestVO를 저장하고 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
 
-            savedGuest.nickname shouldBe guestVO.nickname
-            savedGuest.attendance shouldBe guestVO.attendance
+                savedGuest.nickname shouldBe guestVO.nickname
+                savedGuest.attendance shouldBe guestVO.attendance
 
-            savedGuest.member.getSocialId() shouldBe memberEntity.toDomain().getSocialId()
-            savedGuest.invitation.id shouldBe invitationEntity.id
+                savedGuest.member.getSocialId() shouldBe memberEntity.toDomain().getSocialId()
+                savedGuest.invitation.id shouldBe invitationEntity.id
+            }
         }
     }
 })

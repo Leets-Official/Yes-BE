@@ -3,7 +3,9 @@ package site.yourevents.guest.facade
 import io.kotest.core.spec.style.DescribeSpec
 import io.mockk.confirmVerified
 import io.mockk.every
+import io.mockk.just
 import io.mockk.mockk
+import io.mockk.runs
 import io.mockk.verify
 import site.yourevents.guest.dto.request.InvitationRespondRequest
 import site.yourevents.guest.port.`in`.GuestUseCase
@@ -25,7 +27,7 @@ class GuestFacadeTest : DescribeSpec({
                         any(),
                         any()
                     )
-                } returns Unit
+                } just runs
 
                 val request = InvitationRespondRequest(
                     guestId = UUID.randomUUID(),
