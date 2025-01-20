@@ -22,21 +22,21 @@ class GuestService(
     override fun createGuest(
         memberId: UUID,
         invitationId: UUID,
-        nickname: String): Guest {
-
+        nickname: String
+    ): Guest {
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
         val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
 
-
         return guestPersistencePort.save(
-            GuestVO.from(GuestVO(
+            GuestVO(
                 member = member,
                 invitation = invitation,
                 nickname = nickname,
-                attendance = true))
+                attendance = true
+            )
         )
     }
 
