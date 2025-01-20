@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
+import site.yourevents.guest.exception.GuestNotFoundException
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.guest.port.out.GuestPersistencePort
 import site.yourevents.invitation.exception.InvitationNotFoundException
@@ -47,6 +48,31 @@ class GuestService(
         nickname: String,
         attendance: Boolean
     ) {
-        TODO("Not yet implemented")
+        val member = memberUseCase.findById(memberId)
+            ?: throw MemberNotFountException()
+
+        val invitation = invitationUseCase.findById(invitationId)
+            ?: throw InvitationNotFoundException()
+
+        if (guestId == null) {
+            guestPersistencePort.save(
+                GuestVO(
+                    member = member,
+                    invitation = invitation,
+                    nickname = nickname,
+                    attendance = attendance
+                )
+            )
+            return
+        }
+        updateAttendance(guestId, attendance)
+    }
+
+    private fun updateAttendance(guestId: UUID, attendance: Boolean) {
+        val guest = guestPersistencePort.findById(guestId)
+            ?: throw GuestNotFoundException()
+
+        guest.updateAttendance(attendance)
+        guestPersistencePort.save(guest)
     }
 }
