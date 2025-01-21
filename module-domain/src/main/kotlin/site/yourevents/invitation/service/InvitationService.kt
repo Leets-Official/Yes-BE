@@ -45,4 +45,9 @@ override fun updateQrCode(invitationId: UUID) : Invitation {
     override fun findById(id: UUID): Invitation? {
         return invitationPersistencePort.findById(id)
     }
+
+    override fun getQrCodeUrl(id: UUID): String {
+        val invitation = findById(id) ?: throw InvitationNotFoundException()
+        return invitation.qrUrl
+    }
 }

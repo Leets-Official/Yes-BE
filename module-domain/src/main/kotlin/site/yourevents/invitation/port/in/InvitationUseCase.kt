@@ -9,4 +9,6 @@ interface InvitationUseCase {
     fun updateQrCode(invitationId: UUID): Invitation
 
     fun findById(id: UUID): Invitation?
+
+    fun getQrCodeUrl(id: UUID): String
 }
