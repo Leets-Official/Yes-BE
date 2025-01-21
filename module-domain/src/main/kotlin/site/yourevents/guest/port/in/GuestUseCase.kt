@@ -9,4 +9,12 @@ interface GuestUseCase {
         invitationId: UUID,
         nickname: String
     ): Guest
+
+    fun respondInvitation(
+        guestId: UUID?,
+        invitationId: UUID,
+        memberId: UUID,
+        nickname: String,
+        attendance: Boolean,
+    )
 }

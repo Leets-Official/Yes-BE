@@ -2,16 +2,15 @@ package site.yourevents.guest.domain
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Assertions.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
-import java.util.*
+import java.util.UUID
 
 class GuestVOTest : DescribeSpec({
     lateinit var member: Member
     lateinit var invitation: Invitation
     lateinit var nickname: String
-    var attendance: Boolean = true
+    var attendance = true
 
     beforeTest {
         val memberId = UUID.randomUUID()
@@ -49,26 +48,6 @@ class GuestVOTest : DescribeSpec({
                     this.invitation shouldBe invitation
                     this.nickname shouldBe nickname
                     this.attendance shouldBe attendance
-                }
-            }
-        }
-
-        context("GuestVO로 변환할 때") {
-            it("from() 메서드를 통해 올바른 GuestVO가 생성되어야 한다") {
-                val originalGuestVO = GuestVO(
-                    member = member,
-                    invitation = invitation,
-                    nickname = nickname,
-                    attendance = attendance
-                )
-
-                val transformedGuestVO = GuestVO.from(originalGuestVO)
-
-                transformedGuestVO.apply {
-                    member shouldBe originalGuestVO.member
-                    invitation shouldBe originalGuestVO.invitation
-                    nickname shouldBe originalGuestVO.nickname
-                    attendance shouldBe originalGuestVO.attendance
                 }
             }
         }

@@ -9,6 +9,9 @@ class Guest(
     val member: Member,
     val invitation: Invitation,
     val nickname: String,
-    val attendance: Boolean,
+    var attendance: Boolean,
 ) {
+    fun updateAttendance(attendance: Boolean) {
+        this.attendance = attendance
+    }
 }
