@@ -5,7 +5,6 @@ enum class ErrorCode(
     val code: String,
     val message: String,
 ) {
-    FAIL_TO_UPLOAD_QR_CODE_IMAGE(400, "FAIL_TO_UPLOAD_QR_CODE_IMAGE", "QR코드 이미지 업로드에 실패했습니다."),
     INVALID_TOKEN(401, "INVALID_TOKEN", "유효하지 않은 토큰입니다."),
     EXPIRED_TOKEN(401, "EXPIRED_TOKEN", "만료된 토큰입니다."),
     MALFORMED_TOKEN(401, "MALFORMED_TOKEN", "위/변조된 토큰입니다."),
