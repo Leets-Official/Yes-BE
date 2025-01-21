@@ -6,7 +6,7 @@ import java.util.UUID
 interface InvitationUseCase {
     fun createInvitation(memberId: UUID, qrUrl: String): Invitation
 
-    fun updateQrCode(invitationId: UUID): Invitation
+    fun updateQrCode(invitationId: UUID)
 
     fun findById(id: UUID): Invitation?
 }

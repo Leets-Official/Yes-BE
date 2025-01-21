@@ -17,9 +17,8 @@ class InvitationRepository(
             .toDomain()
     }
 
-    override fun save(invitation: Invitation): Invitation {
-        return invitationJPARepository.save(InvitationEntity.from(invitation))
-            .toDomain()
+    override fun save(invitation: Invitation) {
+        invitationJPARepository.save(InvitationEntity.from(invitation))
     }
 
     override fun findById(id: UUID): Invitation? {

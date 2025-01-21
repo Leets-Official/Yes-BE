@@ -25,7 +25,9 @@ class InvitationFacade(
     ): CreateInvitationResponse {
         val memberId = authDetails.uuid
 
-        val invitation = updateQrCode(generateInvitation(memberId).id)
+        val invitation = generateInvitation(memberId)
+
+        invitationUseCase.updateQrCode(invitation.id)
 
         val owner = generateOwner(memberId, invitation.id, createInvitationRequest)
 
@@ -38,9 +40,6 @@ class InvitationFacade(
 
     private fun generateInvitation(memberId: UUID) =
         invitationUseCase.createInvitation(memberId, null.toString())
-
-    private fun updateQrCode(invitationId: UUID) =
-        invitationUseCase.updateQrCode(invitationId)
 
     private fun generateOwner(memberId: UUID, invitationId: UUID, request: CreateInvitationRequest) =
         guestUseCase.createGuest(
