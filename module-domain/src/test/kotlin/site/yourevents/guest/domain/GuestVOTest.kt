@@ -4,7 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
-import java.util.*
+import java.util.UUID
 
 class GuestVOTest : DescribeSpec({
     lateinit var member: Member
