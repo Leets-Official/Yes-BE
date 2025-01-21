@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
@@ -19,6 +20,8 @@ class InvitationFacade(
     private val invitationThumbnailUseCase: InvitationThumbnailUseCase,
     private val invitationInformationUseCase: InvitationInformationUseCase,
 ) {
+    fun getQrCode(invitationId: UUID) = InvitationQrResponse.from(invitationUseCase.getQrCodeUrl(invitationId))
+
     fun createInvitation(
         createInvitationRequest: CreateInvitationRequest,
         authDetails: AuthDetails
