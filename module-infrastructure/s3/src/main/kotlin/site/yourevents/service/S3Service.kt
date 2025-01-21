@@ -4,8 +4,10 @@ import com.amazonaws.HttpMethod
 import com.amazonaws.services.s3.AmazonS3
 import com.amazonaws.services.s3.model.GeneratePresignedUrlRequest
 import com.amazonaws.services.s3.model.ObjectMetadata
+import org.joda.time.IllegalInstantException
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
+import site.yourevents.s3.exception.FailToUploadQrCodeImageException
 import site.yourevents.s3.port.out.PreSignedUrlPort
 import java.net.URL
 import java.util.Date
@@ -21,13 +23,18 @@ class S3Service(
 
     override fun uploadQrCode(imageName: String, qrCodeBytes: ByteArray): String {
         val inputStream = qrCodeBytes.inputStream()
-        val fileName = createPath(imageName)
         val metadata = ObjectMetadata().apply {
             this.contentType = "image/png"
+            this.contentLength = qrCodeBytes.size.toLong()
         }
 
-        amazonS3.putObject(bucketName, fileName, inputStream, metadata)
-        return amazonS3.getUrl(bucketName, fileName).toString()
+        return try{
+            amazonS3.putObject(bucketName, imageName, inputStream, metadata)
+            amazonS3.getUrl(bucketName, imageName).toString()
+        } catch (e: Exception) {
+            e.printStackTrace()
+            throw FailToUploadQrCodeImageException()
+        }
     }
 
     override fun getPreSignedUrl(imageName: String): String {
