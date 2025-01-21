@@ -30,7 +30,7 @@ class InvitationService(
         )
     }
 
-override fun updateQrCode(invitationId: UUID) {
+override fun updateQrCode(invitationId: UUID) : Invitation {
     val invitation = findById(invitationId) ?: throw InvitationNotFoundException()
 
     val qrCode = qrCodeUseCase.generateQrCode(invitationId)
@@ -39,7 +39,7 @@ override fun updateQrCode(invitationId: UUID) {
 
     invitation.updateQrCode(qrUrl)
 
-    invitationPersistencePort.save(invitation)
+    return invitationPersistencePort.save(invitation)
 }
 
     override fun findById(id: UUID): Invitation? {

@@ -67,7 +67,7 @@ class InvitationFacadeTest : DescribeSpec({
             qrUrl = null.toString()
         )
 
-        every { invitationUseCase.updateQrCode(any()) } returns Unit
+        every { invitationUseCase.updateQrCode(any()) } returns invitation
 
         val guest = Guest(
             id = ownerId,

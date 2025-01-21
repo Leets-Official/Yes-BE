@@ -7,7 +7,7 @@ import java.util.UUID
 interface InvitationPersistencePort {
     fun save(invitationVO: InvitationVO): Invitation
 
-    fun save(invitation: Invitation)
+    fun save(invitation: Invitation): Invitation
 
     fun findById(id: UUID): Invitation?
 }
