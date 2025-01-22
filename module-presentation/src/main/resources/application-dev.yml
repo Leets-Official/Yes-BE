@@ -85,7 +85,7 @@ logging:
 
 aws:
   s3:
-    accessKey: ENC(LLpiZsh2SzFDH66FgY6osWY+uCEreNK1PVyoMfzdOTg=)
+    accessKey: ENC(hCov4JHn3VBk7BS+xUkWZNX0/tw30vpzzxIG/0Lp2cU=)
     secretKey: ENC(LJQwQXZmEK2a6tL3FTB0iRwhQIuseQUbhPKC0FOCfkjotzZ5lRpp73dt22OoCJG71CBFI7BD/4I=)
     bucketName: exerciseburket
     region: ap-northeast-2

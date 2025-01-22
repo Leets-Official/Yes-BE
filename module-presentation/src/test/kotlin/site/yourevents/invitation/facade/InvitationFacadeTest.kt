@@ -4,7 +4,6 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.every
 import io.mockk.mockk
-import io.mockk.verify
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.domain.Invitation
@@ -45,7 +44,6 @@ class InvitationFacadeTest : DescribeSpec({
         )
 
         val createInvitationRequest = CreateInvitationRequest(
-            invitation = CreateInvitationRequest.InvitationRequestDto(qrUrl = "http://example.com"),
             owner = CreateInvitationRequest.GuestRequestDto(nickname = "nickname"),
             invitationThumbnail = CreateInvitationRequest.InvitationThumbnailRequestDto(thumbnailUrl = "http://example.com/"),
             invitationInformation = CreateInvitationRequest.InvitationInformationRequestDto(
@@ -65,9 +63,11 @@ class InvitationFacadeTest : DescribeSpec({
 
         val invitation = Invitation(
             id = invitationId,
-            member = Member(memberId,"6316","nickname","email"),
-            qrUrl = createInvitationRequest.invitation.qrUrl
+            member = Member(memberId, "6316", "nickname", "email"),
+            qrUrl = null.toString()
         )
+
+        every { invitationUseCase.updateQrCode(any()) } returns invitation
 
         val guest = Guest(
             id = ownerId,
@@ -94,19 +94,34 @@ class InvitationFacadeTest : DescribeSpec({
 
         context("createInvitation 메서드가 호출되었을 때") {
             it("초대장을 생성하고 CreateInvitationResponse를 반환해야 한다") {
-                every { invitationUseCase.createInvitation(any(), any()) } returns invitation
+                every {
+                    invitationUseCase.createInvitation(any(), any())
+                } answers {
+                    invitationUseCase.updateQrCode(invitation.id)
+                    invitation
+                }
                 every { guestUseCase.createGuest(any(), any(), any()) } returns guest
                 every { invitationThumbnailUseCase.createInvitationThumbnail(any(), any()) } returns invitationThumbnail
-                every { invitationInformationUseCase.createInvitationInformation(any(), any(), any(), any(), any()) } returns invitationInformation
+                every {
+                    invitationInformationUseCase.createInvitationInformation(
+                        any(),
+                        any(),
+                        any(),
+                        any(),
+                        any()
+                    )
+                } returns invitationInformation
 
                 val response = invitationFacade.createInvitation(createInvitationRequest, authDetails)
 
-                response.shouldBe(CreateInvitationResponse.of(
-                    invitation = invitation,
-                    owner = guest,
-                    invitationThumbnail = invitationThumbnail,
-                    invitationInformation = invitationInformation
-                ))
+                response.shouldBe(
+                    CreateInvitationResponse.of(
+                        invitation = invitation,
+                        owner = guest,
+                        invitationThumbnail = invitationThumbnail,
+                        invitationInformation = invitationInformation
+                    )
+                )
             }
         }
     }

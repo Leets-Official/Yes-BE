@@ -7,14 +7,17 @@ import io.mockk.every
 import io.mockk.mockk
 import io.mockk.verify
 import site.yourevents.invitation.domain.Invitation
+import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
+import site.yourevents.qr.port.`in`.QrCodeUseCase
 import java.util.UUID
 
 class InvitationServiceTest : DescribeSpec({
     lateinit var invitationPersistencePort: InvitationPersistencePort
     lateinit var memberUseCase: MemberUseCase
+    lateinit var qrCodeUseCase: QrCodeUseCase
     lateinit var invitationService: InvitationService
 
     lateinit var invitationId: UUID
@@ -44,7 +47,8 @@ class InvitationServiceTest : DescribeSpec({
     beforeAny {
         invitationPersistencePort = mockk()
         memberUseCase = mockk()
-        invitationService = InvitationService(invitationPersistencePort, memberUseCase)
+        qrCodeUseCase = mockk()
+        invitationService = InvitationService(invitationPersistencePort, memberUseCase, qrCodeUseCase)
     }
 
     describe("InvitationService") {
@@ -57,7 +61,7 @@ class InvitationServiceTest : DescribeSpec({
                     member = member,
                     qrUrl = qrUrl
                 )
-                every { invitationPersistencePort.save(any()) } returns savedInvitation
+                every { invitationPersistencePort.save(any<InvitationVO>()) } returns savedInvitation
 
                 val result = invitationService.createInvitation(memberId, qrUrl)
 
@@ -65,7 +69,7 @@ class InvitationServiceTest : DescribeSpec({
 
                 verify(exactly = 1) { memberUseCase.findById(memberId) }
                 verify(exactly = 1) {
-                    invitationPersistencePort.save(match {
+                    invitationPersistencePort.save(match<InvitationVO> {
                         it.member == member && it.qrUrl == qrUrl
                     })
                 }

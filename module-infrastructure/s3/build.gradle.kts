@@ -17,6 +17,5 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-web")
 
     implementation(platform("io.awspring.cloud:spring-cloud-aws-dependencies:3.0.0"))
-    implementation("io.awspring.cloud:spring-cloud-aws-starter-s3")
     implementation("com.amazonaws:aws-java-sdk-s3:1.12.780")
 }

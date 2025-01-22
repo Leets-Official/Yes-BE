@@ -1,25 +1,33 @@
 package site.yourevents.invitation.api
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal
-import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestBody
+import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.facade.InvitationFacade
 import site.yourevents.principal.AuthDetails
 import site.yourevents.response.ApiResponse
 import site.yourevents.type.SuccessCode
+import java.util.UUID
 
 @RestController
 class InvitationController(
-    private val invitationFacade: InvitationFacade
+    private val invitationFacade: InvitationFacade,
 ) : InvitationApi {
 
     override fun createInvitation(
         @RequestBody createInvitationRequest: CreateInvitationRequest,
-        @AuthenticationPrincipal authDetails: AuthDetails
+        @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<CreateInvitationResponse> = ApiResponse.success(
         SuccessCode.REQUEST_OK, invitationFacade.createInvitation(createInvitationRequest, authDetails)
+    )
+
+    override fun getQrCode(
+        @RequestParam invitationId: UUID,
+    ): ApiResponse<InvitationQrResponse> = ApiResponse.success(
+        SuccessCode.REQUEST_OK, invitationFacade.getQrCode(invitationId)
     )
 }

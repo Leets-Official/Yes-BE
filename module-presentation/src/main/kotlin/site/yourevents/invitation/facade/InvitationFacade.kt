@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
@@ -19,13 +20,15 @@ class InvitationFacade(
     private val invitationThumbnailUseCase: InvitationThumbnailUseCase,
     private val invitationInformationUseCase: InvitationInformationUseCase,
 ) {
+    fun getQrCode(invitationId: UUID) = InvitationQrResponse.from(invitationUseCase.getQrCodeUrl(invitationId))
+
     fun createInvitation(
         createInvitationRequest: CreateInvitationRequest,
         authDetails: AuthDetails
     ): CreateInvitationResponse {
         val memberId = authDetails.uuid
 
-        val invitation = generateInvitation(memberId, createInvitationRequest)
+        val invitation = invitationUseCase.updateQrCode(generateInvitation(memberId).id)
 
         val owner = generateOwner(memberId, invitation.id, createInvitationRequest)
 
@@ -36,8 +39,8 @@ class InvitationFacade(
         return CreateInvitationResponse.of(invitation, owner, invitationThumbnail, invitationInformation)
     }
 
-    private fun generateInvitation(memberId: UUID, request: CreateInvitationRequest) =
-        invitationUseCase.createInvitation(memberId,request.invitation.qrUrl)
+    private fun generateInvitation(memberId: UUID) =
+        invitationUseCase.createInvitation(memberId, null.toString())
 
     private fun generateOwner(memberId: UUID, invitationId: UUID, request: CreateInvitationRequest) =
         guestUseCase.createGuest(
