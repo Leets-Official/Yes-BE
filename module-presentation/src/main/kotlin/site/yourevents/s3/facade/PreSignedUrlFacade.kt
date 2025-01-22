@@ -15,6 +15,6 @@ class PreSignedUrlFacade(
         preSignedUrlRequest: PreSignedUrlRequest
     ): PreSignedUrlResponse {
         val preSignedUrl = preSignedUrlUseCase.getPreSignedUrl(preSignedUrlRequest.imageName)
-        return PreSignedUrlResponse.of(preSignedUrl)
+        return PreSignedUrlResponse.from(preSignedUrl)
     }
 }
