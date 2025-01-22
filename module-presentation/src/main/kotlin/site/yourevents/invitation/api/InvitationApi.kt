@@ -18,11 +18,11 @@ interface InvitationApi {
     @PostMapping("/invitation")
     fun createInvitation(
         @RequestBody createInvitationRequest: CreateInvitationRequest,
-        @AuthenticationPrincipal authDetails: AuthDetails
+        @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<CreateInvitationResponse>
 
     @Operation(summary = "초대장 QR 코드 조회")
-    @GetMapping("/invitation/QR")
+    @GetMapping("/invitation/qr")
     fun getQrCode(
         @RequestParam invitationId: UUID,
     ): ApiResponse<InvitationQrResponse>

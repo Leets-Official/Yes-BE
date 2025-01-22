@@ -23,31 +23,36 @@ class InvitationService(
 
 
         return invitationPersistencePort.save(
-            InvitationVO.from(InvitationVO(
-                member = member,
-                qrUrl = qrUrl
-            ))
+            InvitationVO.from(
+                InvitationVO(
+                    member = member,
+                    qrUrl = qrUrl
+                )
+            )
         )
     }
 
-override fun updateQrCode(invitationId: UUID) : Invitation {
-    val invitation = findById(invitationId) ?: throw InvitationNotFoundException()
+    override fun updateQrCode(invitationId: UUID): Invitation {
+        val invitation = findById(invitationId)
+            ?: throw InvitationNotFoundException()
 
-    val qrCode = qrCodeUseCase.generateQrCode(invitationId)
+        val qrCode = qrCodeUseCase.generateQrCode(invitationId)
 
-    val qrUrl = qrCodeUseCase.uploadQrCode(invitationId.toString(), qrCode)
+        val qrUrl = qrCodeUseCase.uploadQrCode(invitationId.toString(), qrCode)
 
-    invitation.updateQrCode(qrUrl)
+        invitation.updateQrCode(qrUrl)
 
-    return invitationPersistencePort.save(invitation)
-}
+        return invitationPersistencePort.save(invitation)
+    }
 
     override fun findById(id: UUID): Invitation? {
         return invitationPersistencePort.findById(id)
     }
 
     override fun getQrCodeUrl(id: UUID): String {
-        val invitation = findById(id) ?: throw InvitationNotFoundException()
+        val invitation = findById(id)
+            ?: throw InvitationNotFoundException()
+
         return invitation.qrUrl
     }
 }

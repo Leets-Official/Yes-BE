@@ -4,10 +4,8 @@ data class InvitationQrResponse(
     val qrUrl: String,
 ) {
     companion object {
-        fun from(qrUrl: String): InvitationQrResponse {
-            return InvitationQrResponse(
-                qrUrl = qrUrl
-            )
-        }
+        fun from(qrUrl: String): InvitationQrResponse = InvitationQrResponse(
+            qrUrl = qrUrl
+        )
     }
 }
