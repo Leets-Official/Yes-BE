@@ -7,6 +7,8 @@ class Invitation(
     val id: UUID,
     val member: Member,
     var qrUrl: String,
+    var deleted: Boolean
+
 ) {
     fun updateQrCode(qrUrl: String) {
         this.qrUrl = qrUrl

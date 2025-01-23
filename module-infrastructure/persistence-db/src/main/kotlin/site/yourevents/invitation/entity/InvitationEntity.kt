@@ -31,7 +31,8 @@ class InvitationEntity(
     fun toDomain(): Invitation = Invitation(
         id = id!!,
         member = member.toDomain(),
-        qrUrl = qrUrl
+        qrUrl = qrUrl,
+        deleted = deleted
     )
 
     companion object {
@@ -40,11 +41,13 @@ class InvitationEntity(
             //무슨 일이 있어도 건들면 안됩니다. 얘가 있어야 다른 엔티티에서 id를 받아올 수 있습니다. 얘가 없으면 하이버네이트에서 새로운 null 값의 엔티티라고 생각합니다.
             member = MemberEntity.from(invitation.member),
             qrUrl = invitation.qrUrl,
+            deleted = invitation.deleted
         )
 
         fun from(invitationVO: InvitationVO): InvitationEntity = InvitationEntity(
             member = MemberEntity.from(invitationVO.member),
-            qrUrl = invitationVO.qrUrl
+            qrUrl = invitationVO.qrUrl,
+            deleted = invitationVO.deleted
         )
     }
 }
