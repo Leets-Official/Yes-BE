@@ -5,7 +5,7 @@ import site.yourevents.member.domain.Member
 import java.util.UUID
 
 interface InvitationUseCase {
-    fun getSentInvitations(member: Member): List<Invitation>
+    fun findByMember(member: Member): List<Invitation>
 
     fun countByMember(member: Member): Int
 

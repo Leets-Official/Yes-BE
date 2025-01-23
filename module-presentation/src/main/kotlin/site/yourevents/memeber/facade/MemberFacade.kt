@@ -47,7 +47,7 @@ class MemberFacade(
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
-        val sentInvitations = invitationUseCase.getSentInvitations(member)
+        val sentInvitations = invitationUseCase.findByMember(member)
 
         return sentInvitations.stream()
             .map { invitation -> createMyPageInvitationInfoResponse(invitation, member) }
