@@ -16,7 +16,7 @@ import java.util.*
 @Transactional
 class InvitationThumbnailService(
     private val invitationThumbnailPersistencePort: InvitationThumbnailPersistencePort,
-    private val invitationUseCase: InvitationUseCase
+    private val invitationUseCase: InvitationUseCase,
 ) : InvitationThumbnailUseCase {
     override fun createInvitationThumbnail(
         invitationId: UUID,
