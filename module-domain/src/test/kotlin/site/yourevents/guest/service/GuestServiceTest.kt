@@ -99,7 +99,9 @@ class GuestServiceTest : DescribeSpec({
                     member = member,
                     invitation = invitation,
                     nickname = guestNickname,
-                    attendance = attendance
+                    attendance = attendance,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 guestService.respondInvitation(
@@ -113,7 +115,7 @@ class GuestServiceTest : DescribeSpec({
                 verify(exactly = 1) { memberUseCase.findById(memberId) }
                 verify(exactly = 1) { invitationUseCase.findById(invitationId) }
                 verify(exactly = 1) {
-                    guestPersistencePort.save(match { guestVO: GuestVO ->
+                    guestPersistencePort.save(match<GuestVO> { guestVO ->
                         guestVO.member == member &&
                                 guestVO.invitation == invitation &&
                                 guestVO.nickname == guestNickname &&
@@ -130,7 +132,9 @@ class GuestServiceTest : DescribeSpec({
                     member = member,
                     invitation = invitation,
                     nickname = guestNickname,
-                    attendance = true
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 every { guestPersistencePort.findById(any()) } returns expectedGuest
