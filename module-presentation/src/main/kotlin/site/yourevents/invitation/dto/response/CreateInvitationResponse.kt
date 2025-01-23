@@ -11,25 +11,26 @@ data class CreateInvitationResponse(
     val invitation: InvitationResponseDto,
     val owner: OwnerResponseDto,
     val invitationThumbnail: InvitationThumbnailResponseDto,
-    val invitationInformation: InvitationInformationResponseDto
+    val invitationInformation: InvitationInformationResponseDto,
 ) {
     data class InvitationResponseDto(
         val invitationId: UUID,
         val memberId: UUID,
-        val qrUrl: String
+        val qrUrl: String,
+        val deleted: Boolean,
     )
 
     data class OwnerResponseDto(
         val ownerId: UUID,
         val invitationId: UUID,
         val ownerNickname: String,
-        val attendance: Boolean = true
+        val attendance: Boolean = true,
     )
 
     data class InvitationThumbnailResponseDto(
         val thumbnailId: UUID,
         val invitationId: UUID,
-        val thumbnailUrl: String
+        val thumbnailUrl: String,
     )
 
     data class InvitationInformationResponseDto(
@@ -38,19 +39,22 @@ data class CreateInvitationResponse(
         val title: String,
         val schedule: LocalDateTime,
         val location: String,
-        val remark: String
+        val remark: String,
     )
-    companion object{
-        fun of(invitation: Invitation,
-               owner: Guest,
-               invitationThumbnail: InvitationThumbnail,
-               invitationInformation: InvitationInformation
-               ): CreateInvitationResponse {
+
+    companion object {
+        fun of(
+            invitation: Invitation,
+            owner: Guest,
+            invitationThumbnail: InvitationThumbnail,
+            invitationInformation: InvitationInformation,
+        ): CreateInvitationResponse {
 
             val invitationResponse = InvitationResponseDto(
                 invitationId = invitation.id,
                 memberId = invitation.member.getId(),
-                qrUrl = invitation.qrUrl
+                qrUrl = invitation.qrUrl,
+                deleted = invitation.deleted
             )
 
             val ownerResponse = OwnerResponseDto(
