@@ -26,7 +26,8 @@ class InvitationInformationVOTest : DescribeSpec({
         invitation = Invitation(
             id = UUID.randomUUID(),
             member = member,
-            qrUrl = "http://example.com"
+            qrUrl = "http://example.com",
+            deleted = false
         )
 
         title = "title"

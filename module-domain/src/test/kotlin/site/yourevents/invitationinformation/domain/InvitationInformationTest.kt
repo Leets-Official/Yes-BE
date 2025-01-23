@@ -21,7 +21,8 @@ class InvitationInformationTest : DescribeSpec({
                 val invitation = Invitation(
                     id = UUID.randomUUID(),
                     member = member,
-                    qrUrl = "http://example.com"
+                    qrUrl = "http://example.com",
+                    deleted = false
                 )
 
                 val infoId = UUID.randomUUID()

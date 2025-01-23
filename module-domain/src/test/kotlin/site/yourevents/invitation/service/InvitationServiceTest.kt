@@ -27,6 +27,7 @@ class InvitationServiceTest : DescribeSpec({
     lateinit var email: String
     lateinit var qrUrl: String
     lateinit var member: Member
+    var deleted = false
 
     beforeTest {
         invitationId = UUID.randomUUID()
@@ -35,6 +36,7 @@ class InvitationServiceTest : DescribeSpec({
         nickname = "seunghyun"
         email = "seunghyun@naver.com"
         qrUrl = "http://example.com"
+        deleted = false
 
         member = Member(
             id = memberId,
@@ -59,7 +61,8 @@ class InvitationServiceTest : DescribeSpec({
                 val savedInvitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
                 every { invitationPersistencePort.save(any<InvitationVO>()) } returns savedInvitation
 
@@ -82,7 +85,8 @@ class InvitationServiceTest : DescribeSpec({
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
 
                 every { invitationPersistencePort.findById(invitationId) } returns invitation

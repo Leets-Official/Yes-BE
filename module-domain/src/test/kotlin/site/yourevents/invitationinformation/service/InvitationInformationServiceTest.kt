@@ -43,7 +43,8 @@ class InvitationInformationServiceTest : DescribeSpec({
         invitation = Invitation(
             id = invitationId,
             member = member,
-            qrUrl = "http://example.com"
+            qrUrl = "http://example.com",
+            deleted = false
         )
     }
 
