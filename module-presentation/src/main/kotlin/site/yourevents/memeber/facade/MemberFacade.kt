@@ -61,4 +61,29 @@ class MemberFacade(
             }
             .collect(Collectors.toList())
     }
+
+    fun getReceivedInvitations(authDetails: AuthDetails): List<MyPageInvitationInfoResponse> {
+        val memberId = authDetails.uuid
+
+        val member = memberUseCase.findById(memberId)
+            ?: throw MemberNotFountException()
+
+        val guestsOfReceivedInvitation = guestUseCase.getGuestsOfReceivedInvitation(member)
+
+        return guestsOfReceivedInvitation.stream()
+            .map { guest ->
+                val invitation = guest.invitation
+
+                val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
+                    ?: throw InvitationInformationNotFoundException()
+
+                val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
+                    ?: throw InvitationThumbnailNotFoundException()
+
+                val isSender = MemberVO.from(invitation.member) == MemberVO.from(member)
+
+                MyPageInvitationInfoResponse.of(isSender, InvitationInfoResponse.of(invitation, invitationInfo, invitationThumbnail))
+            }
+            .collect(Collectors.toList())
+    }
 }
