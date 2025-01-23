@@ -92,6 +92,10 @@ class InvitationFacadeTest : DescribeSpec({
             remark = createInvitationRequest.invitationInformation.remark
         )
 
+        afterTest {
+            clearMocks(invitationUseCase, guestUseCase, invitationThumbnailUseCase, invitationInformationUseCase)
+        }
+
         context("createInvitation 메서드가 호출되었을 때") {
             it("초대장을 생성하고 CreateInvitationResponse를 반환해야 한다") {
                 every {
