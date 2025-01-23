@@ -12,5 +12,7 @@ interface InvitationPersistencePort {
 
     fun findById(id: UUID): Invitation?
 
+    fun getSentInvitations(member: Member): List<Invitation>
+
     fun getSentInvitationCount(member: Member): Int
 }

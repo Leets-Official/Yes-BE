@@ -13,4 +13,6 @@ interface InvitationJPARepository : JpaRepository<InvitationEntity, UUID> {
                 " WHERE i.member = :member"
     )
     fun getSentInvitationCount(member: MemberEntity): Int
+
+    fun findByMember(member: MemberEntity): List<InvitationEntity>
 }

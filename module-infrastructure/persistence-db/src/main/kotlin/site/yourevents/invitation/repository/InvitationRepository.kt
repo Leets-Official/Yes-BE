@@ -29,6 +29,14 @@ class InvitationRepository(
             .getOrNull()?.toDomain()
     }
 
+    override fun getSentInvitations(member: Member): List<Invitation> {
+        return MemberEntity.from(member)
+            .let { memberEntity ->
+                invitationJPARepository.findByMember(memberEntity)
+                    .map { it.toDomain() }
+            }
+    }
+
     override fun getSentInvitationCount(member: Member): Int {
         return MemberEntity.from(member)
             .let { memberEntity ->

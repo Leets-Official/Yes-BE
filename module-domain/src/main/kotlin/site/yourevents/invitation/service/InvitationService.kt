@@ -18,6 +18,8 @@ class InvitationService(
     private val memberUseCase: MemberUseCase,
     private val qrCodeUseCase: QrCodeUseCase,
 ) : InvitationUseCase {
+    override fun getSentInvitations(member: Member) = invitationPersistencePort.getSentInvitations(member)
+
     override fun getSentInvitationCount(member: Member) = invitationPersistencePort.getSentInvitationCount(member)
 
     override fun createInvitation(memberId: UUID, qrUrl: String): Invitation {
