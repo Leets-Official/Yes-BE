@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
+import java.time.LocalDateTime
 import java.util.UUID
 
 class GuestTest : DescribeSpec({
@@ -19,7 +20,9 @@ class GuestTest : DescribeSpec({
                     id = memberId,
                     socialId = socialId,
                     nickname = nicknameMember,
-                    email = email
+                    email = email,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 val invitationId = UUID.randomUUID()
@@ -28,7 +31,9 @@ class GuestTest : DescribeSpec({
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 val guestId = UUID.randomUUID()
@@ -40,7 +45,9 @@ class GuestTest : DescribeSpec({
                     member = member,
                     invitation = invitation,
                     nickname = guestNickname,
-                    attendance = attendance
+                    attendance = attendance,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 guest.apply {

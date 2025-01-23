@@ -2,9 +2,9 @@ package site.yourevents.invitation.domain
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Test
 import site.yourevents.member.domain.Member
-import java.util.*
+import java.time.LocalDateTime
+import java.util.UUID
 
 class InvitationTest : DescribeSpec({
     describe("Invitation 도메인") {
@@ -19,7 +19,9 @@ class InvitationTest : DescribeSpec({
                     id = memberId,
                     socialId = socialId,
                     nickname = nickname,
-                    email = email
+                    email = email,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 val invitationId = UUID.randomUUID()
@@ -27,7 +29,9 @@ class InvitationTest : DescribeSpec({
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 invitation.apply {

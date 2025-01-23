@@ -5,7 +5,8 @@ import io.kotest.matchers.shouldBe
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
 import site.yourevents.member.domain.Member
-import java.util.*
+import java.time.LocalDateTime
+import java.util.UUID
 
 class InvitationThumbnailVOTest : DescribeSpec({
     lateinit var member: Member
@@ -18,12 +19,14 @@ class InvitationThumbnailVOTest : DescribeSpec({
             id = memberId,
             socialId = "6316",
             nickname = "seunghyun",
-            email = "seunghyun@naver.com"
+            email = "seunghyun@naver.com",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         val invitationId = UUID.randomUUID()
         val qrUrl = "http://example.com"
-        invitation = Invitation(invitationId, member, qrUrl)
+        invitation = Invitation(invitationId, member, qrUrl, LocalDateTime.now(), LocalDateTime.now())
 
         url = "http://example.com/"
     }

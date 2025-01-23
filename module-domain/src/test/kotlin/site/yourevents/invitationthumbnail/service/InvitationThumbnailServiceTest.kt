@@ -9,7 +9,8 @@ import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.port.out.InvitationThumbnailPersistencePort
 import site.yourevents.invitationthumnail.service.InvitationThumbnailService
 import site.yourevents.member.domain.Member
-import java.util.*
+import java.time.LocalDateTime
+import java.util.UUID
 
 class InvitationThumbnailServiceTest : DescribeSpec({
     lateinit var invitationThumbnailPersistencePort: InvitationThumbnailPersistencePort
@@ -30,13 +31,17 @@ class InvitationThumbnailServiceTest : DescribeSpec({
             id = memberId,
             socialId = "6316",
             nickname = "seunghyun",
-            email = "seunghyun@naver.com"
+            email = "seunghyun@naver.com",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         invitation = Invitation(
             id = invitationId,
             member = member,
-            qrUrl = "http://example.com"
+            qrUrl = "http://example.com",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
     }
 
@@ -59,7 +64,9 @@ class InvitationThumbnailServiceTest : DescribeSpec({
                 val savedThumbnail = InvitationThumbnail(
                     id = thumbnailId,
                     invitation = invitation,
-                    url = url
+                    url = url,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
                 every {
                     invitationThumbnailPersistencePort.save(match {

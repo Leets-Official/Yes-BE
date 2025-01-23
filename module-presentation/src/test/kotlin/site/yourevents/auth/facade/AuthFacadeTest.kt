@@ -11,6 +11,7 @@ import site.yourevents.auth.port.`in`.usecase.TokenUseCase
 import site.yourevents.auth.vo.KakaoProfile
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
+import java.time.LocalDateTime
 import java.util.UUID
 
 class AuthFacadeTest : DescribeSpec({
@@ -44,6 +45,8 @@ class AuthFacadeTest : DescribeSpec({
                     socialId,
                     nickname,
                     email,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
                 val expectedResponse = LoginResponse(
                     id,

@@ -9,6 +9,7 @@ import io.mockk.verify
 import site.yourevents.auth.vo.KakaoProfile
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.out.persistence.MemberPersistencePort
+import java.time.LocalDateTime
 import java.util.UUID
 
 class MemberServiceTest : DescribeSpec({
@@ -44,7 +45,9 @@ class MemberServiceTest : DescribeSpec({
                     id = id,
                     socialId = kakaoProfile.socialId,
                     nickname = kakaoProfile.nickname,
-                    email = kakaoProfile.email
+                    email = kakaoProfile.email,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 every { memberPersistencePort.save(any()) } returns mockMember
@@ -67,7 +70,9 @@ class MemberServiceTest : DescribeSpec({
                     id = id,
                     socialId = socialId,
                     nickname = nickname,
-                    email = email
+                    email = email,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 every { memberPersistencePort.findBySocialId(socialId) } returns mockMember

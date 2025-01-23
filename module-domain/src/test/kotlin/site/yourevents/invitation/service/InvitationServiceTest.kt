@@ -12,6 +12,7 @@ import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
 import site.yourevents.qr.port.`in`.QrCodeUseCase
+import java.time.LocalDateTime
 import java.util.UUID
 
 class InvitationServiceTest : DescribeSpec({
@@ -40,7 +41,9 @@ class InvitationServiceTest : DescribeSpec({
             id = memberId,
             socialId = socialId,
             nickname = nickname,
-            email = email
+            email = email,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
     }
 
@@ -59,7 +62,9 @@ class InvitationServiceTest : DescribeSpec({
                 val savedInvitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
                 every { invitationPersistencePort.save(any<InvitationVO>()) } returns savedInvitation
 
@@ -82,7 +87,9 @@ class InvitationServiceTest : DescribeSpec({
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 every { invitationPersistencePort.findById(invitationId) } returns invitation
