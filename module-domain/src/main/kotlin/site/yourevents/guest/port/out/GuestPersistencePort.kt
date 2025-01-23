@@ -13,6 +13,4 @@ interface GuestPersistencePort {
     fun findById(guestId: UUID): Guest?
 
     fun getReceivedInvitationCount(member: Member): Int
-
-    fun getSentInvitationCount(member: Member): Int
 }

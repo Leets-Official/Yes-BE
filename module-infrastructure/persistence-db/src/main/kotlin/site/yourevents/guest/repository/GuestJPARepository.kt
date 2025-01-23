@@ -14,12 +14,4 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
                 "AND g.invitation.member <> :member"
     )
     fun getReceivedInvitationCount(member: MemberEntity): Int
-
-    @Query(
-        "SELECT COUNT(g) " +
-                "FROM guest g " +
-                "WHERE g.member = :member " +
-                "AND g.invitation.member = :member"
-    )
-    fun getSentInvitationCount(member: MemberEntity): Int
 }

@@ -34,11 +34,4 @@ class GuestRepository(
                 guestJPARepository.getReceivedInvitationCount(memberEntity)
             }
     }
-
-    override fun getSentInvitationCount(member: Member): Int {
-        return MemberEntity.from(member)
-            .let { memberEntity ->
-                guestJPARepository.getSentInvitationCount(memberEntity)
-            }
-    }
 }

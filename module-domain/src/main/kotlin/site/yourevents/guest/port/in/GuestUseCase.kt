@@ -9,10 +9,6 @@ interface GuestUseCase {
         member: Member,
     ): Int
 
-    fun getSentInvitationCount(
-        member: Member,
-    ): Int
-
     fun createGuest(
         memberId: UUID,
         invitationId: UUID,

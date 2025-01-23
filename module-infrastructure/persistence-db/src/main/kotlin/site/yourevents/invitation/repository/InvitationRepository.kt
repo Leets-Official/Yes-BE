@@ -5,6 +5,8 @@ import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.invitation.port.out.InvitationPersistencePort
+import site.yourevents.member.domain.Member
+import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
 import kotlin.jvm.optionals.getOrNull
 
@@ -25,5 +27,12 @@ class InvitationRepository(
     override fun findById(id: UUID): Invitation? {
         return invitationJPARepository.findById(id)
             .getOrNull()?.toDomain()
+    }
+
+    override fun getSentInvitationCount(member: Member): Int {
+        return MemberEntity.from(member)
+            .let { memberEntity ->
+                invitationJPARepository.getSentInvitationCount(memberEntity)
+            }
     }
 }

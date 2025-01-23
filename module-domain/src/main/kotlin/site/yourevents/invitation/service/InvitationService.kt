@@ -6,6 +6,7 @@ import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitation.port.out.InvitationPersistencePort
+import site.yourevents.member.domain.Member
 import site.yourevents.member.exception.MemberNotFountException
 import site.yourevents.member.port.`in`.MemberUseCase
 import site.yourevents.qr.port.`in`.QrCodeUseCase
@@ -17,6 +18,8 @@ class InvitationService(
     private val memberUseCase: MemberUseCase,
     private val qrCodeUseCase: QrCodeUseCase,
 ) : InvitationUseCase {
+    override fun getSentInvitationCount(member: Member) = invitationPersistencePort.getSentInvitationCount(member)
+
     override fun createInvitation(memberId: UUID, qrUrl: String): Invitation {
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()

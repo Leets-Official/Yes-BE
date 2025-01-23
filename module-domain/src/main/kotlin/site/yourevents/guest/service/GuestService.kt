@@ -21,17 +21,7 @@ class GuestService(
     private val memberUseCase: MemberUseCase,
     private val invitationUseCase: InvitationUseCase,
 ) : GuestUseCase {
-    override fun getReceivedInvitationCount(
-        member: Member,
-    ): Int {
-        return guestPersistencePort.getReceivedInvitationCount(member)
-    }
-
-    override fun getSentInvitationCount(
-        member: Member,
-    ): Int {
-        return guestPersistencePort.getSentInvitationCount(member)
-    }
+    override fun getReceivedInvitationCount(member: Member) = guestPersistencePort.getReceivedInvitationCount(member)
 
     override fun createGuest(
         memberId: UUID,
