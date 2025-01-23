@@ -5,6 +5,10 @@ import site.yourevents.member.domain.Member
 import java.util.UUID
 
 interface GuestUseCase {
+    fun getGuestsOfReceivedInvitation(
+        member: Member,
+    ): List<Guest>
+
     fun getReceivedInvitationCount(
         member: Member,
     ): Int
