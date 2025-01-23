@@ -13,4 +13,8 @@ class Invitation(
     fun updateQrCode(qrUrl: String) {
         this.qrUrl = qrUrl
     }
+
+    fun updateDeleted(deleted: Boolean){
+        this.deleted = deleted
+    }
 }

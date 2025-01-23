@@ -10,4 +10,6 @@ interface InvitationPersistencePort {
     fun save(invitation: Invitation): Invitation
 
     fun findById(id: UUID): Invitation?
+
+    fun delete(invitation: Invitation)
 }
