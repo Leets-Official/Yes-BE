@@ -61,7 +61,7 @@ class InvitationService(
         val invitation = findById(invitationId)
             ?: throw InvitationNotFoundException()
 
-        invitation.updateDeleted(deleted)
+        invitation.updateDeleted()
         invitationPersistencePort.delete(invitation)
     }
 }
