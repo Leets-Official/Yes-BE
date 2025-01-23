@@ -3,6 +3,7 @@ package site.yourevents.memeber.facade
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.dto.response.MyPageInvitationInfoResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
@@ -10,6 +11,7 @@ import site.yourevents.invitationinformation.exception.InvitationInformationNotF
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.exception.InvitationThumbnailNotFoundException
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
+import site.yourevents.member.domain.Member
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.exception.MemberNotFountException
 import site.yourevents.member.port.`in`.MemberUseCase
@@ -48,17 +50,7 @@ class MemberFacade(
         val sentInvitations = invitationUseCase.getSentInvitations(member)
 
         return sentInvitations.stream()
-            .map { invitation ->
-                val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
-                    ?: throw InvitationInformationNotFoundException()
-
-                val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
-                    ?: throw InvitationThumbnailNotFoundException()
-
-                val isSender = MemberVO.from(invitation.member) == MemberVO.from(member)
-
-                MyPageInvitationInfoResponse.of(isSender, InvitationInfoResponse.of(invitation, invitationInfo, invitationThumbnail))
-            }
+            .map { invitation -> createMyPageInvitationInfoResponse(invitation, member) }
             .collect(Collectors.toList())
     }
 
@@ -71,19 +63,19 @@ class MemberFacade(
         val guestsOfReceivedInvitation = guestUseCase.getGuestsOfReceivedInvitation(member)
 
         return guestsOfReceivedInvitation.stream()
-            .map { guest ->
-                val invitation = guest.invitation
-
-                val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
-                    ?: throw InvitationInformationNotFoundException()
-
-                val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
-                    ?: throw InvitationThumbnailNotFoundException()
-
-                val isSender = MemberVO.from(invitation.member) == MemberVO.from(member)
-
-                MyPageInvitationInfoResponse.of(isSender, InvitationInfoResponse.of(invitation, invitationInfo, invitationThumbnail))
-            }
+            .map { guest -> createMyPageInvitationInfoResponse(guest.invitation, member) }
             .collect(Collectors.toList())
+    }
+
+    private fun createMyPageInvitationInfoResponse(invitation: Invitation, member: Member): MyPageInvitationInfoResponse {
+        val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
+            ?: throw InvitationInformationNotFoundException()
+
+        val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
+            ?: throw InvitationThumbnailNotFoundException()
+
+        val isSender = MemberVO.from(invitation.member) == MemberVO.from(member)
+
+        return MyPageInvitationInfoResponse.of(isSender, InvitationInfoResponse.of(invitation, invitationInfo, invitationThumbnail))
     }
 }
