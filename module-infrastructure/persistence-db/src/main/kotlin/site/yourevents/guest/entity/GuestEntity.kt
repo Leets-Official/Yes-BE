@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import site.yourevents.common.entity.BaseTimeEntity
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
 import site.yourevents.invitation.entity.InvitationEntity
@@ -32,14 +33,16 @@ class GuestEntity(
 
     @Column(nullable = false)
     val attendance: Boolean,
-) {
+) : BaseTimeEntity() {
     fun toDomain(): Guest =
         Guest(
             id = id!!,
             member = member.toDomain(),
             invitation = invitation.toDomain(),
             nickname = nickname,
-            attendance = attendance
+            attendance = attendance,
+            createdAt = createdAt,
+            modifiedAt = modifiedAt
         )
 
     companion object {

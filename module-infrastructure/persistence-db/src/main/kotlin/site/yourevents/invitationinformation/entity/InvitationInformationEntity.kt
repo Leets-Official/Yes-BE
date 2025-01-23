@@ -8,6 +8,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import site.yourevents.common.entity.BaseTimeEntity
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.invitationinformation.domain.InvitationInformation
 import site.yourevents.invitationinformation.domain.InvitationInformationVO
@@ -35,7 +36,7 @@ class InvitationInformationEntity(
 
     @Column
     var remark: String,
-) {
+) : BaseTimeEntity() {
     fun toDomain(): InvitationInformation =
         InvitationInformation(
             id = id!!,
@@ -43,7 +44,9 @@ class InvitationInformationEntity(
             title = title,
             schedule = schedule,
             location = location,
-            remark = remark
+            remark = remark,
+            createdAt = createdAt,
+            modifiedAt = modifiedAt
         )
 
     companion object {

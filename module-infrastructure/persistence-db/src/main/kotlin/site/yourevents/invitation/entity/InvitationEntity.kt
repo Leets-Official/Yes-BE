@@ -7,6 +7,7 @@ import jakarta.persistence.GenerationType
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.ManyToOne
+import site.yourevents.common.entity.BaseTimeEntity
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.member.entity.MemberEntity
@@ -24,11 +25,13 @@ class InvitationEntity(
 
     @Column
     val qrUrl: String,
-) {
+) : BaseTimeEntity() {
     fun toDomain(): Invitation = Invitation(
         id = id!!,
         member = member.toDomain(),
-        qrUrl = qrUrl
+        qrUrl = qrUrl,
+        createdAt = createdAt,
+        modifiedAt = modifiedAt
     )
 
     companion object {
@@ -38,6 +41,7 @@ class InvitationEntity(
             member = MemberEntity.from(invitation.member),
             qrUrl = invitation.qrUrl
         )
+
         fun from(invitationVO: InvitationVO): InvitationEntity = InvitationEntity(
             member = MemberEntity.from(invitationVO.member),
             qrUrl = invitationVO.qrUrl
