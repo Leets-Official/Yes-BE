@@ -20,4 +20,10 @@ interface MemberApi {
     fun sentInvitations(
         @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<List<MyPageInvitationInfoResponse>>
+
+    @Operation(summary = "받은 초대장 목록 조회")
+    @GetMapping("mypage/invitation/received")
+    fun receivedInvitations(
+        @AuthenticationPrincipal authDetails: AuthDetails,
+    ): ApiResponse<List<MyPageInvitationInfoResponse>>
 }

@@ -17,4 +17,7 @@ class MemberController(
 
     override fun sentInvitations(authDetails: AuthDetails): ApiResponse<List<MyPageInvitationInfoResponse>> =
         ApiResponse.success(SuccessCode.REQUEST_OK, memberFacade.getSentInvitations(authDetails))
+
+    override fun receivedInvitations(authDetails: AuthDetails): ApiResponse<List<MyPageInvitationInfoResponse>> =
+        ApiResponse.success(SuccessCode.REQUEST_OK, memberFacade.getReceivedInvitations(authDetails))
 }
