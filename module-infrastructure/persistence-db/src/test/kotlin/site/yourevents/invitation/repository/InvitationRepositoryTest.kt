@@ -76,5 +76,19 @@ class InvitationRepositoryTest(
                 invitation shouldBe null
             }
         }
+
+        context("delete() 메서드에서") {
+            it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
+                val invitationBeforeDelete = invitationRepository.findById(invitationId)
+                invitationBeforeDelete shouldNotBe null
+                invitationBeforeDelete!!.deleted shouldBe false
+
+                invitationRepository.delete(invitationBeforeDelete)
+
+                val invitationAfterDelete = invitationRepository.findById(invitationId)
+                invitationAfterDelete shouldNotBe null
+                invitationAfterDelete!!.deleted shouldBe true
+            }
+        }
     }
 })
