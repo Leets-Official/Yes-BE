@@ -9,6 +9,7 @@ class Invitation(
     val id: UUID,
     val member: Member,
     var qrUrl: String,
+    var deleted: Boolean,
     createdAt: LocalDateTime?,
     modifiedAt: LocalDateTime?,
 ) : BaseTime(createdAt, modifiedAt) {
