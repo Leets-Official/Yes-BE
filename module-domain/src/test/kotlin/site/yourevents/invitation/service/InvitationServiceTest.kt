@@ -1,13 +1,12 @@
 package site.yourevents.invitation.service
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.confirmVerified
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.domain.InvitationVO
+import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
@@ -109,6 +108,29 @@ class InvitationServiceTest : DescribeSpec({
                 verify(exactly = 1) {
                     invitationPersistencePort.findById(invitationId)
                 }
+                confirmVerified(invitationPersistencePort)
+            }
+        }
+
+        context("deleteInvitation() 메서드를 통해서") {
+            it("존재하는 Invitation을 삭제해야 한다") {
+                val invitation = Invitation(
+                    id = invitationId,
+                    member = member,
+                    qrUrl = qrUrl,
+                    deleted = false
+                )
+
+                every { invitationPersistencePort.findById(invitationId) } returns invitation
+                every { invitationPersistencePort.delete(invitation) } just Runs
+
+                invitationService.deleteInvitation(invitationId, true)
+
+                invitation.deleted shouldBe true
+
+                verify(exactly = 1) { invitationPersistencePort.findById(invitationId) }
+                verify(exactly = 1) { invitationPersistencePort.delete(invitation) }
+
                 confirmVerified(invitationPersistencePort)
             }
         }
