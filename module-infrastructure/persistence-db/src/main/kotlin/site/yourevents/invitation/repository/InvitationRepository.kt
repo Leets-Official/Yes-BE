@@ -30,6 +30,7 @@ class InvitationRepository(
     }
 
     override fun delete(invitation: Invitation) {
+        invitation.updateDeleted()
         invitationJPARepository.save(InvitationEntity.from(invitation))
     }
 
