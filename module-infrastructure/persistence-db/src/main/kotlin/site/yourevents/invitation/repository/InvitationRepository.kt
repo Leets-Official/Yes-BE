@@ -29,6 +29,10 @@ class InvitationRepository(
             .getOrNull()?.toDomain()
     }
 
+    override fun delete(invitation: Invitation) {
+        invitationJPARepository.save(InvitationEntity.from(invitation))
+    }
+
     override fun findByMember(member: Member) =
         invitationJPARepository.findByMember(MemberEntity.from(member)).map(InvitationEntity::toDomain)
 

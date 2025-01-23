@@ -12,6 +12,8 @@ interface InvitationPersistencePort {
 
     fun findById(id: UUID): Invitation?
 
+    fun delete(invitation: Invitation)
+
     fun findByMember(member: Member): List<Invitation>
 
     fun countByMember(member: Member): Int

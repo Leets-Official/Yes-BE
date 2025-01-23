@@ -16,4 +16,6 @@ interface InvitationUseCase {
     fun findById(id: UUID): Invitation?
 
     fun getQrCodeUrl(id: UUID): String
+
+    fun deleteInvitation(invitationId: UUID, deleted: Boolean)
 }
