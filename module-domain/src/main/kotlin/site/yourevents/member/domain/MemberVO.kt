@@ -14,5 +14,12 @@ data class MemberVO(
                 kakaoProfile.nickname,
                 kakaoProfile.email,
             )
+
+        fun from(member: Member): MemberVO =
+            MemberVO(
+                member.getSocialId(),
+                member.getNickname(),
+                member.getNickname(),
+            )
     }
 }
