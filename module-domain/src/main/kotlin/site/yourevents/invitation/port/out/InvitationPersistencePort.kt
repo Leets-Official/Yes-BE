@@ -14,5 +14,5 @@ interface InvitationPersistencePort {
 
     fun getSentInvitations(member: Member): List<Invitation>
 
-    fun getSentInvitationCount(member: Member): Int
+    fun countByMember(member: Member): Int
 }

@@ -34,7 +34,7 @@ class MemberFacade(
 
         val receivedInvitationCount = guestUseCase.getReceivedInvitationCount(member)
 
-        val sentInvitationCount = invitationUseCase.getSentInvitationCount(member)
+        val sentInvitationCount = invitationUseCase.countByMember(member)
 
         return MemberInfoResponse.of(member.getNickname(), receivedInvitationCount, sentInvitationCount)
     }

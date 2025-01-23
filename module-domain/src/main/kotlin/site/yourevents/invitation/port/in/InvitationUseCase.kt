@@ -7,7 +7,7 @@ import java.util.UUID
 interface InvitationUseCase {
     fun getSentInvitations(member: Member): List<Invitation>
 
-    fun getSentInvitationCount(member: Member): Int
+    fun countByMember(member: Member): Int
 
     fun createInvitation(memberId: UUID, qrUrl: String): Invitation
 

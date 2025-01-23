@@ -37,10 +37,10 @@ class InvitationRepository(
             }
     }
 
-    override fun getSentInvitationCount(member: Member): Int {
+    override fun countByMember(member: Member): Int {
         return MemberEntity.from(member)
             .let { memberEntity ->
-                invitationJPARepository.getSentInvitationCount(memberEntity)
+                invitationJPARepository.countByMember(memberEntity)
             }
     }
 }
