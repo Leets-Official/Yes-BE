@@ -20,7 +20,8 @@ class InvitationThumbnailTest : DescribeSpec({
 
                 val invitationId = UUID.randomUUID()
                 val qrUrl = "http://example.com"
-                val invitation = Invitation(invitationId, member, qrUrl, LocalDateTime.now(), LocalDateTime.now())
+                val deleted = false
+                val invitation = Invitation(invitationId, member, qrUrl, deleted, LocalDateTime.now(), LocalDateTime.now())
 
                 val thumbnailId = UUID.randomUUID()
                 val url = "http://example.com/"

@@ -28,6 +28,7 @@ class InvitationServiceTest : DescribeSpec({
     lateinit var email: String
     lateinit var qrUrl: String
     lateinit var member: Member
+    var deleted = false
 
     beforeTest {
         invitationId = UUID.randomUUID()
@@ -36,6 +37,7 @@ class InvitationServiceTest : DescribeSpec({
         nickname = "seunghyun"
         email = "seunghyun@naver.com"
         qrUrl = "http://example.com"
+        deleted = false
 
         member = Member(
             id = memberId,
@@ -63,6 +65,7 @@ class InvitationServiceTest : DescribeSpec({
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
+                    deleted = deleted,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
                 )
@@ -88,6 +91,7 @@ class InvitationServiceTest : DescribeSpec({
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
+                    deleted = deleted,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
                 )

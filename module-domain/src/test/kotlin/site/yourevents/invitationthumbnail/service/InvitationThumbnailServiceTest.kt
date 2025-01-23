@@ -40,6 +40,7 @@ class InvitationThumbnailServiceTest : DescribeSpec({
             id = invitationId,
             member = member,
             qrUrl = "http://example.com",
+            deleted = false,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()
         )
