@@ -8,10 +8,10 @@ data class InvitationVO(
     val deleted: Boolean,
 ) {
     companion object {
-        fun from(invitationVO: InvitationVO): InvitationVO = InvitationVO(
-            member = invitationVO.member,
-            qrUrl = invitationVO.qrUrl,
-            deleted = invitationVO.deleted
+        fun of(member: Member, qrUrl: String, deleted: Boolean): InvitationVO = InvitationVO(
+            member = member,
+            qrUrl = qrUrl,
+            deleted = deleted
         )
     }
 }
