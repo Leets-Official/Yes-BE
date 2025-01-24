@@ -62,11 +62,11 @@ class InvitationService(
         return invitation.qrUrl
     }
 
-    override fun deleteInvitation(invitationId: UUID, deleted: Boolean) {
+    override fun markInvitationAsDeleted(invitationId: UUID) {
         val invitation = findById(invitationId)
             ?: throw InvitationNotFoundException()
 
-        invitation.updateDeleted()
-        invitationPersistencePort.delete(invitation)
+        invitation.markAsDeleted()
+        invitationPersistencePort.save(invitation)
     }
 }
