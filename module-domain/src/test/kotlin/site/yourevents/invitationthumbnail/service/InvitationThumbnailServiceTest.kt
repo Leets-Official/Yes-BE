@@ -5,7 +5,6 @@ import io.kotest.matchers.shouldBe
 import io.mockk.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.port.`in`.InvitationUseCase
-import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.port.out.InvitationThumbnailPersistencePort
 import site.yourevents.invitationthumnail.service.InvitationThumbnailService
@@ -44,7 +43,7 @@ class InvitationThumbnailServiceTest : DescribeSpec({
 
     beforeAny {
         invitationThumbnailPersistencePort = mockk()
-        invitation = mockk()
+        invitationUseCase = mockk()
         invitationThumbnailService = InvitationThumbnailService(
             invitationThumbnailPersistencePort,
             invitationUseCase
