@@ -11,13 +11,13 @@ data class InvitationInformationVO(
     var remark: String,
 ) {
     companion object {
-        fun from(invitationInformationVO: InvitationInformationVO) =
+        fun of(invitation: Invitation, title: String, schedule: LocalDateTime, location: String, remark: String) =
             InvitationInformationVO(
-                invitation = invitationInformationVO.invitation,
-                title = invitationInformationVO.title,
-                schedule = invitationInformationVO.schedule,
-                location = invitationInformationVO.location,
-                remark = invitationInformationVO.remark
+                invitation = invitation,
+                title = title,
+                schedule = schedule,
+                location = location,
+                remark = remark
             )
     }
 }

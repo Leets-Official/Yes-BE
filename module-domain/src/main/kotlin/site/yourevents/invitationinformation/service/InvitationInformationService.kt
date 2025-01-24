@@ -28,13 +28,13 @@ class InvitationInformationService(
             ?: throw InvitationNotFoundException()
 
         return invitationInformationPersistencePort.save(
-            InvitationInformationVO.from(InvitationInformationVO(
+            InvitationInformationVO.of(
                 invitation = invitation,
                 title = title,
                 schedule = schedule,
                 location = location,
                 remark = remark
-            ))
+            )
         )
     }
 }

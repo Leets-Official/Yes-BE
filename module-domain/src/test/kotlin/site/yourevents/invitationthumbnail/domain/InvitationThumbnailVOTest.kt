@@ -51,7 +51,10 @@ class InvitationThumbnailVOTest : DescribeSpec({
                     url = url
                 )
 
-                val transformedVO = InvitationThumbnailVO.from(originalVO)
+                val transformedVO = InvitationThumbnailVO.of(
+                    originalVO.invitation,
+                    originalVO.url
+                )
 
                 transformedVO.apply {
                     invitation shouldBe originalVO.invitation

@@ -46,7 +46,7 @@ class InvitationVOTest : DescribeSpec({
                     deleted = deleted
                 )
 
-                val transformedInvitationVO = InvitationVO.from(originalInvitationVO)
+                val transformedInvitationVO = InvitationVO.of( originalInvitationVO.member, originalInvitationVO.qrUrl, originalInvitationVO.deleted)
 
                 transformedInvitationVO.apply {
                     member shouldBe originalInvitationVO.member

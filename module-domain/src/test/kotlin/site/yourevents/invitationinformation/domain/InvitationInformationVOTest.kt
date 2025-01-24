@@ -67,7 +67,13 @@ class InvitationInformationVOTest : DescribeSpec({
                     remark = remark
                 )
 
-                val transformedVO = InvitationInformationVO.from(originalVO)
+                val transformedVO = InvitationInformationVO.of(
+                    originalVO.invitation,
+                    originalVO.title,
+                    originalVO.schedule,
+                    originalVO.location,
+                    originalVO.remark
+                )
 
                 transformedVO.apply {
                     invitation shouldBe originalVO.invitation

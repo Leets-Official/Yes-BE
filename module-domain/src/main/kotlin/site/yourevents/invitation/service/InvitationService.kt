@@ -23,12 +23,10 @@ class InvitationService(
 
 
         return invitationPersistencePort.save(
-            InvitationVO.from(
-                InvitationVO(
-                    member = member,
-                    qrUrl = qrUrl,
-                    deleted = false
-                )
+            InvitationVO.of(
+                member = member,
+                qrUrl = qrUrl,
+                deleted = false
             )
         )
     }
