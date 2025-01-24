@@ -3,7 +3,6 @@ package site.yourevents.invitation.repository
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -87,8 +86,7 @@ class InvitationRepositoryTest(
                 invitationRepository.save(invitationBeforeDelete)
 
                 val invitationAfterDelete = invitationRepository.findById(invitationId)
-                invitationAfterDelete shouldNotBe null
-                invitationAfterDelete!!.deleted shouldBe true
+                invitationAfterDelete shouldBe null
             }
         }
     }
