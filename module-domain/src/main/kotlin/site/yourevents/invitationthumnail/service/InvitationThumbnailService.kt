@@ -4,6 +4,7 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.exception.InvitationNotFoundException
+import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
@@ -15,14 +16,14 @@ import java.util.*
 @Transactional
 class InvitationThumbnailService(
     private val invitationThumbnailPersistencePort: InvitationThumbnailPersistencePort,
-    private val invitationPersistencePort: InvitationPersistencePort,
+    private val invitationUseCase: InvitationUseCase
 ) : InvitationThumbnailUseCase {
     override fun createInvitationThumbnail(
         invitationId: UUID,
         url: String,
     ): InvitationThumbnail {
 
-        val invitation = invitationPersistencePort.findById(invitationId)
+        val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
 
         return invitationThumbnailPersistencePort.save(
