@@ -52,7 +52,7 @@ class InvitationFacade(
             throw UnauthorizedException()
         }
 
-        invitationUseCase.deleteInvitation(invitationId,true)
+        invitationUseCase.markInvitationAsDeleted(invitationId)
     }
 
     private fun generateInvitation(memberId: UUID) =

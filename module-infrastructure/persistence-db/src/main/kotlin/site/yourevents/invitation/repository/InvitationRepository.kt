@@ -26,9 +26,4 @@ class InvitationRepository(
         return invitationJPARepository.findById(id)
             .getOrNull()?.toDomain()
     }
-
-    override fun delete(invitation: Invitation) {
-        invitation.updateDeleted()
-        invitationJPARepository.save(InvitationEntity.from(invitation))
-    }
 }

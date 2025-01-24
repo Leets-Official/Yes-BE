@@ -32,7 +32,7 @@ interface InvitationApi {
     ): ApiResponse<InvitationQrResponse>
 
     @Operation(summary = "초대장 삭제")
-    @PatchMapping("/delete/{invitationId}")
+    @PatchMapping("/{invitationId}")
     fun deleteInvitation(
         @PathVariable invitationId: UUID,
         @AuthenticationPrincipal authDetails: AuthDetails

@@ -131,12 +131,12 @@ class InvitationFacadeTest : DescribeSpec({
         context("deleteInvitation 메서드가 호출되었을 때") {
             it("존재하는 초대장 삭제(soft delete)를 완료해야 한다") {
                 every { invitationUseCase.findById(invitationId) } returns invitation
-                every { invitationUseCase.deleteInvitation(invitationId, true) } just Runs
+                every { invitationUseCase.markInvitationAsDeleted(invitationId) } just Runs
 
                 invitationFacade.deleteInvitation(invitationId, authDetails)
 
                 verify(exactly = 1) { invitationUseCase.findById(invitationId) }
-                verify(exactly = 1) { invitationUseCase.deleteInvitation(invitationId, true) }
+                verify(exactly = 1) { invitationUseCase.markInvitationAsDeleted(invitationId) }
 
                 confirmVerified(invitationUseCase)
             }

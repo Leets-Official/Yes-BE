@@ -14,7 +14,7 @@ class Invitation(
         this.qrUrl = qrUrl
     }
 
-    fun updateDeleted(){
+    fun markAsDeleted(){
         this.deleted = true
     }
 }

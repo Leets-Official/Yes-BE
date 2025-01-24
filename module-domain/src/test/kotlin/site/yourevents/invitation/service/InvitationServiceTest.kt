@@ -1,12 +1,10 @@
 package site.yourevents.invitation.service
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.domain.InvitationVO
-import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
@@ -122,14 +120,20 @@ class InvitationServiceTest : DescribeSpec({
                 )
 
                 every { invitationPersistencePort.findById(invitationId) } returns invitation
-                every { invitationPersistencePort.delete(invitation) } just Runs
+                every {
+                    invitation.markAsDeleted()
+                    invitationPersistencePort.save(invitation)
+                } returns invitation
 
-                invitationService.deleteInvitation(invitationId, true)
+                invitationService.markInvitationAsDeleted(invitationId)
 
                 invitation.deleted shouldBe true
 
                 verify(exactly = 1) { invitationPersistencePort.findById(invitationId) }
-                verify(exactly = 1) { invitationPersistencePort.delete(invitation) }
+                verify(exactly = 1) {
+                    invitation.markAsDeleted()
+                    invitationPersistencePort.save(invitation)
+                }
 
                 confirmVerified(invitationPersistencePort)
             }

@@ -83,7 +83,8 @@ class InvitationRepositoryTest(
                 invitationBeforeDelete shouldNotBe null
                 invitationBeforeDelete!!.deleted shouldBe false
 
-                invitationRepository.delete(invitationBeforeDelete)
+                invitationBeforeDelete.markAsDeleted()
+                invitationRepository.save(invitationBeforeDelete)
 
                 val invitationAfterDelete = invitationRepository.findById(invitationId)
                 invitationAfterDelete shouldNotBe null

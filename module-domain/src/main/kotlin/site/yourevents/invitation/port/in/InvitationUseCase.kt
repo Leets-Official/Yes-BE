@@ -12,5 +12,5 @@ interface InvitationUseCase {
 
     fun getQrCodeUrl(id: UUID): String
 
-    fun deleteInvitation(invitationId: UUID, deleted: Boolean)
+    fun markInvitationAsDeleted(invitationId: UUID)
 }
