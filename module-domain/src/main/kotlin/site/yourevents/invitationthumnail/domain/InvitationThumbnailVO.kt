@@ -7,10 +7,10 @@ data class InvitationThumbnailVO(
     val url: String,
 ) {
     companion object {
-        fun from(invitationThumbnailVO: InvitationThumbnailVO): InvitationThumbnailVO =
+        fun of(invitation: Invitation, url: String) =
             InvitationThumbnailVO(
-                invitation = invitationThumbnailVO.invitation,
-                url = invitationThumbnailVO.url
+                invitation = invitation,
+                url = url
             )
     }
 }

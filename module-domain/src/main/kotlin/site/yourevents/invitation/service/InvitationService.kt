@@ -23,11 +23,10 @@ class InvitationService(
 
 
         return invitationPersistencePort.save(
-            InvitationVO.from(
-                InvitationVO(
-                    member = member,
-                    qrUrl = qrUrl
-                )
+            InvitationVO.of(
+                member = member,
+                qrUrl = qrUrl,
+                deleted = false
             )
         )
     }
@@ -54,5 +53,13 @@ class InvitationService(
             ?: throw InvitationNotFoundException()
 
         return invitation.qrUrl
+    }
+
+    override fun markInvitationAsDeleted(invitationId: UUID) {
+        val invitation = findById(invitationId)
+            ?: throw InvitationNotFoundException()
+
+        invitation.markAsDeleted()
+        invitationPersistencePort.save(invitation)
     }
 }

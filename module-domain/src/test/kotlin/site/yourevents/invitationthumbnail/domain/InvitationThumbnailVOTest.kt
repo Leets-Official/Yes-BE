@@ -23,7 +23,8 @@ class InvitationThumbnailVOTest : DescribeSpec({
 
         val invitationId = UUID.randomUUID()
         val qrUrl = "http://example.com"
-        invitation = Invitation(invitationId, member, qrUrl)
+        val deleted = false
+        invitation = Invitation(invitationId, member, qrUrl, deleted)
 
         url = "http://example.com/"
     }
@@ -50,7 +51,10 @@ class InvitationThumbnailVOTest : DescribeSpec({
                     url = url
                 )
 
-                val transformedVO = InvitationThumbnailVO.from(originalVO)
+                val transformedVO = InvitationThumbnailVO.of(
+                    originalVO.invitation,
+                    originalVO.url
+                )
 
                 transformedVO.apply {
                     invitation shouldBe originalVO.invitation

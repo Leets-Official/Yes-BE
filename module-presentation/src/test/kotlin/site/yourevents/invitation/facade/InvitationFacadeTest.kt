@@ -2,8 +2,7 @@ package site.yourevents.invitation.facade
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.every
-import io.mockk.mockk
+import io.mockk.*
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.domain.Invitation
@@ -64,7 +63,8 @@ class InvitationFacadeTest : DescribeSpec({
         val invitation = Invitation(
             id = invitationId,
             member = Member(memberId, "6316", "nickname", "email"),
-            qrUrl = null.toString()
+            qrUrl = null.toString(),
+            deleted = false
         )
 
         every { invitationUseCase.updateQrCode(any()) } returns invitation
@@ -91,6 +91,10 @@ class InvitationFacadeTest : DescribeSpec({
             location = createInvitationRequest.invitationInformation.location,
             remark = createInvitationRequest.invitationInformation.remark
         )
+
+        afterTest {
+            clearMocks(invitationUseCase, guestUseCase, invitationThumbnailUseCase, invitationInformationUseCase)
+        }
 
         context("createInvitation 메서드가 호출되었을 때") {
             it("초대장을 생성하고 CreateInvitationResponse를 반환해야 한다") {
@@ -122,6 +126,19 @@ class InvitationFacadeTest : DescribeSpec({
                         invitationInformation = invitationInformation
                     )
                 )
+            }
+        }
+        context("deleteInvitation 메서드가 호출되었을 때") {
+            it("존재하는 초대장 삭제(soft delete)를 완료해야 한다") {
+                every { invitationUseCase.findById(invitationId) } returns invitation
+                every { invitationUseCase.markInvitationAsDeleted(invitationId) } just Runs
+
+                invitationFacade.deleteInvitation(invitationId, authDetails)
+
+                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
+                verify(exactly = 1) { invitationUseCase.markInvitationAsDeleted(invitationId) }
+
+                confirmVerified(invitationUseCase)
             }
         }
     }

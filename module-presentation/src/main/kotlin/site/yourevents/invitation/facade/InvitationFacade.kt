@@ -6,6 +6,8 @@ import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
 import site.yourevents.invitation.dto.response.InvitationQrResponse
+import site.yourevents.invitation.exception.InvitationNotFoundException
+import site.yourevents.invitation.exception.UnauthorizedException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
@@ -37,6 +39,20 @@ class InvitationFacade(
         val invitationInformation = generateInvitationInformation(invitation.id, createInvitationRequest)
 
         return CreateInvitationResponse.of(invitation, owner, invitationThumbnail, invitationInformation)
+    }
+
+    fun deleteInvitation(
+        invitationId: UUID,
+        authDetails: AuthDetails
+    ) {
+        val invitation = invitationUseCase.findById(invitationId)
+            ?: throw InvitationNotFoundException()
+
+        if(invitation.member.getId() != authDetails.uuid){
+            throw UnauthorizedException()
+        }
+
+        invitationUseCase.markInvitationAsDeleted(invitationId)
     }
 
     private fun generateInvitation(memberId: UUID) =

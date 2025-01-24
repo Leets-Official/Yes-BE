@@ -3,7 +3,6 @@ package site.yourevents.invitation.repository
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.kotest.matchers.shouldNotBe
-import org.junit.jupiter.api.Assertions.*
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
@@ -27,6 +26,7 @@ class InvitationRepositoryTest(
     lateinit var memberEntity: MemberEntity
     lateinit var invitationId: UUID
     val qrUrl = "http://example.com"
+    val deleted = false
 
     beforeSpec {
         val socialId = "6316"
@@ -42,7 +42,8 @@ class InvitationRepositoryTest(
 
         val invitationEntity = InvitationEntity(
             member = memberEntity,
-            qrUrl = qrUrl
+            qrUrl = qrUrl,
+            deleted = deleted
         )
         invitationJPARepository.save(invitationEntity)
 
@@ -63,6 +64,7 @@ class InvitationRepositoryTest(
                     id shouldBe invitationId
                     member shouldBe invitation.member
                     qrUrl shouldBe invitation.qrUrl
+                    deleted shouldBe invitation.deleted
                 }
             }
 
@@ -71,6 +73,20 @@ class InvitationRepositoryTest(
                 val invitation = invitationRepository.findById(nonExistentId)
 
                 invitation shouldBe null
+            }
+        }
+
+        context("delete() 메서드에서") {
+            it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
+                val invitationBeforeDelete = invitationRepository.findById(invitationId)
+                invitationBeforeDelete shouldNotBe null
+                invitationBeforeDelete!!.deleted shouldBe false
+
+                invitationBeforeDelete.markAsDeleted()
+                invitationRepository.save(invitationBeforeDelete)
+
+                val invitationAfterDelete = invitationRepository.findById(invitationId)
+                invitationAfterDelete shouldBe null
             }
         }
     }

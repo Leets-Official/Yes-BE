@@ -24,10 +24,12 @@ class InvitationTest : DescribeSpec({
 
                 val invitationId = UUID.randomUUID()
                 val qrUrl = "http://example.com"
+                val deleted = false
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
 
                 invitation.apply {

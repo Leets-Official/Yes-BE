@@ -23,7 +23,7 @@ class InvitationRepository(
     }
 
     override fun findById(id: UUID): Invitation? {
-        return invitationJPARepository.findById(id)
-            .getOrNull()?.toDomain()
+        return invitationJPARepository.findByIdNotDeleted(id)
+            ?.toDomain()
     }
 }

@@ -38,7 +38,8 @@ class GuestServiceTest : DescribeSpec({
         invitation = Invitation(
             id = invitationId,
             member = member,
-            qrUrl = "https://qrUrl.com"
+            qrUrl = "https://qrUrl.com",
+            deleted = false
         )
 
         guestPersistencePort = mockk()

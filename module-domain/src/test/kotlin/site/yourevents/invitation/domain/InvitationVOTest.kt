@@ -8,6 +8,7 @@ import java.util.*
 class InvitationVOTest : DescribeSpec({
     lateinit var member: Member
     lateinit var qrUrl: String
+    var deleted = false
 
     beforeTest {
         val memberId = UUID.randomUUID()
@@ -18,6 +19,7 @@ class InvitationVOTest : DescribeSpec({
             email = "seunghyun@naver.com"
         )
         qrUrl = "http://example.com"
+        deleted = false
     }
 
     describe("InvitationVO") {
@@ -25,7 +27,8 @@ class InvitationVOTest : DescribeSpec({
             it("주어진 필드 값이 올바르게 주입되어야 한다") {
                 val invitationVO = InvitationVO(
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
 
                 invitationVO.apply {
@@ -39,10 +42,11 @@ class InvitationVOTest : DescribeSpec({
             it("from() 메서드를 통해 올바른 InvitationVO가 생성되어야 한다") {
                 val originalInvitationVO = InvitationVO(
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
 
-                val transformedInvitationVO = InvitationVO.from(originalInvitationVO)
+                val transformedInvitationVO = InvitationVO.of( originalInvitationVO.member, originalInvitationVO.qrUrl, originalInvitationVO.deleted)
 
                 transformedInvitationVO.apply {
                     member shouldBe originalInvitationVO.member

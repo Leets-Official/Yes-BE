@@ -2,10 +2,7 @@ package site.yourevents.invitation.service
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.confirmVerified
-import io.mockk.every
-import io.mockk.mockk
-import io.mockk.verify
+import io.mockk.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.port.out.InvitationPersistencePort
@@ -27,6 +24,7 @@ class InvitationServiceTest : DescribeSpec({
     lateinit var email: String
     lateinit var qrUrl: String
     lateinit var member: Member
+    var deleted = false
 
     beforeTest {
         invitationId = UUID.randomUUID()
@@ -35,6 +33,7 @@ class InvitationServiceTest : DescribeSpec({
         nickname = "seunghyun"
         email = "seunghyun@naver.com"
         qrUrl = "http://example.com"
+        deleted = false
 
         member = Member(
             id = memberId,
@@ -59,7 +58,8 @@ class InvitationServiceTest : DescribeSpec({
                 val savedInvitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
                 every { invitationPersistencePort.save(any<InvitationVO>()) } returns savedInvitation
 
@@ -82,7 +82,8 @@ class InvitationServiceTest : DescribeSpec({
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
-                    qrUrl = qrUrl
+                    qrUrl = qrUrl,
+                    deleted = deleted
                 )
 
                 every { invitationPersistencePort.findById(invitationId) } returns invitation
@@ -105,6 +106,35 @@ class InvitationServiceTest : DescribeSpec({
                 verify(exactly = 1) {
                     invitationPersistencePort.findById(invitationId)
                 }
+                confirmVerified(invitationPersistencePort)
+            }
+        }
+
+        context("deleteInvitation() 메서드를 통해서") {
+            it("존재하는 Invitation을 삭제해야 한다") {
+                val invitation = Invitation(
+                    id = invitationId,
+                    member = member,
+                    qrUrl = qrUrl,
+                    deleted = false
+                )
+
+                every { invitationPersistencePort.findById(invitationId) } returns invitation
+                every {
+                    invitation.markAsDeleted()
+                    invitationPersistencePort.save(invitation)
+                } returns invitation
+
+                invitationService.markInvitationAsDeleted(invitationId)
+
+                invitation.deleted shouldBe true
+
+                verify(exactly = 1) { invitationPersistencePort.findById(invitationId) }
+                verify(exactly = 1) {
+                    invitation.markAsDeleted()
+                    invitationPersistencePort.save(invitation)
+                }
+
                 confirmVerified(invitationPersistencePort)
             }
         }
