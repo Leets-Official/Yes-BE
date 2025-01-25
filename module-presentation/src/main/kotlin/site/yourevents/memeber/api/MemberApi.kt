@@ -16,13 +16,13 @@ interface MemberApi {
     ): ApiResponse<MemberInfoResponse>
 
     @Operation(summary = "보낸 초대장 목록 조회")
-    @GetMapping("mypage/invitation/sent")
+    @GetMapping("/mypage/invitation/sent")
     fun sentInvitations(
         @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<List<InvitationInfoResponse>>
 
     @Operation(summary = "받은 초대장 목록 조회")
-    @GetMapping("mypage/invitation/received")
+    @GetMapping("/mypage/invitation/received")
     fun receivedInvitations(
         @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<List<InvitationInfoResponse>>
