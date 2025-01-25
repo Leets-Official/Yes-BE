@@ -8,7 +8,6 @@ import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.domain.Member
 import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
-import kotlin.jvm.optionals.getOrNull
 
 @Repository
 class InvitationRepository(
@@ -30,7 +29,7 @@ class InvitationRepository(
     }
 
     override fun delete(invitation: Invitation) {
-        invitation.updateDeleted()
+        invitation.markAsDeleted()
         invitationJPARepository.save(InvitationEntity.from(invitation))
     }
 

@@ -123,7 +123,9 @@ class InvitationServiceTest : DescribeSpec({
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
-                    deleted = false
+                    deleted = false,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 every { invitationPersistencePort.findById(invitationId) } returns invitation
