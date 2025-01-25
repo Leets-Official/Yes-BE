@@ -10,6 +10,7 @@ import site.yourevents.invitationinformation.exception.InvitationInformationNotF
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.exception.InvitationThumbnailNotFoundException
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
+import site.yourevents.member.domain.Member
 import site.yourevents.member.exception.MemberNotFountException
 import site.yourevents.member.port.`in`.MemberUseCase
 import site.yourevents.memeber.dto.response.MemberInfoResponse
@@ -26,10 +27,7 @@ class MemberFacade(
     private val invitationThumbnailUseCase: InvitationThumbnailUseCase,
 ) {
     fun getMemberInfo(authDetails: AuthDetails): MemberInfoResponse {
-        val memberId = authDetails.uuid
-
-        val member = memberUseCase.findById(memberId)
-            ?: throw MemberNotFountException()
+        val member = findMember(authDetails)
 
         val receivedInvitationCount = guestUseCase.getReceivedInvitationCount(member)
 
@@ -43,28 +41,30 @@ class MemberFacade(
     }
 
     fun getSentInvitations(authDetails: AuthDetails): List<InvitationInfoResponse> {
-        val memberId = authDetails.uuid
-
-        val member = memberUseCase.findById(memberId)
-            ?: throw MemberNotFountException()
+        val member = findMember(authDetails)
 
         val sentInvitations = invitationUseCase.findByMember(member)
 
-        return sentInvitations.stream()
-            .map { invitation -> createInvitationInfoResponse(invitation) }
-            .collect(Collectors.toList())
+        return mapInvitationsToResponse(sentInvitations)
     }
 
     fun getReceivedInvitations(authDetails: AuthDetails): List<InvitationInfoResponse> {
+        val member = findMember(authDetails)
+
+        val receivedInvitations = guestUseCase.getReceivedInvitations(member)
+
+        return mapInvitationsToResponse(receivedInvitations)
+    }
+
+    private fun findMember(authDetails: AuthDetails): Member {
         val memberId = authDetails.uuid
 
-        val member = memberUseCase.findById(memberId)
-            ?: throw MemberNotFountException()
+        return memberUseCase.findById(memberId) ?: throw MemberNotFountException()
+    }
 
-        val guestsOfReceivedInvitation = guestUseCase.getGuestsOfReceivedInvitation(member)
-
-        return guestsOfReceivedInvitation.stream()
-            .map { guest -> createInvitationInfoResponse(guest.invitation) }
+    private fun mapInvitationsToResponse(invitations: List<Invitation>): List<InvitationInfoResponse> {
+        return invitations.stream()
+            .map { invitation -> createInvitationInfoResponse(invitation) }
             .collect(Collectors.toList())
     }
 
