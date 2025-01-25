@@ -9,8 +9,8 @@ class Invitation(
     val id: UUID,
     val member: Member,
     var qrUrl: String,
-    createdAt: LocalDateTime,
-    modifiedAt: LocalDateTime,
+    createdAt: LocalDateTime?,
+    modifiedAt: LocalDateTime?,
 ) : BaseTime(createdAt, modifiedAt) {
     fun updateQrCode(qrUrl: String) {
         this.qrUrl = qrUrl

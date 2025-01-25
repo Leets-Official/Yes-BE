@@ -9,8 +9,8 @@ class Member(
     private val socialId: String,
     private val nickname: String,
     private val email: String,
-    createdAt: LocalDateTime,
-    modifiedAt: LocalDateTime,
+    createdAt: LocalDateTime?,
+    modifiedAt: LocalDateTime?,
 ) : BaseTime(createdAt, modifiedAt) {
     fun getId(): UUID = id
 

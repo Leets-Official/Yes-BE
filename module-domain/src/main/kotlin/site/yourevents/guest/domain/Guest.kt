@@ -12,8 +12,8 @@ class Guest(
     val invitation: Invitation,
     val nickname: String,
     var attendance: Boolean,
-    createdAt: LocalDateTime,
-    modifiedAt: LocalDateTime,
+    createdAt: LocalDateTime?,
+    modifiedAt: LocalDateTime?,
 ) : BaseTime(createdAt, modifiedAt) {
     fun updateAttendance(attendance: Boolean) {
         this.attendance = attendance

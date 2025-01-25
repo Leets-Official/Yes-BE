@@ -12,7 +12,7 @@ class InvitationInformation(
     var schedule: LocalDateTime,
     var location: String,
     var remark: String,
-    createdAt: LocalDateTime,
-    modifiedAt: LocalDateTime,
+    createdAt: LocalDateTime?,
+    modifiedAt: LocalDateTime?,
 ) : BaseTime(createdAt, modifiedAt) {
 }

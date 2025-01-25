@@ -8,7 +8,7 @@ import java.util.UUID
 
 data class InvitationInfoResponse(
     val invitationId: UUID,
-    var createDate: LocalDateTime,
+    var createDate: LocalDateTime?,
     var title: String,
     var schedule: LocalDateTime,
     var location: String,

@@ -9,7 +9,7 @@ class InvitationThumbnail(
     val id: UUID,
     val invitation: Invitation,
     val url: String,
-    createdAt: LocalDateTime,
-    modifiedAt: LocalDateTime,
+    createdAt: LocalDateTime?,
+    modifiedAt: LocalDateTime?,
 ) : BaseTime(createdAt, modifiedAt) {
 }
