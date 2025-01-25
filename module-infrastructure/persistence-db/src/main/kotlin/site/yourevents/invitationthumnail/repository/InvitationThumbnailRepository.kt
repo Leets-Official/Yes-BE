@@ -2,13 +2,11 @@ package site.yourevents.invitationthumnail.repository
 
 import org.springframework.stereotype.Repository
 import site.yourevents.invitation.domain.Invitation
-import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
 import site.yourevents.invitationthumnail.entity.InvitationThumbnailEntity
 import site.yourevents.invitationthumnail.port.out.InvitationThumbnailPersistencePort
-import java.util.*
 
 @Repository
 class InvitationThumbnailRepository(
