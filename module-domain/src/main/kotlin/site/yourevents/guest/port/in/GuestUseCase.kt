@@ -1,13 +1,14 @@
 package site.yourevents.guest.port.`in`
 
 import site.yourevents.guest.domain.Guest
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
 import java.util.UUID
 
 interface GuestUseCase {
-    fun getGuestsOfReceivedInvitation(
+    fun getReceivedInvitations(
         member: Member,
-    ): List<Guest>
+    ): List<Invitation>
 
     fun getReceivedInvitationCount(
         member: Member,

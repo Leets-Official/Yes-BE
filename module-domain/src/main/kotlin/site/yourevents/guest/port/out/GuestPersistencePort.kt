@@ -2,6 +2,7 @@ package site.yourevents.guest.port.out
 
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
 import java.util.UUID
 
@@ -14,5 +15,5 @@ interface GuestPersistencePort {
 
     fun getReceivedInvitationCount(member: Member): Int
 
-    fun getGuestsOfReceivedInvitation(member: Member): List<Guest>
+    fun getReceivedInvitations(member: Member): List<Invitation>
 }

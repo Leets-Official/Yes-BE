@@ -5,6 +5,7 @@ import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
 import site.yourevents.guest.entity.GuestEntity
 import site.yourevents.guest.port.out.GuestPersistencePort
+import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.member.domain.Member
 import site.yourevents.member.entity.MemberEntity
 import java.util.UUID
@@ -31,6 +32,6 @@ class GuestRepository(
     override fun getReceivedInvitationCount(member: Member) =
         guestJPARepository.getReceivedInvitationCount(MemberEntity.from(member))
 
-    override fun getGuestsOfReceivedInvitation(member: Member) =
-        guestJPARepository.getGuestsOfReceivedInvitation(MemberEntity.from(member)).map(GuestEntity::toDomain)
+    override fun getReceivedInvitations(member: Member) =
+        guestJPARepository.getReceivedInvitations(MemberEntity.from(member)).map(InvitationEntity::toDomain)
 }
