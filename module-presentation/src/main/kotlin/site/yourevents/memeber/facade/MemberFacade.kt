@@ -38,7 +38,11 @@ class MemberFacade(
 
         val sentInvitationCount = invitationUseCase.countByMember(member)
 
-        return MemberInfoResponse.of(member.getNickname(), receivedInvitationCount, sentInvitationCount)
+        return MemberInfoResponse.of(
+            member.getNickname(),
+            receivedInvitationCount,
+            sentInvitationCount
+        )
     }
 
     fun getSentInvitations(authDetails: AuthDetails): List<MyPageInvitationInfoResponse> {
@@ -67,7 +71,10 @@ class MemberFacade(
             .collect(Collectors.toList())
     }
 
-    private fun createMyPageInvitationInfoResponse(invitation: Invitation, member: Member): MyPageInvitationInfoResponse {
+    private fun createMyPageInvitationInfoResponse(
+        invitation: Invitation,
+        member: Member,
+    ): MyPageInvitationInfoResponse {
         val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
             ?: throw InvitationInformationNotFoundException()
 
@@ -76,6 +83,13 @@ class MemberFacade(
 
         val isSender = MemberVO.from(invitation.member) == MemberVO.from(member)
 
-        return MyPageInvitationInfoResponse.of(isSender, InvitationInfoResponse.of(invitation, invitationInfo, invitationThumbnail))
+        return MyPageInvitationInfoResponse.of(
+            isSender,
+            InvitationInfoResponse.of(
+                invitation,
+                invitationInfo,
+                invitationThumbnail
+            )
+        )
     }
 }
