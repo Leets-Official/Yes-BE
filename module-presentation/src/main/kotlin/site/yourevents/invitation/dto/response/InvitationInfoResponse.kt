@@ -12,7 +12,7 @@ data class InvitationInfoResponse(
     var title: String,
     var schedule: LocalDateTime,
     var location: String,
-    var url: String,
+    var thumbnailUrl: String,
 ) {
     companion object {
         fun of(
