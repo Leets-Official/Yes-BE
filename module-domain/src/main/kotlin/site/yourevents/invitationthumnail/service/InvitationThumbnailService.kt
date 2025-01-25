@@ -27,11 +27,9 @@ class InvitationThumbnailService(
             ?: throw InvitationNotFoundException()
 
         return invitationThumbnailPersistencePort.save(
-            InvitationThumbnailVO.from(
-                InvitationThumbnailVO(
-                    invitation = invitation,
-                    url = url
-                )
+            InvitationThumbnailVO.of(
+                invitation = invitation,
+                url = url
             )
         )
     }

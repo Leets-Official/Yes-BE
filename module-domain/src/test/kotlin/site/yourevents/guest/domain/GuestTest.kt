@@ -36,6 +36,7 @@ class GuestTest : DescribeSpec({
                     deleted = deleted,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
+
                 )
 
                 val guestId = UUID.randomUUID()
