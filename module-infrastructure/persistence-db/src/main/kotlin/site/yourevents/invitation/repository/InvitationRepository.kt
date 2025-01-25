@@ -29,18 +29,9 @@ class InvitationRepository(
             .getOrNull()?.toDomain()
     }
 
-    override fun findByMember(member: Member): List<Invitation> {
-        return MemberEntity.from(member)
-            .let { memberEntity ->
-                invitationJPARepository.findByMember(memberEntity)
-                    .map { it.toDomain() }
-            }
-    }
+    override fun findByMember(member: Member) =
+        invitationJPARepository.findByMember(MemberEntity.from(member)).map(InvitationEntity::toDomain)
 
-    override fun countByMember(member: Member): Int {
-        return MemberEntity.from(member)
-            .let { memberEntity ->
-                invitationJPARepository.countByMember(memberEntity)
-            }
-    }
+    override fun countByMember(member: Member) =
+        invitationJPARepository.countByMember(MemberEntity.from(member))
 }

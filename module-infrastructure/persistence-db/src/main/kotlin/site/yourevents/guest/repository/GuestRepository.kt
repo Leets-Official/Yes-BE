@@ -28,18 +28,9 @@ class GuestRepository(
             .getOrNull()?.toDomain()
     }
 
-    override fun getReceivedInvitationCount(member: Member): Int {
-        return MemberEntity.from(member)
-            .let { memberEntity ->
-                guestJPARepository.getReceivedInvitationCount(memberEntity)
-            }
-    }
+    override fun getReceivedInvitationCount(member: Member) =
+        guestJPARepository.getReceivedInvitationCount(MemberEntity.from(member))
 
-    override fun getGuestsOfReceivedInvitation(member: Member): List<Guest> {
-        return MemberEntity.from(member)
-            .let { memberEntity ->
-                guestJPARepository.getGuestsOfReceivedInvitation(memberEntity)
-                    .map { it.toDomain() }
-            }
-    }
+    override fun getGuestsOfReceivedInvitation(member: Member) =
+        guestJPARepository.getGuestsOfReceivedInvitation(MemberEntity.from(member)).map(GuestEntity::toDomain)
 }
