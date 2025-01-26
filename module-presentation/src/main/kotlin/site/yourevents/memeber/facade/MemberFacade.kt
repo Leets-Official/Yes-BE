@@ -13,7 +13,6 @@ import site.yourevents.member.exception.MemberNotFountException
 import site.yourevents.member.port.`in`.MemberUseCase
 import site.yourevents.memeber.dto.response.MemberInfoResponse
 import site.yourevents.principal.AuthDetails
-import java.util.stream.Collectors
 
 @Service
 @Transactional
@@ -63,7 +62,7 @@ class MemberFacade(
     private fun mapInvitationsToResponse(invitations: List<Invitation>): List<InvitationInfoResponse> {
         return invitations.stream()
             .map { invitation -> createInvitationInfoResponse(invitation) }
-            .collect(Collectors.toList())
+            .toList()
     }
 
     private fun createInvitationInfoResponse(invitation: Invitation): InvitationInfoResponse {
