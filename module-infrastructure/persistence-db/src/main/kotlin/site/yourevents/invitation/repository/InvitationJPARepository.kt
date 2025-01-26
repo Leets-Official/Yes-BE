@@ -10,7 +10,9 @@ interface InvitationJPARepository : JpaRepository<InvitationEntity, UUID> {
     @Query("SELECT i FROM invitation i where i.id = :id AND i.deleted = false")
     fun findByIdNotDeleted(id: UUID): InvitationEntity?
 
+    @Query("SELECT count(i) FROM invitation i where i.member = :member AND i.deleted = false")
     fun countByMember(member: MemberEntity): Int
 
+    @Query("SELECT i FROM invitation i where i.member = :member AND i.deleted = false")
     fun findByMember(member: MemberEntity): List<InvitationEntity>
 }
