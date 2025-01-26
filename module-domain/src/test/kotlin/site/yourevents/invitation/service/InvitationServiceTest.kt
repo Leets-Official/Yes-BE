@@ -54,6 +54,43 @@ class InvitationServiceTest : DescribeSpec({
     }
 
     describe("InvitationService") {
+            context("findByMember() 메서드를 통해서") {
+                it("정상적으로 List<Invitation>가 반환되어야 한다.") {
+                    val expectedInvitations = listOf(
+                        Invitation(
+                            id = invitationId,
+                            member = member,
+                            qrUrl = qrUrl,
+                            deleted = deleted,
+                            createdAt = LocalDateTime.now(),
+                            modifiedAt = LocalDateTime.now()
+                        )
+                    )
+
+                    every { invitationPersistencePort.findByMember(member) } returns expectedInvitations
+
+                    val result = invitationService.findByMember(member)
+
+                    result shouldBe expectedInvitations
+
+                    verify(exactly = 1) { invitationPersistencePort.findByMember(member) }
+                }
+            }
+
+            context("countByMember() 메서드를 통해서") {
+                it("정상적으로 초대받은 초대장의 개수가 반환되야 한다.") {
+                    val expectedCount = 1
+
+                    every { invitationPersistencePort.countByMember(member) } returns expectedCount
+
+                    val result = invitationService.countByMember(member)
+
+                    result shouldBe expectedCount
+
+                    verify(exactly = 1) { invitationPersistencePort.countByMember(member) }
+                }
+            }
+
         context("createInvitation() 메서드를 통해서") {
             it("MemberUseCase.findById()와 InvitationPersistencePort.save()가 정상적으로 호출되어 Invitation이 반환되어야 한다.") {
                 every { memberUseCase.findById(memberId) } returns member
