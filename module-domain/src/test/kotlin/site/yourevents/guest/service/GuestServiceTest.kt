@@ -57,6 +57,34 @@ class GuestServiceTest : DescribeSpec({
     }
 
     describe("GuestService") {
+        context("getReceivedInvitations() 메서드를 통해서") {
+            it("정상적으로 List<Invitation>가 반환되어야 한다.") {
+                val expectedInvitations = emptyList<Invitation>()
+
+                every { guestPersistencePort.getReceivedInvitations(member) } returns expectedInvitations
+
+                val result = guestService.getReceivedInvitations(member)
+
+                result shouldBe expectedInvitations
+
+                verify(exactly = 1) { guestPersistencePort.getReceivedInvitations(member) }
+            }
+        }
+
+        context("getReceivedInvitationCount() 메서드를 통해서") {
+            it("정상적으로 초대받은 초대장의 개수가 반환되야 한다.") {
+                val expectedCount = 0
+
+                every { guestPersistencePort.getReceivedInvitationCount(member) } returns expectedCount
+
+                val result = guestService.getReceivedInvitationCount(member)
+
+                result shouldBe expectedCount
+
+                verify(exactly = 1) { guestPersistencePort.getReceivedInvitationCount(member) }
+                }
+        }
+
         context("createGuest() 메서드를 통해서") {
             it("정상적으로 Guest가 생성되어 반환해야 한다.") {
                 val guestId = UUID.randomUUID()
