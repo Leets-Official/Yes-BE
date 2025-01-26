@@ -6,9 +6,7 @@ import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
-import site.yourevents.invitationinformation.exception.InvitationInformationNotFoundException
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
-import site.yourevents.invitationthumnail.exception.InvitationThumbnailNotFoundException
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.member.domain.Member
 import site.yourevents.member.exception.MemberNotFountException
@@ -70,10 +68,8 @@ class MemberFacade(
 
     private fun createInvitationInfoResponse(invitation: Invitation): InvitationInfoResponse {
         val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
-            ?: throw InvitationInformationNotFoundException()
 
         val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
-            ?: throw InvitationThumbnailNotFoundException()
 
         return InvitationInfoResponse.of(
             invitation,

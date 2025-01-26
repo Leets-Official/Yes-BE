@@ -5,9 +5,9 @@ import org.springframework.stereotype.Service
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
-import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
+import site.yourevents.invitationthumnail.exception.InvitationThumbnailNotFoundException
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.invitationthumnail.port.out.InvitationThumbnailPersistencePort
 import java.util.*
@@ -34,7 +34,7 @@ class InvitationThumbnailService(
         )
     }
 
-    override fun findByInvitation(invitation: Invitation): InvitationThumbnail? =
+    override fun findByInvitation(invitation: Invitation): InvitationThumbnail =
         invitationThumbnailPersistencePort.findByInvitation(invitation)
-
+            ?: throw InvitationThumbnailNotFoundException()
 }

@@ -40,6 +40,7 @@ class InvitationInformationService(
         )
     }
 
-    override fun findByInvitation(invitation: Invitation): InvitationInformation? =
+    override fun findByInvitation(invitation: Invitation): InvitationInformation =
         invitationInformationPersistencePort.findByInvitation(invitation)
+            ?: throw InvitationNotFoundException()
 }

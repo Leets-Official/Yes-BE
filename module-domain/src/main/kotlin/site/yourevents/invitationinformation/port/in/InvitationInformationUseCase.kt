@@ -14,5 +14,5 @@ interface InvitationInformationUseCase {
         remark: String
     ): InvitationInformation
 
-    fun findByInvitation(invitation: Invitation): InvitationInformation?
+    fun findByInvitation(invitation: Invitation): InvitationInformation
 }

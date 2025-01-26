@@ -7,5 +7,5 @@ import java.util.UUID
 interface InvitationThumbnailUseCase {
     fun createInvitationThumbnail(invitationId: UUID, url: String): InvitationThumbnail
 
-    fun findByInvitation(invitation: Invitation): InvitationThumbnail?
+    fun findByInvitation(invitation: Invitation): InvitationThumbnail
 }
