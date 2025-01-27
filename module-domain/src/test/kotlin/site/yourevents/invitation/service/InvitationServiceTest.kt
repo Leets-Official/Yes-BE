@@ -1,10 +1,12 @@
 package site.yourevents.invitation.service
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.domain.InvitationVO
+import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
@@ -144,8 +146,9 @@ class InvitationServiceTest : DescribeSpec({
             it("존재하지 않는 InvitationId면 null을 반환해야 한다") {
                 every { invitationPersistencePort.findById(invitationId) } returns null
 
-                val result = invitationService.findById(invitationId)
-                result shouldBe null
+                shouldThrow<InvitationNotFoundException> {
+                    invitationService.findById(invitationId)
+                }
 
                 verify(exactly = 1) {
                     invitationPersistencePort.findById(invitationId)
