@@ -57,14 +57,18 @@ class InvitationFacadeTest : DescribeSpec({
             id = memberId,
             socialId = "6316",
             nickname = "nickname",
-            email = "email"
+            email = "email",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         val invitation = Invitation(
             id = invitationId,
-            member = Member(memberId, "6316", "nickname", "email"),
+            member = Member(memberId, "6316", "nickname", "email", LocalDateTime.now(), LocalDateTime.now()),
             qrUrl = null.toString(),
-            deleted = false
+            deleted = false,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         every { invitationUseCase.updateQrCode(any()) } returns invitation
@@ -74,13 +78,17 @@ class InvitationFacadeTest : DescribeSpec({
             member = member,
             invitation = invitation,
             nickname = createInvitationRequest.owner.nickname,
-            attendance = true
+            attendance = true,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         val invitationThumbnail = InvitationThumbnail(
             id = thumbnailId,
             invitation = invitation,
-            url = createInvitationRequest.invitationThumbnail.thumbnailUrl
+            url = createInvitationRequest.invitationThumbnail.thumbnailUrl,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         val invitationInformation = InvitationInformation(
@@ -89,7 +97,9 @@ class InvitationFacadeTest : DescribeSpec({
             title = createInvitationRequest.invitationInformation.title,
             schedule = createInvitationRequest.invitationInformation.schedule,
             location = createInvitationRequest.invitationInformation.location,
-            remark = createInvitationRequest.invitationInformation.remark
+            remark = createInvitationRequest.invitationInformation.remark,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         afterTest {

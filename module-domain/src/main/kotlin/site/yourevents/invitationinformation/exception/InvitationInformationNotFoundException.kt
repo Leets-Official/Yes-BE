@@ -1,0 +1,6 @@
+package site.yourevents.invitationinformation.exception
+
+import site.yourevents.error.exception.ServiceException
+import site.yourevents.type.ErrorCode
+
+class InvitationInformationNotFoundException : ServiceException(ErrorCode.INVITATION_INFORMATION_NOT_FOUND)

@@ -4,6 +4,6 @@ data class PreSignedUrlResponse(
     val preSignedUrl: String
 ) {
     companion object {
-        fun of(preSignedUrl: String) : PreSignedUrlResponse = PreSignedUrlResponse(preSignedUrl)
+        fun from(preSignedUrl: String) : PreSignedUrlResponse = PreSignedUrlResponse(preSignedUrl)
     }
 }

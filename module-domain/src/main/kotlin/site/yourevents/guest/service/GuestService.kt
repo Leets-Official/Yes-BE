@@ -9,21 +9,28 @@ import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.guest.port.out.GuestPersistencePort
 import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
+import site.yourevents.member.domain.Member
 import site.yourevents.member.exception.MemberNotFountException
 import site.yourevents.member.port.`in`.MemberUseCase
-import java.util.*
+import java.util.UUID
 
 @Service
 @Transactional
 class GuestService(
     private val guestPersistencePort: GuestPersistencePort,
     private val memberUseCase: MemberUseCase,
-    private val invitationUseCase: InvitationUseCase
+    private val invitationUseCase: InvitationUseCase,
 ) : GuestUseCase {
+    override fun getReceivedInvitations(member: Member) =
+        guestPersistencePort.getReceivedInvitations(member)
+
+    override fun getReceivedInvitationCount(member: Member) =
+        guestPersistencePort.getReceivedInvitationCount(member)
+
     override fun createGuest(
         memberId: UUID,
         invitationId: UUID,
-        nickname: String
+        nickname: String,
     ): Guest {
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
@@ -46,7 +53,7 @@ class GuestService(
         invitationId: UUID,
         memberId: UUID,
         nickname: String,
-        attendance: Boolean
+        attendance: Boolean,
     ) {
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()

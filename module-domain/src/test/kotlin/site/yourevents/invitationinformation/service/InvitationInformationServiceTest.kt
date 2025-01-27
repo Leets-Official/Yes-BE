@@ -3,14 +3,13 @@ package site.yourevents.invitationinformation.service
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*
-import org.junit.jupiter.api.Assertions.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.domain.InvitationInformation
 import site.yourevents.invitationinformation.port.out.InvitationInformationPersistencePort
 import site.yourevents.member.domain.Member
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 class InvitationInformationServiceTest : DescribeSpec({
     lateinit var invitationInformationPersistencePort: InvitationInformationPersistencePort
@@ -37,14 +36,18 @@ class InvitationInformationServiceTest : DescribeSpec({
             id = memberId,
             socialId = "6316",
             nickname = "seunghyun",
-            email = "seunghyun@naver.com"
+            email = "seunghyun@naver.com",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         invitation = Invitation(
             id = invitationId,
             member = member,
             qrUrl = "http://example.com",
-            deleted = false
+            deleted = false,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
     }
 
@@ -70,16 +73,18 @@ class InvitationInformationServiceTest : DescribeSpec({
                     title = title,
                     schedule = schedule,
                     location = location,
-                    remark = remark
+                    remark = remark,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 every {
                     invitationInformationPersistencePort.save(match {
                         it.invitation == invitation &&
-                            it.title == title &&
-                            it.schedule == schedule &&
-                            it.location == location &&
-                            it.remark == remark
+                                it.title == title &&
+                                it.schedule == schedule &&
+                                it.location == location &&
+                                it.remark == remark
                     })
                 } returns savedInfo
 
@@ -93,10 +98,10 @@ class InvitationInformationServiceTest : DescribeSpec({
                 verify(exactly = 1) {
                     invitationInformationPersistencePort.save(match {
                         it.invitation == invitation &&
-                            it.title == title &&
-                            it.schedule == schedule &&
-                            it.location == location &&
-                            it.remark == remark
+                                it.title == title &&
+                                it.schedule == schedule &&
+                                it.location == location &&
+                                it.remark == remark
                     })
                 }
                 confirmVerified(invitationUseCase, invitationInformationPersistencePort)

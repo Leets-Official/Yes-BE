@@ -2,11 +2,12 @@ package site.yourevents.invitationthumnail.service
 
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
-import site.yourevents.invitation.port.out.InvitationPersistencePort
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
+import site.yourevents.invitationthumnail.exception.InvitationThumbnailNotFoundException
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.invitationthumnail.port.out.InvitationThumbnailPersistencePort
 import java.util.*
@@ -15,11 +16,12 @@ import java.util.*
 @Transactional
 class InvitationThumbnailService(
     private val invitationThumbnailPersistencePort: InvitationThumbnailPersistencePort,
-    private val invitationUseCase: InvitationUseCase
+    private val invitationUseCase: InvitationUseCase,
 ) : InvitationThumbnailUseCase {
     override fun createInvitationThumbnail(
         invitationId: UUID,
-        url: String): InvitationThumbnail {
+        url: String,
+    ): InvitationThumbnail {
 
         val invitation = invitationUseCase.findById(invitationId)
             ?: throw InvitationNotFoundException()
@@ -31,4 +33,8 @@ class InvitationThumbnailService(
             )
         )
     }
+
+    override fun findByInvitation(invitation: Invitation): InvitationThumbnail =
+        invitationThumbnailPersistencePort.findByInvitation(invitation)
+            ?: throw InvitationThumbnailNotFoundException()
 }

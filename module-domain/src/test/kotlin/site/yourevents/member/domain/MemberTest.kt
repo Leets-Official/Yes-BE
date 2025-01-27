@@ -2,6 +2,7 @@ package site.yourevents.member.domain
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
+import java.time.LocalDateTime
 import java.util.UUID
 
 class MemberTest : DescribeSpec({
@@ -17,7 +18,9 @@ class MemberTest : DescribeSpec({
                     id = id,
                     socialId = socialId,
                     nickname = nickname,
-                    email = email
+                    email = email,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
                 )
 
                 member.apply {

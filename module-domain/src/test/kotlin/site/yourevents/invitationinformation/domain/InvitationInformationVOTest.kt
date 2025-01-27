@@ -2,11 +2,10 @@ package site.yourevents.invitationinformation.domain
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import org.junit.jupiter.api.Assertions.*
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
 import java.time.LocalDateTime
-import java.util.*
+import java.util.UUID
 
 class InvitationInformationVOTest : DescribeSpec({
     lateinit var member: Member
@@ -21,13 +20,17 @@ class InvitationInformationVOTest : DescribeSpec({
             id = UUID.randomUUID(),
             socialId = "6316",
             nickname = "seunghyun",
-            email = "seunghyun@naver.com"
+            email = "seunghyun@naver.com",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
         invitation = Invitation(
             id = UUID.randomUUID(),
             member = member,
             qrUrl = "http://example.com",
-            deleted = false
+            deleted = false,
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
 
         title = "title"

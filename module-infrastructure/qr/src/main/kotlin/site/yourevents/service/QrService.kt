@@ -11,8 +11,8 @@ import java.util.UUID
 @Service
 class QrService : QrCodePort {
     override fun generate(invitationId: UUID): ByteArray {
-        val width = 128
-        val height = 128
+        val width = 600
+        val height = 600
         val url = "https://yourevents.site/invitation/$invitationId"
         val encode = MultiFormatWriter().encode(url, BarcodeFormat.QR_CODE, width, height)
 

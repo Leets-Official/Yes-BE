@@ -3,7 +3,8 @@ package site.yourevents.invitation.domain
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import site.yourevents.member.domain.Member
-import java.util.*
+import java.time.LocalDateTime
+import java.util.UUID
 
 class InvitationVOTest : DescribeSpec({
     lateinit var member: Member
@@ -16,7 +17,9 @@ class InvitationVOTest : DescribeSpec({
             id = memberId,
             socialId = "6316",
             nickname = "seunghyun",
-            email = "seunghyun@naver.com"
+            email = "seunghyun@naver.com",
+            createdAt = LocalDateTime.now(),
+            modifiedAt = LocalDateTime.now()
         )
         qrUrl = "http://example.com"
         deleted = false
