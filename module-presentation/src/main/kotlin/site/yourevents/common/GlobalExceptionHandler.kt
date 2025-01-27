@@ -33,6 +33,7 @@ class GlobalExceptionHandler {
         val errorCode = ErrorCode.INTERNAL_SERVER_ERROR
 
         log.error("{}", e.message)
+        e.printStackTrace()
 
         return ResponseEntity(
             ApiResponse.error(errorCode), HttpStatus.valueOf(errorCode.httpStatus)
