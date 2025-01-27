@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.facade.InvitationFacade
 import site.yourevents.principal.AuthDetails
@@ -39,4 +40,10 @@ class InvitationController(
         invitationFacade.deleteInvitation(invitationId, authDetails)
         return ApiResponse.success(SuccessCode.REQUEST_OK)
     }
+
+    override fun getInvitation(
+        @PathVariable invitationId: UUID
+    ): ApiResponse<InvitationInfoResponse> = ApiResponse.success(
+        SuccessCode.REQUEST_OK, invitationFacade.getInvitation(invitationId)
+    )
 }
