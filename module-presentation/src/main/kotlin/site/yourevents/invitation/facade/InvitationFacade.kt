@@ -26,7 +26,7 @@ class InvitationFacade(
 
     fun createInvitation(
         createInvitationRequest: CreateInvitationRequest,
-        authDetails: AuthDetails
+        authDetails: AuthDetails,
     ): CreateInvitationResponse {
         val memberId = authDetails.uuid
 
@@ -43,11 +43,11 @@ class InvitationFacade(
 
     fun deleteInvitation(
         invitationId: UUID,
-        authDetails: AuthDetails
+        authDetails: AuthDetails,
     ) {
         val invitation = invitationUseCase.findById(invitationId)
 
-        if(invitation.member.getId() != authDetails.uuid){
+        if (invitation.member.getId() != authDetails.uuid) {
             throw UnauthorizedException()
         }
 
@@ -61,7 +61,11 @@ class InvitationFacade(
 
         val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
 
-        return InvitationInfoResponse.of(invitation, invitationInformation, invitationThumbnail)
+        return InvitationInfoResponse.of(
+            invitation,
+            invitationInformation,
+            invitationThumbnail
+        )
     }
 
     private fun generateInvitation(memberId: UUID) =
