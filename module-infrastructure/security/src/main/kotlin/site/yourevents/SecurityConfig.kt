@@ -41,7 +41,29 @@ class SecurityConfig(
                 authorize("/v3/**", permitAll)
                 authorize("/health-check", permitAll)
                 authorize("$actuatorEndPoint/**", permitAll)
-                authorize(anyRequest, permitAll)
+
+                // login
+                authorize("/login", permitAll)
+
+                // presigned url
+//                authorize("/presignedurl", authenticated)
+                authorize("/presignedurl", permitAll)
+
+                // invitation
+//                authorize("/invitation/qr", authenticated)
+//                authorize(HttpMethod.GET, "/invitation/{invitationId}", permitAll)
+//                authorize("/invitation/**", authenticated)
+                authorize("/invitation/**", permitAll)
+
+                // guest
+//                authorize("/guest/**", authenticated)
+                authorize("/guest/**", permitAll)
+
+                // mypage
+//                authorize("/mypage/**", authenticated)
+                authorize("/mypage/**", permitAll)
+
+                authorize(anyRequest, denyAll)
             }
         }
 
