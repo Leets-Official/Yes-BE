@@ -11,8 +11,8 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
     @Query(
         "SELECT COUNT(g) " +
                 "FROM guest g " +
-                "WHERE g.member = :member " +
-                "AND g.invitation.member <> :member " +
+                "WHERE g.member = :memberEntity " +
+                "AND g.invitation.member <> :memberEntity " +
                 "AND g.invitation.deleted = false"
     )
     fun getReceivedInvitationCount(memberEntity: MemberEntity): Int
@@ -21,8 +21,8 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
         "SELECT DISTINCT i " +
                 "FROM guest g " +
                 "JOIN g.invitation i " +
-                "WHERE g.member = :member " +
-                "AND i.member <> :member " +
+                "WHERE g.member = :memberEntity " +
+                "AND i.member <> :memberEntity " +
                 "AND i.deleted = false"
     )
     fun getReceivedInvitations(memberEntity: MemberEntity): List<InvitationEntity>

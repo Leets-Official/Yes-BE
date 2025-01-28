@@ -8,6 +8,7 @@ import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.domain.InvitationInformation
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
@@ -138,6 +139,7 @@ class InvitationFacadeTest : DescribeSpec({
                 )
             }
         }
+
         context("deleteInvitation 메서드가 호출되었을 때") {
             it("존재하는 초대장 삭제(soft delete)를 완료해야 한다") {
                 every { invitationUseCase.findById(invitationId) } returns invitation
@@ -149,6 +151,24 @@ class InvitationFacadeTest : DescribeSpec({
                 verify(exactly = 1) { invitationUseCase.markInvitationAsDeleted(invitationId) }
 
                 confirmVerified(invitationUseCase)
+            }
+        }
+
+        context("getInvitation 메서드가 호출되었을 때") {
+            it("존재하는 초대장 정보를 반환해야 한다") {
+                every { invitationUseCase.findById(invitationId) } returns invitation
+                every { invitationInformationUseCase.findByInvitation(invitation) } returns invitationInformation
+                every { invitationThumbnailUseCase.findByInvitation(invitation) } returns invitationThumbnail
+
+                val response = invitationFacade.getInvitation(invitationId)
+
+                response.shouldBe(
+                    InvitationInfoResponse.of(
+                        invitation = invitation,
+                        invitationInformation = invitationInformation,
+                        invitationThumbnail = invitationThumbnail
+                    )
+                )
             }
         }
     }

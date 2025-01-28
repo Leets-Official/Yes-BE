@@ -38,7 +38,6 @@ class InvitationService(
 
     override fun updateQrCode(invitationId: UUID): Invitation {
         val invitation = findById(invitationId)
-            ?: throw InvitationNotFoundException()
 
         val qrCode = qrCodeUseCase.generateQrCode(invitationId)
 
@@ -49,20 +48,18 @@ class InvitationService(
         return invitationPersistencePort.save(invitation)
     }
 
-    override fun findById(id: UUID): Invitation? {
-        return invitationPersistencePort.findById(id)
-    }
+    override fun findById(id: UUID): Invitation =
+        invitationPersistencePort.findById(id)
+            ?: throw InvitationNotFoundException()
 
     override fun getQrCodeUrl(id: UUID): String {
         val invitation = findById(id)
-            ?: throw InvitationNotFoundException()
 
         return invitation.qrUrl
     }
 
     override fun markInvitationAsDeleted(invitationId: UUID) {
         val invitation = findById(invitationId)
-            ?: throw InvitationNotFoundException()
 
         invitation.markAsDeleted()
         invitationPersistencePort.save(invitation)

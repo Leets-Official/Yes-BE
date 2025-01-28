@@ -5,8 +5,8 @@ import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.dto.response.InvitationQrResponse
-import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.exception.UnauthorizedException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
@@ -26,7 +26,7 @@ class InvitationFacade(
 
     fun createInvitation(
         createInvitationRequest: CreateInvitationRequest,
-        authDetails: AuthDetails
+        authDetails: AuthDetails,
     ): CreateInvitationResponse {
         val memberId = authDetails.uuid
 
@@ -43,16 +43,29 @@ class InvitationFacade(
 
     fun deleteInvitation(
         invitationId: UUID,
-        authDetails: AuthDetails
+        authDetails: AuthDetails,
     ) {
         val invitation = invitationUseCase.findById(invitationId)
-            ?: throw InvitationNotFoundException()
 
-        if(invitation.member.getId() != authDetails.uuid){
+        if (invitation.member.getId() != authDetails.uuid) {
             throw UnauthorizedException()
         }
 
         invitationUseCase.markInvitationAsDeleted(invitationId)
+    }
+
+    fun getInvitation(invitationId: UUID): InvitationInfoResponse {
+        val invitation = invitationUseCase.findById(invitationId)
+
+        val invitationInformation = invitationInformationUseCase.findByInvitation(invitation)
+
+        val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
+
+        return InvitationInfoResponse.of(
+            invitation,
+            invitationInformation,
+            invitationThumbnail
+        )
     }
 
     private fun generateInvitation(memberId: UUID) =

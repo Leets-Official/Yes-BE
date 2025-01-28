@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.principal.AuthDetails
 import site.yourevents.response.ApiResponse
@@ -37,4 +38,10 @@ interface InvitationApi {
         @PathVariable invitationId: UUID,
         @AuthenticationPrincipal authDetails: AuthDetails
     ): ApiResponse<Unit>
+
+    @Operation(summary = "초대장 조회")
+    @GetMapping("/{invitationId}")
+    fun getInvitation(
+        @PathVariable invitationId: UUID
+    ): ApiResponse<InvitationInfoResponse>
 }
