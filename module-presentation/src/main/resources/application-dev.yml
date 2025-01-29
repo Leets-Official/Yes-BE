@@ -6,9 +6,9 @@ spring:
       region:
         static: ap-northeast-2
   datasource:
-    url: ENC(C/rNVsNH63ZMFsmaFQGBP8VACCRppRxYVUW4OGoNuTus8JVcJK63EjzIaXR8AeGZhVQcIuREbmkiwRJ2nrnuMtaDc7Elh2y/heJ5njeCEQKNDNIfGRSiRw==)
-    username: ENC(kettemDgjE+NwOvxxl6N6Q==)
-    password: ENC(DLwwx/chknxWnBbAtFn80+1ineavR1+eV84lpja2xSk=)
+    url: ENC(23IGLSB/0axhKycVOz17vvNesN+LopnKIFFyHJwipBdjvn1UhrCad9CuPAeb4Pkl9J333qUGw0Y=)
+    username: ENC(eNiA0XQLI53nTY8y50hFsg==)
+    password: ENC(BmX51bNLLwFxbf7nuDxLatr3rh2U7peS)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
@@ -44,7 +44,7 @@ jwt:
 
 app:
   server:
-    url: ENC(uN3Diby1cLKgQIKPznbuLr/9mQrqzUFhTlzKRp4ZCSxovF26NNCo+A==)
+    url: ENC(Ss7gpjbZexbUby0QTUWOx/RC461GjUI0JbTSLUdZ7kksHnp0HmtiGw==)
 
 management:
   endpoints:
