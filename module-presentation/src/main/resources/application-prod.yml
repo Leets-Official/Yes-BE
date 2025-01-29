@@ -33,7 +33,7 @@ spring:
           kakao:
             client-name: kakao
             client-id: ENC(hUMHbWie9KAHtBWcInSZruPtxz5F+RaJPwdN9i9b7GGB+g/aDjEUfqMyPWabTJaH)
-            redirect-uri: ENC(3D2mg2HI1sp8ayvb5vXqaQWMEuNTsylp+UrLnQ0ynJhhfguYfbr6Ww2CeX80HjXm)
+            redirect-uri: https://www.yourevents.site/login/oauth
             authorization-grant-type: authorization_code
             scope:
               - profile
