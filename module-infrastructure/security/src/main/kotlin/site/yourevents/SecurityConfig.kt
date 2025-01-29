@@ -3,6 +3,7 @@ package site.yourevents
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
+import org.springframework.http.HttpMethod
 import org.springframework.security.config.annotation.web.builders.HttpSecurity
 import org.springframework.security.config.annotation.web.builders.WebSecurity
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity
@@ -33,35 +34,33 @@ class SecurityConfig(
     private val jwtAuthenticationEntryPoint: JwtAuthenticationEntryPoint,
     private val customAccessDeniedHandler: CustomAccessDeniedHandler,
 ) {
+    private val whiteList = arrayOf(
+        "/swagger-ui/**",
+        "/v3/**",
+        "/health-check",
+        "$actuatorEndPoint/**",
+        "/login"
+    )
+
     @Bean
     fun SecurityFilterChain(http: HttpSecurity): SecurityFilterChain {
         http {
             authorizeHttpRequests {
-                authorize("/swagger-ui/**", permitAll)
-                authorize("/v3/**", permitAll)
-                authorize("/health-check", permitAll)
-                authorize("$actuatorEndPoint/**", permitAll)
-
-                // login
-                authorize("/login", permitAll)
+                whiteList.forEach { authorize(it, permitAll) }
 
                 // presigned url
-//                authorize("/presignedurl", authenticated)
-                authorize("/presignedurl", permitAll)
+                authorize("/presignedurl", authenticated)
 
                 // invitation
-//                authorize("/invitation/qr", authenticated)
-//                authorize(HttpMethod.GET, "/invitation/{invitationId}", permitAll)
-//                authorize("/invitation/**", authenticated)
-                authorize("/invitation/**", permitAll)
+                authorize("/invitation/qr", authenticated)
+                authorize(HttpMethod.GET, "/invitation/{invitationId}", permitAll)
+                authorize("/invitation/**", authenticated)
 
                 // guest
-//                authorize("/guest/**", authenticated)
-                authorize("/guest/**", permitAll)
+                authorize("/guest/**", authenticated)
 
                 // mypage
-//                authorize("/mypage/**", authenticated)
-                authorize("/mypage/**", permitAll)
+                authorize("/mypage/**", authenticated)
 
                 authorize(anyRequest, denyAll)
             }
