@@ -3,6 +3,7 @@ package site.yourevents.guest.service
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.guest.domain.Guest
+import site.yourevents.guest.domain.GuestAttendance
 import site.yourevents.guest.domain.GuestVO
 import site.yourevents.guest.exception.GuestNotFoundException
 import site.yourevents.guest.port.`in`.GuestUseCase
@@ -70,6 +71,17 @@ class GuestService(
             return
         }
         updateAttendance(guestId, attendance)
+    }
+
+    override fun findGuestsByInvitation(invitationId: UUID): GuestAttendance {
+        val invitation = invitationUseCase.findById(invitationId)
+
+        val guests = guestPersistencePort.findByInvitation(invitation)
+
+        val attendGuests = guests.filter { it.attendance }
+        val notAttendGuests = guests.filter { !it.attendance }
+
+        return GuestAttendance(attendGuests,notAttendGuests)
     }
 
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {

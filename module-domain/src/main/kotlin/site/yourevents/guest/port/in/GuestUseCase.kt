@@ -1,6 +1,7 @@
 package site.yourevents.guest.port.`in`
 
 import site.yourevents.guest.domain.Guest
+import site.yourevents.guest.domain.GuestAttendance
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.member.domain.Member
 import java.util.UUID
@@ -27,4 +28,6 @@ interface GuestUseCase {
         nickname: String,
         attendance: Boolean,
     )
+
+    fun findGuestsByInvitation(invitationId: UUID): GuestAttendance
 }
