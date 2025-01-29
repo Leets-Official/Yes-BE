@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationGuestResponse
 import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.exception.UnauthorizedException
@@ -65,6 +66,19 @@ class InvitationFacade(
             invitation,
             invitationInformation,
             invitationThumbnail
+        )
+    }
+
+    fun getInvitationGuests(invitationId: UUID): InvitationGuestResponse {
+        val guests = guestUseCase.getGuestsByInvitation(invitationId)
+        val attendGuests = guests.filter { it.attendance }
+            .map { InvitationGuestResponse.GuestResponse.from(it) }
+        val notAttendGuests = guests.filter { !it.attendance }
+            .map { InvitationGuestResponse.GuestResponse.from(it) }
+
+        return InvitationGuestResponse(
+            attending = attendGuests,
+            nonAttending = notAttendGuests
         )
     }
 

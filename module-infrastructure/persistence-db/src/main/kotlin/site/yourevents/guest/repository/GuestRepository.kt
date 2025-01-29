@@ -37,7 +37,7 @@ class GuestRepository(
         guestJPARepository.getReceivedInvitations(MemberEntity.from(member)).map(InvitationEntity::toDomain)
 
     override fun findByInvitation(invitation: Invitation): List<Guest> {
-        return guestJPARepository.findByInvitation(InvitationEntity.Companion.from(invitation))
+        return guestJPARepository.findByInvitation(InvitationEntity.from(invitation))
             .map { it.toDomain() }
     }
 }
