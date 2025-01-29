@@ -263,5 +263,39 @@ class GuestServiceTest : DescribeSpec({
                 confirmVerified(memberUseCase, invitationUseCase, guestPersistencePort)
             }
         }
+        context("getGuestsByInvitation() 메서드를 통해서") {
+            it("참석하는 게스트와 참석하지 않는 게스트 목록이 반환되어야 한다.") {
+                val attendingGuest1 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "1",
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+                val attendingGuest2 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "2",
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+
+                val attendGuests = listOf(attendingGuest1, attendingGuest2)
+
+                every { guestPersistencePort.findByInvitation(invitation) } returns attendGuests
+
+                val result = guestService.getGuestsByInvitation(invitationId)
+
+                result shouldBe attendGuests
+
+                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
+                verify(exactly = 1) { guestPersistencePort.findByInvitation(invitation) }
+                confirmVerified(invitationUseCase, guestPersistencePort)
+            }
+        }
     }
 })
