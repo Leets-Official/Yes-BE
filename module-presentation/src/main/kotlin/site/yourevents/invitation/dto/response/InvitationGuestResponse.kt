@@ -5,7 +5,7 @@ import java.util.UUID
 
 data class InvitationGuestResponse(
     val attending: List<GuestResponse>,
-    val nonAttending: List<GuestResponse>
+    val notAttending: List<GuestResponse>
 ) {
     data class GuestResponse(
         val guestId:UUID,

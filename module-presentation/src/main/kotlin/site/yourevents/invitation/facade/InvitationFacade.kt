@@ -78,7 +78,7 @@ class InvitationFacade(
 
         return InvitationGuestResponse(
             attending = attendGuests,
-            nonAttending = notAttendGuests
+            notAttending = notAttendGuests
         )
     }
 
