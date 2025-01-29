@@ -24,6 +24,7 @@ class S3Service(
         val metadata = ObjectMetadata().apply {
             this.contentType = "image/png"
             this.contentLength = qrCodeBytes.size.toLong()
+            this.contentDisposition = "attachment; filename=\"$imageName\""
         }
 
         amazonS3.putObject(bucketName, imageName, inputStream, metadata)
