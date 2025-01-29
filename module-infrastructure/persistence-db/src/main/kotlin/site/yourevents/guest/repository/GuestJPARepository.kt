@@ -26,4 +26,7 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
                 "AND i.deleted = false"
     )
     fun getReceivedInvitations(memberEntity: MemberEntity): List<InvitationEntity>
+
+    @Query("SELECT g FROM guest g WHERE g.invitation = :invitation")
+    fun findByInvitation(invitationEntity: InvitationEntity): List<GuestEntity>
 }
