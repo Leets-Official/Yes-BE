@@ -6,14 +6,14 @@ spring:
       region:
         static: ap-northeast-2
   datasource:
-    url: ENC(23IGLSB/0axhKycVOz17vvNesN+LopnKIFFyHJwipBdjvn1UhrCad9CuPAeb4Pkl9J333qUGw0Y=)
-    username: ENC(eNiA0XQLI53nTY8y50hFsg==)
-    password: ENC(BmX51bNLLwFxbf7nuDxLatr3rh2U7peS)
+    url: ENC(C/rNVsNH63ZMFsmaFQGBP8VACCRppRxYVUW4OGoNuTus8JVcJK63EjzIaXR8AeGZhVQcIuREbmkiwRJ2nrnuMtaDc7Elh2y/heJ5njeCEQKNDNIfGRSiRw==)
+    username: ENC(kettemDgjE+NwOvxxl6N6Q==)
+    password: ENC(DLwwx/chknxWnBbAtFn80+1ineavR1+eV84lpja2xSk=)
     driver-class-name: com.mysql.cj.jdbc.Driver
 
   jpa:
     hibernate:
-      ddl-auto: create
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -33,7 +33,7 @@ spring:
           kakao:
             client-name: kakao
             client-id: ENC(hUMHbWie9KAHtBWcInSZruPtxz5F+RaJPwdN9i9b7GGB+g/aDjEUfqMyPWabTJaH)
-            redirect-uri: http://localhost:3000/login/oauth
+            redirect-uri: https://www.yourevents.site/login/oauth
             authorization-grant-type: authorization_code
             scope:
               - profile
@@ -44,7 +44,7 @@ jwt:
 
 app:
   server:
-    url: ENC(Ss7gpjbZexbUby0QTUWOx/RC461GjUI0JbTSLUdZ7kksHnp0HmtiGw==)
+    url: ENC(uN3Diby1cLKgQIKPznbuLr/9mQrqzUFhTlzKRp4ZCSxovF26NNCo+A==)
 
 management:
   endpoints:
@@ -72,8 +72,8 @@ management:
 
 sentry:
   dsn: ENC(UefOk3EHvOlzQ+99rApWCWoEMEbTlVbECMRxnRLgtNzuWJa0PmWL1pBtfGRpRK6qWsOSGlmWlJsP7PI7JVaLOnHG3CDLM2bChy61gXTkqYiTs2I1Axf8SW/rxMmcEkH7PLOqEY/TI5I=)
-  environment: ENC(5Nbdf/7y1sF9NAU0jw0SCg==)
-  servername: ENC(Tf/+6HqlCb8m17xkhfHjhw==)
+  environment: ENC(48PEcsCiZ2Ab51ubxZioOw==)
+  servername: ENC(IswUFBeQr7/ev+O2demuRPJJXKUwLvzQ)
 
 logging:
   config: classpath:logback-spring.xml

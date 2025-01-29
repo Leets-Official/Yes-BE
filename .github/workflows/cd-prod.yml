@@ -1,0 +1,25 @@
+name: Yes prod CD 파이프라인
+
+on:
+  workflow_run:
+    workflows: ["Yes CI 파이프라인"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-22.04
+    environment: production
+    permissions:
+      contents: read
+
+    steps:
+      - name: Docker 이미지 Prod 서버 배포
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.HOST}}
+          username: ${{secrets.USERNAME}}
+          key: ${{secrets.KEY}}
+          script: |
+            sudo docker pull ${{secrets.DOCKER_USERNAME}}/yes:latest
+            sudo ~/deploy.sh
