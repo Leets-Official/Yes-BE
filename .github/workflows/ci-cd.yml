@@ -60,7 +60,7 @@ jobs:
           push: true
           tags: ${{secrets.DOCKER_USERNAME}}/yes:latest
 
-      - name: Docker 이미지 배포
+      - name: Docker 이미지 Prod 서버 배포
         uses: appleboy/ssh-action@master
         with:
           host: ${{secrets.HOST}}
@@ -69,3 +69,28 @@ jobs:
           script: |
             sudo docker pull ${{secrets.DOCKER_USERNAME}}/yes:latest
             sudo ~/deploy.sh
+
+
+      - name: Docker 이미지 dev 서버 배포
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{secrets.DEV_HOST}}
+          username: ${{secrets.DEV_USERNAME}}
+          key: ${{secrets.DEV_KEY}}
+          script: |
+            sudo docker pull ${{secrets.DOCKER_USERNAME}}/yes:latest
+            
+            EXISTING_CONTAINER_ID=$(sudo docker ps -q -f "publish=8080" -f "status=running")
+            if [ ! -z "$EXISTING_CONTAINER_ID" ]; then
+              sudo docker stop $EXISTING_CONTAINER_ID
+              sudo docker rm $EXISTING_CONTAINER_ID
+            fi
+            
+            EXISTING_CONTAINER_ID=$(sudo docker ps -q -f "publish=8080" -f "status=exited")
+            if [ ! -z "$EXISTING_CONTAINER_ID" ]; then
+              sudo docker rm $EXISTING_CONTAINER_ID
+            fi
+            
+            sudo docker rm $(sudo docker ps --filter 'status=exited' -a -q) 
+            sudo docker run -d --name yes_dev -p 8080:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=${{secrets.JASYPT_ENCRYPTOR_PASSWORD}} -e PROFILE=dev ${{secrets.DOCKER_USERNAME}}/yes:latest
+            sudo docker image prune -a -f
