@@ -1,0 +1,91 @@
+spring:
+  application:
+    name: YES-BE
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+  datasource:
+    url: ENC(C/rNVsNH63ZMFsmaFQGBP8VACCRppRxYVUW4OGoNuTus8JVcJK63EjzIaXR8AeGZhVQcIuREbmkiwRJ2nrnuMtaDc7Elh2y/heJ5njeCEQKNDNIfGRSiRw==)
+    username: ENC(kettemDgjE+NwOvxxl6N6Q==)
+    password: ENC(DLwwx/chknxWnBbAtFn80+1ineavR1+eV84lpja2xSk=)
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+        use_sql_comments: true
+
+  security:
+    oauth2:
+      client:
+        provider:
+          kakao:
+            authorization-uri: https://kauth.kakao.com/oauth/authorize
+            token-uri: https://kauth.kakao.com/oauth/token
+            user-info-uri: https://kapi.kakao.com/v2/user/me
+            user-name-attribute: id
+        registration:
+          kakao:
+            client-name: kakao
+            client-id: ENC(hUMHbWie9KAHtBWcInSZruPtxz5F+RaJPwdN9i9b7GGB+g/aDjEUfqMyPWabTJaH)
+            redirect-uri: ENC(3D2mg2HI1sp8ayvb5vXqaQWMEuNTsylp+UrLnQ0ynJhhfguYfbr6Ww2CeX80HjXm)
+            authorization-grant-type: authorization_code
+            scope:
+              - profile
+              - email
+
+jwt:
+  secret_key: ENC(mGMgmCyPl7Gw4ungaWJ5B8iHFNsJft59DjR9fNnDmLAk7QfobVjwYyfNXNw4YhWAyBNS8OFMFnSr4aaHSSMWyXPQgRLowW0W)
+
+app:
+  server:
+    url: ENC(uN3Diby1cLKgQIKPznbuLr/9mQrqzUFhTlzKRp4ZCSxovF26NNCo+A==)
+
+management:
+  endpoints:
+    access:
+      default: none
+    web:
+      exposure:
+        include: health, info, metrics, prometheus
+      base-path: ENC(cQ5URPVoxD85Noap7xjvpu/KMMq3RuUZ7lcoHGsr4Ojhq6LKHOFiRShTarLoZF76CVckUbNJHCM=)
+    jmx:
+      exposure:
+        exclude: "*"
+  endpoint:
+    metrics:
+      access: unrestricted
+    prometheus:
+      access: unrestricted
+    info:
+      access: unrestricted
+    health:
+      access: unrestricted
+  metrics:
+    tags:
+      application: ${spring.application.name}
+
+sentry:
+  dsn: ENC(UefOk3EHvOlzQ+99rApWCWoEMEbTlVbECMRxnRLgtNzuWJa0PmWL1pBtfGRpRK6qWsOSGlmWlJsP7PI7JVaLOnHG3CDLM2bChy61gXTkqYiTs2I1Axf8SW/rxMmcEkH7PLOqEY/TI5I=)
+  environment: ENC(48PEcsCiZ2Ab51ubxZioOw==)
+  servername: ENC(IswUFBeQr7/ev+O2demuRPJJXKUwLvzQ)
+
+logging:
+  config: classpath:logback-spring.xml
+  sentry:
+    repository-uri: ${SENTRY_REPOSITORY_URI}
+    environment:  ${SENTRY_ENVIRONMENT}
+  slack:
+    webhook-url: ${SLACK_WEBHOOK_URL}
+
+aws:
+  s3:
+    accessKey: ENC(hCov4JHn3VBk7BS+xUkWZNX0/tw30vpzzxIG/0Lp2cU=)
+    secretKey: ENC(LJQwQXZmEK2a6tL3FTB0iRwhQIuseQUbhPKC0FOCfkjotzZ5lRpp73dt22OoCJG71CBFI7BD/4I=)
+    bucketName: exerciseburket
+    region: ap-northeast-2
