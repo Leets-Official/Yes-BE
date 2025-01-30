@@ -5,6 +5,7 @@ import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
 import site.yourevents.guest.entity.GuestEntity
 import site.yourevents.guest.port.out.GuestPersistencePort
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.member.domain.Member
 import site.yourevents.member.entity.MemberEntity
@@ -34,4 +35,14 @@ class GuestRepository(
 
     override fun getReceivedInvitations(member: Member) =
         guestJPARepository.getReceivedInvitations(MemberEntity.from(member)).map(InvitationEntity::toDomain)
+
+    override fun findAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
+        return guestJPARepository.findAttendGuestsByInvitation(InvitationEntity.from(invitation))
+            .map(GuestEntity::toDomain)
+    }
+
+    override fun findNotAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
+        return guestJPARepository.findNotAttendGuestsByInvitation(InvitationEntity.from(invitation))
+            .map(GuestEntity::toDomain)
+    }
 }

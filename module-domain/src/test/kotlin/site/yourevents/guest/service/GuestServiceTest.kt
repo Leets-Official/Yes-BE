@@ -263,5 +263,54 @@ class GuestServiceTest : DescribeSpec({
                 confirmVerified(memberUseCase, invitationUseCase, guestPersistencePort)
             }
         }
+        context("getGuestsByInvitation() 메서드를 통해서") {
+            it("참석하는 게스트와 참석하지 않는 게스트 목록이 반환되어야 한다.") {
+                val attendingGuest1 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "1",
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+                val attendingGuest2 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "2",
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+                val notAttendingGuest = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "3",
+                    attendance = false,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+
+                val attend = listOf(attendingGuest1, attendingGuest2)
+                val notAttend = listOf(notAttendingGuest)
+
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
+                every { guestPersistencePort.findAttendGuestsByInvitation(invitation) } returns attend
+                every { guestPersistencePort.findNotAttendGuestsByInvitation(invitation) } returns notAttend
+
+                val result1 = guestService.getAttendGuestsByInvitation(invitation)
+                val result2 = guestService.getNotAttendGuestsByInvitation(invitation)
+
+                result1 shouldBe attend
+                result2 shouldBe notAttend
+
+                verify(exactly = 1) { guestPersistencePort.findAttendGuestsByInvitation(invitation) }
+                verify(exactly = 1) { guestPersistencePort.findNotAttendGuestsByInvitation(invitation) }
+                confirmVerified(guestPersistencePort)
+            }
+        }
     }
 })

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationGuestResponse
 import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.facade.InvitationFacade
@@ -45,5 +46,11 @@ class InvitationController(
         @PathVariable invitationId: UUID
     ): ApiResponse<InvitationInfoResponse> = ApiResponse.success(
         SuccessCode.REQUEST_OK, invitationFacade.getInvitation(invitationId)
+    )
+
+    override fun getGuestsByInvitation(
+        @PathVariable invitationId: UUID
+    ): ApiResponse<InvitationGuestResponse> = ApiResponse.success(
+        SuccessCode.REQUEST_OK, invitationFacade.getInvitationGuests(invitationId)
     )
 }

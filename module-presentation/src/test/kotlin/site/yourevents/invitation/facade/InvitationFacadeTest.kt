@@ -8,6 +8,7 @@ import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
 import site.yourevents.invitation.dto.response.CreateInvitationResponse
+import site.yourevents.invitation.dto.response.InvitationGuestResponse
 import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.domain.InvitationInformation
@@ -171,5 +172,54 @@ class InvitationFacadeTest : DescribeSpec({
                 )
             }
         }
+        context("getInvitationGuests 메서드가 호출되었을 때") {
+            it("참석하는 게스트와 참석하지 않는 게스트 목록이 반환되어야 한다") {
+                // 준비
+                val guest1 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "1",
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+                val guest2 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "2",
+                    attendance = false,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+                val guest3 = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "3",
+                    attendance = true,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
+
+                val attends = listOf(guest1, guest3)
+                val notAttends = listOf(guest2)
+
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
+                every { guestUseCase.getAttendGuestsByInvitation(invitation) } returns attends
+                every { guestUseCase.getNotAttendGuestsByInvitation(invitation) } returns notAttends
+
+                val response = invitationFacade.getInvitationGuests(invitationId)
+
+                response.attending shouldBe attends.map(InvitationGuestResponse.GuestResponse::from)
+                response.notAttending shouldBe notAttends.map(InvitationGuestResponse.GuestResponse::from)
+
+                verify(exactly = 1) { guestUseCase.getAttendGuestsByInvitation(invitation) }
+                verify(exactly = 1) { guestUseCase.getNotAttendGuestsByInvitation(invitation) }
+                confirmVerified(guestUseCase)
+            }
+            }
     }
 })
