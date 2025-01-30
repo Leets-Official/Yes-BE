@@ -221,5 +221,40 @@ class InvitationFacadeTest : DescribeSpec({
                 confirmVerified(guestUseCase)
             }
         }
+        context("getInvitationAttendance 메서드가 호출되었을 때") {
+            it("참석 여부가 true로 반환되어야 한다") {
+                val isAttending = true
+
+                every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
+                val response = invitationFacade.getInvitationAttendance(invitationId, memberId)
+
+                response.invitationId shouldBe invitationId
+                response.memberId shouldBe memberId
+                response.attendance shouldBe isAttending
+
+                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
+                verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
+                confirmVerified(invitationUseCase, guestUseCase)
+            }
+
+            it("참석 여부가 false로 반환되어야 한다") {
+                val isAttending = false
+
+                every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
+                val response = invitationFacade.getInvitationAttendance(invitationId, memberId)
+
+                response.invitationId shouldBe invitationId
+                response.memberId shouldBe memberId
+                response.attendance shouldBe isAttending
+
+                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
+                verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
+                confirmVerified(invitationUseCase, guestUseCase)
+            }
+        }
     }
 })
