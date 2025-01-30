@@ -220,6 +220,18 @@ class InvitationFacadeTest : DescribeSpec({
                 verify(exactly = 1) { guestUseCase.getNotAttendGuestsByInvitation(invitation) }
                 confirmVerified(guestUseCase)
             }
+        }
+        context("isSender 메서드가 호출되었을 때") {
+            it("초대장 발송자가 사용자인지 확인해야 한다") {
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
+                val response = invitationFacade.isSender(invitationId, authDetails)
+
+                response shouldBe true
+
+                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
+                confirmVerified(invitationUseCase)
             }
+        }
     }
 })
