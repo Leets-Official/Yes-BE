@@ -226,7 +226,6 @@ class InvitationFacadeTest : DescribeSpec({
                 val isAttending = true
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
-                every { invitationUseCase.findById(invitationId) } returns invitation
 
                 val response = invitationFacade.getInvitationAttendance(invitationId, memberId)
 
@@ -234,7 +233,6 @@ class InvitationFacadeTest : DescribeSpec({
                 response.memberId shouldBe memberId
                 response.attendance shouldBe isAttending
 
-                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
                 verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
                 confirmVerified(invitationUseCase, guestUseCase)
             }
@@ -243,7 +241,6 @@ class InvitationFacadeTest : DescribeSpec({
                 val isAttending = false
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
-                every { invitationUseCase.findById(invitationId) } returns invitation
 
                 val response = invitationFacade.getInvitationAttendance(invitationId, memberId)
 
@@ -251,7 +248,6 @@ class InvitationFacadeTest : DescribeSpec({
                 response.memberId shouldBe memberId
                 response.attendance shouldBe isAttending
 
-                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
                 verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
                 confirmVerified(invitationUseCase, guestUseCase)
             }
