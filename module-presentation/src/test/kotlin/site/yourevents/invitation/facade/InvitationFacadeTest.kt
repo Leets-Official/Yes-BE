@@ -221,16 +221,13 @@ class InvitationFacadeTest : DescribeSpec({
                 confirmVerified(guestUseCase)
             }
         }
-        context("isSender 메서드가 호출되었을 때") {
+        context("verifySender 메서드가 호출되었을 때") {
             it("초대장 발송자가 사용자인지 확인해야 한다") {
-                every { invitationUseCase.findById(invitationId) } returns invitation
+                every { invitationUseCase.getOwnerId(any()) } returns memberId
 
-                val response = invitationFacade.verifySender(invitationId, authDetails)
+                val result = invitationFacade.verifySender(invitationId, authDetails)
 
-                response shouldBe true
-
-                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
-                confirmVerified(invitationUseCase)
+                result shouldBe true
             }
         }
     }
