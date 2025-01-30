@@ -38,4 +38,7 @@ class InvitationRepository(
 
     override fun countByMember(member: Member) =
         invitationJPARepository.countByMember(MemberEntity.from(member))
+
+    override fun getOwnerId(invitationId: UUID): UUID =
+        invitationJPARepository.getOwnerId(invitationId)
 }
