@@ -53,4 +53,11 @@ class InvitationController(
     ): ApiResponse<InvitationGuestResponse> = ApiResponse.success(
         SuccessCode.REQUEST_OK, invitationFacade.getInvitationGuests(invitationId)
     )
+
+    override fun isSender(
+        @PathVariable invitationId: UUID,
+        @AuthenticationPrincipal authDetails: AuthDetails
+    ): ApiResponse<Boolean> = ApiResponse.success(
+        SuccessCode.REQUEST_OK, invitationFacade.isSender(invitationId, authDetails)
+    )
 }

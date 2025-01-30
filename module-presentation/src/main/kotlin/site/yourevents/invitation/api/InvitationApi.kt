@@ -51,4 +51,11 @@ interface InvitationApi {
     fun getGuestsByInvitation(
         @PathVariable invitationId: UUID
     ): ApiResponse<InvitationGuestResponse>
+
+    @Operation(summary = "초대장 발송자가 사용자인지 확인")
+    @GetMapping("/{invitationId}/is-sender")
+    fun isSender(
+        @PathVariable invitationId: UUID,
+        @AuthenticationPrincipal authDetails: AuthDetails
+    ): ApiResponse<Boolean>
 }
