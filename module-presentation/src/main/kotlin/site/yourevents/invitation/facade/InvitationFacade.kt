@@ -83,7 +83,7 @@ class InvitationFacade(
         )
     }
 
-    fun isSender(invitationId: UUID, authDetails: AuthDetails): Boolean {
+    fun verifySender(invitationId: UUID, authDetails: AuthDetails): Boolean {
         val invitation = invitationUseCase.findById(invitationId)
 
         return invitation.member.getId() == authDetails.uuid

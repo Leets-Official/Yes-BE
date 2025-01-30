@@ -225,7 +225,7 @@ class InvitationFacadeTest : DescribeSpec({
             it("초대장 발송자가 사용자인지 확인해야 한다") {
                 every { invitationUseCase.findById(invitationId) } returns invitation
 
-                val response = invitationFacade.isSender(invitationId, authDetails)
+                val response = invitationFacade.verifySender(invitationId, authDetails)
 
                 response shouldBe true
 
