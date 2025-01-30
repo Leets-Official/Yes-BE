@@ -220,6 +220,6 @@ class InvitationFacadeTest : DescribeSpec({
                 verify(exactly = 1) { guestUseCase.getNotAttendGuestsByInvitation(invitation) }
                 confirmVerified(guestUseCase)
             }
-            }
+        }
     }
 })
