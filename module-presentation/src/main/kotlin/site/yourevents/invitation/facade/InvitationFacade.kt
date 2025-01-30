@@ -81,7 +81,6 @@ class InvitationFacade(
     }
 
     fun getInvitationAttendance(invitationId: UUID, memberId: UUID): InvitationAttendanceResponse{
-        val invitation = invitationUseCase.findById(invitationId)
         val invitationAttendance = guestUseCase.getInvitationAttendance(memberId, invitationId)
 
         return InvitationAttendanceResponse(
