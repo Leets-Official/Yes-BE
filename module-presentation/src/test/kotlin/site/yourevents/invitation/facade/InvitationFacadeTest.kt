@@ -206,16 +206,18 @@ class InvitationFacadeTest : DescribeSpec({
                 val attends = listOf(guest1, guest3)
                 val notAttends = listOf(guest2)
 
-                every { guestUseCase.getAttendGuestsByInvitation(invitationId) } returns attends
-                every { guestUseCase.getNotAttendGuestsByInvitation(invitationId) } returns notAttends
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
+                every { guestUseCase.getAttendGuestsByInvitation(invitation) } returns attends
+                every { guestUseCase.getNotAttendGuestsByInvitation(invitation) } returns notAttends
 
                 val response = invitationFacade.getInvitationGuests(invitationId)
 
-                response.attending shouldBe attends.map { InvitationGuestResponse.GuestResponse.from(it) }
-                response.notAttending shouldBe notAttends.map { InvitationGuestResponse.GuestResponse.from(it) }
+                response.attending shouldBe attends.map(InvitationGuestResponse.GuestResponse::from)
+                response.notAttending shouldBe notAttends.map(InvitationGuestResponse.GuestResponse::from)
 
-                verify(exactly = 1) { guestUseCase.getAttendGuestsByInvitation(invitationId) }
-                verify(exactly = 1) { guestUseCase.getNotAttendGuestsByInvitation(invitationId) }
+                verify(exactly = 1) { guestUseCase.getAttendGuestsByInvitation(invitation) }
+                verify(exactly = 1) { guestUseCase.getNotAttendGuestsByInvitation(invitation) }
                 confirmVerified(guestUseCase)
             }
             }

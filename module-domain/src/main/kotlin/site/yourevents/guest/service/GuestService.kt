@@ -7,6 +7,7 @@ import site.yourevents.guest.domain.GuestVO
 import site.yourevents.guest.exception.GuestNotFoundException
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.guest.port.out.GuestPersistencePort
+import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.member.domain.Member
 import site.yourevents.member.exception.MemberNotFountException
@@ -72,15 +73,11 @@ class GuestService(
         updateAttendance(guestId, attendance)
     }
 
-    override fun getAttendGuestsByInvitation(invitationId: UUID): List<Guest> {
-        val invitation = invitationUseCase.findById(invitationId)
-
+    override fun getAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
         return guestPersistencePort.findAttendGuestsByInvitation(invitation)
     }
 
-    override fun getNotAttendGuestsByInvitation(invitationId: UUID): List<Guest> {
-        val invitation = invitationUseCase.findById(invitationId)
-
+    override fun getNotAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
         return guestPersistencePort.findNotAttendGuestsByInvitation(invitation)
     }
 

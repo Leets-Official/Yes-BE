@@ -296,12 +296,13 @@ class GuestServiceTest : DescribeSpec({
                 val attend = listOf(attendingGuest1, attendingGuest2)
                 val notAttend = listOf(notAttendingGuest)
 
-                // Mocking 참석자와 불참석자를 별도로 반환하도록 설정
+                every { invitationUseCase.findById(invitationId) } returns invitation
+
                 every { guestPersistencePort.findAttendGuestsByInvitation(invitation) } returns attend
                 every { guestPersistencePort.findNotAttendGuestsByInvitation(invitation) } returns notAttend
 
-                val result1 = guestService.getAttendGuestsByInvitation(invitationId)
-                val result2 = guestService.getNotAttendGuestsByInvitation(invitationId)
+                val result1 = guestService.getAttendGuestsByInvitation(invitation)
+                val result2 = guestService.getNotAttendGuestsByInvitation(invitation)
 
                 result1 shouldBe attend
                 result2 shouldBe notAttend
