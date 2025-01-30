@@ -4,10 +4,7 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
-import site.yourevents.invitation.dto.response.CreateInvitationResponse
-import site.yourevents.invitation.dto.response.InvitationGuestResponse
-import site.yourevents.invitation.dto.response.InvitationInfoResponse
-import site.yourevents.invitation.dto.response.InvitationQrResponse
+import site.yourevents.invitation.dto.response.*
 import site.yourevents.invitation.exception.UnauthorizedException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
@@ -80,6 +77,17 @@ class InvitationFacade(
         return InvitationGuestResponse(
             attending = attend,
             notAttending = notAttend
+        )
+    }
+
+    fun getInvitationAttendance(invitationId: UUID, memberId: UUID): InvitationAttendanceResponse{
+        val invitation = invitationUseCase.findById(invitationId)
+        val invitationAttendance = guestUseCase.getInvitationAttendance(memberId, invitationId)
+
+        return InvitationAttendanceResponse(
+            invitationId = invitationId,
+            memberId = memberId,
+            attendance = invitationAttendance
         )
     }
 

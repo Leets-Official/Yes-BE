@@ -40,4 +40,7 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
                 "AND g.attendance = false " +
                 "AND g.invitation.deleted = false")
     fun findNotAttendGuestsByInvitation(invitationEntity: InvitationEntity): List<GuestEntity>
+
+    @Query("SELECT g FROM guest g WHERE g.member.id = :memberId AND g.invitation.id = :invitationId")
+    fun findByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): GuestEntity
 }

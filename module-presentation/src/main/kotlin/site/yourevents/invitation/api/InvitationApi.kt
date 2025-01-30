@@ -10,10 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
-import site.yourevents.invitation.dto.response.CreateInvitationResponse
-import site.yourevents.invitation.dto.response.InvitationGuestResponse
-import site.yourevents.invitation.dto.response.InvitationInfoResponse
-import site.yourevents.invitation.dto.response.InvitationQrResponse
+import site.yourevents.invitation.dto.response.*
 import site.yourevents.principal.AuthDetails
 import site.yourevents.response.ApiResponse
 import java.util.UUID
@@ -51,4 +48,11 @@ interface InvitationApi {
     fun getGuestsByInvitation(
         @PathVariable invitationId: UUID
     ): ApiResponse<InvitationGuestResponse>
+
+    @Operation(summary = "특정 초대장에 대한 본인 참석 여부 조회")
+    @GetMapping("/{invitationId}/attendance")
+    fun getInvitationAttendance(
+        @PathVariable invitationId: UUID,
+        @AuthenticationPrincipal authDetails: AuthDetails
+    ): ApiResponse<InvitationAttendanceResponse>
 }
