@@ -8,7 +8,7 @@ data class InvitationGuestResponse(
     val notAttending: List<GuestResponse>
 ) {
     data class GuestResponse(
-        val guestId:UUID,
+        val guestId: UUID,
         val nickname: String,
     ) {
         companion object {

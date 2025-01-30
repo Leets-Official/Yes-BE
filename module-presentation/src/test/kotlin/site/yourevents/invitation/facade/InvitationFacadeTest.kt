@@ -212,7 +212,7 @@ class InvitationFacadeTest : DescribeSpec({
                 val response = invitationFacade.getInvitationGuests(invitationId)
 
                 response.attending shouldBe attendingGuests.map { InvitationGuestResponse.GuestResponse.from(it) }
-                response.nonAttending shouldBe nonAttendingGuests.map { InvitationGuestResponse.GuestResponse.from(it) }
+                response.notAttending shouldBe nonAttendingGuests.map { InvitationGuestResponse.GuestResponse.from(it) }
 
                 verify(exactly = 1) { guestUseCase.getGuestsByInvitation(invitationId) }
                 confirmVerified(guestUseCase)
