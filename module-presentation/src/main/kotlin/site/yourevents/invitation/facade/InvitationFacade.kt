@@ -83,11 +83,8 @@ class InvitationFacade(
         )
     }
 
-    fun verifySender(invitationId: UUID, authDetails: AuthDetails): Boolean {
-        val invitation = invitationUseCase.findById(invitationId)
-
-        return invitation.member.getId() == authDetails.uuid
-    }
+    fun verifySender(invitationId: UUID, authDetails: AuthDetails) =
+        invitationUseCase.getOwnerId(invitationId) == authDetails.uuid
 
     private fun generateInvitation(memberId: UUID) =
         invitationUseCase.createInvitation(memberId, null.toString())
