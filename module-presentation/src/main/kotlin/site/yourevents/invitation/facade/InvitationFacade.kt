@@ -83,6 +83,12 @@ class InvitationFacade(
         )
     }
 
+    fun isSender(invitationId: UUID, authDetails: AuthDetails): Boolean {
+        val invitation = invitationUseCase.findById(invitationId)
+
+        return invitation.member.getId() == authDetails.uuid
+    }
+
     private fun generateInvitation(memberId: UUID) =
         invitationUseCase.createInvitation(memberId, null.toString())
 
