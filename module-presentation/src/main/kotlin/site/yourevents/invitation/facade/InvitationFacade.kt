@@ -70,15 +70,15 @@ class InvitationFacade(
     }
 
     fun getInvitationGuests(invitationId: UUID): InvitationGuestResponse {
-        val guests = guestUseCase.getGuestsByInvitation(invitationId)
-        val attendGuests = guests.filter { it.attendance }
+        val attend = guestUseCase.getAttendGuestsByInvitation(invitationId)
             .map { InvitationGuestResponse.GuestResponse.from(it) }
-        val notAttendGuests = guests.filter { !it.attendance }
+
+        val notAttend = guestUseCase.getNotAttendGuestsByInvitation(invitationId)
             .map { InvitationGuestResponse.GuestResponse.from(it) }
 
         return InvitationGuestResponse(
-            attending = attendGuests,
-            notAttending = notAttendGuests
+            attending = attend,
+            notAttending = notAttend
         )
     }
 

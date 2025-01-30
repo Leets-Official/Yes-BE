@@ -72,10 +72,16 @@ class GuestService(
         updateAttendance(guestId, attendance)
     }
 
-    override fun getGuestsByInvitation(invitationId: UUID): List<Guest> {
+    override fun getAttendGuestsByInvitation(invitationId: UUID): List<Guest> {
         val invitation = invitationUseCase.findById(invitationId)
 
-        return guestPersistencePort.findByInvitation(invitation)
+        return guestPersistencePort.findAttendGuestsByInvitation(invitation)
+    }
+
+    override fun getNotAttendGuestsByInvitation(invitationId: UUID): List<Guest> {
+        val invitation = invitationUseCase.findById(invitationId)
+
+        return guestPersistencePort.findNotAttendGuestsByInvitation(invitation)
     }
 
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {

@@ -283,18 +283,32 @@ class GuestServiceTest : DescribeSpec({
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
                 )
+                val notAttendingGuest = Guest(
+                    id = UUID.randomUUID(),
+                    member = member,
+                    invitation = invitation,
+                    nickname = "3",
+                    attendance = false,
+                    createdAt = LocalDateTime.now(),
+                    modifiedAt = LocalDateTime.now()
+                )
 
-                val attendGuests = listOf(attendingGuest1, attendingGuest2)
+                val attend = listOf(attendingGuest1, attendingGuest2)
+                val notAttend = listOf(notAttendingGuest)
 
-                every { guestPersistencePort.findByInvitation(invitation) } returns attendGuests
+                // Mocking 참석자와 불참석자를 별도로 반환하도록 설정
+                every { guestPersistencePort.findAttendGuestsByInvitation(invitation) } returns attend
+                every { guestPersistencePort.findNotAttendGuestsByInvitation(invitation) } returns notAttend
 
-                val result = guestService.getGuestsByInvitation(invitationId)
+                val result1 = guestService.getAttendGuestsByInvitation(invitationId)
+                val result2 = guestService.getNotAttendGuestsByInvitation(invitationId)
 
-                result shouldBe attendGuests
+                result1 shouldBe attend
+                result2 shouldBe notAttend
 
-                verify(exactly = 1) { invitationUseCase.findById(invitationId) }
-                verify(exactly = 1) { guestPersistencePort.findByInvitation(invitation) }
-                confirmVerified(invitationUseCase, guestPersistencePort)
+                verify(exactly = 1) { guestPersistencePort.findAttendGuestsByInvitation(invitation) }
+                verify(exactly = 1) { guestPersistencePort.findNotAttendGuestsByInvitation(invitation) }
+                confirmVerified(guestPersistencePort)
             }
         }
     }

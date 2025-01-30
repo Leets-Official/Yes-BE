@@ -17,5 +17,7 @@ interface GuestPersistencePort {
 
     fun getReceivedInvitations(member: Member): List<Invitation>
 
-    fun findByInvitation(invitation: Invitation): List<Guest>
+    fun findAttendGuestsByInvitation(invitation: Invitation): List<Guest>
+
+    fun findNotAttendGuestsByInvitation(invitation: Invitation): List<Guest>
 }

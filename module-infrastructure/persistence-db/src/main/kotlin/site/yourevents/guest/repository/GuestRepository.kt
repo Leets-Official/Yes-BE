@@ -36,8 +36,13 @@ class GuestRepository(
     override fun getReceivedInvitations(member: Member) =
         guestJPARepository.getReceivedInvitations(MemberEntity.from(member)).map(InvitationEntity::toDomain)
 
-    override fun findByInvitation(invitation: Invitation): List<Guest> {
-        return guestJPARepository.findByInvitation(InvitationEntity.from(invitation))
+    override fun findAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
+        return guestJPARepository.findAttendGuestsByInvitation(InvitationEntity.from(invitation))
+            .map { it.toDomain() }
+    }
+
+    override fun findNotAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
+        return guestJPARepository.findNotAttendGuestsByInvitation(InvitationEntity.from(invitation))
             .map { it.toDomain() }
     }
 }
