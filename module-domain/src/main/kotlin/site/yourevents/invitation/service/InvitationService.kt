@@ -65,5 +65,6 @@ class InvitationService(
         invitationPersistencePort.save(invitation)
     }
 
-    override fun getOwnerId(invitationId: UUID) = invitationPersistencePort.getOwnerId(invitationId)
+    override fun getOwnerId(invitationId: UUID) =
+        invitationPersistencePort.getOwnerId(invitationId)
 }
