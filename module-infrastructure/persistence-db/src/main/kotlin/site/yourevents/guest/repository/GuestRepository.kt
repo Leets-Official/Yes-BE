@@ -38,11 +38,11 @@ class GuestRepository(
 
     override fun findAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
         return guestJPARepository.findAttendGuestsByInvitation(InvitationEntity.from(invitation))
-            .map { it.toDomain() }
+            .map(GuestEntity::toDomain)
     }
 
     override fun findNotAttendGuestsByInvitation(invitation: Invitation): List<Guest> {
         return guestJPARepository.findNotAttendGuestsByInvitation(InvitationEntity.from(invitation))
-            .map { it.toDomain() }
+            .map(GuestEntity::toDomain)
     }
 }
