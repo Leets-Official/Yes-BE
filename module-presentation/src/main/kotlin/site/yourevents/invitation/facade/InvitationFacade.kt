@@ -83,6 +83,9 @@ class InvitationFacade(
         )
     }
 
+    fun verifySender(invitationId: UUID, authDetails: AuthDetails) =
+        invitationUseCase.getOwnerId(invitationId) == authDetails.uuid
+
     private fun generateInvitation(memberId: UUID) =
         invitationUseCase.createInvitation(memberId, null.toString())
 

@@ -220,6 +220,29 @@ class InvitationFacadeTest : DescribeSpec({
                 verify(exactly = 1) { guestUseCase.getNotAttendGuestsByInvitation(invitation) }
                 confirmVerified(guestUseCase)
             }
+        }
+        context("verifySender 메서드가 호출되었을 때") {
+            it("초대장 주인이 사용자이면 true를 반환해야한다.") {
+                every { invitationUseCase.getOwnerId(any()) } returns memberId
+
+                val result = invitationFacade.verifySender(invitationId, authDetails)
+
+                result shouldBe true
             }
+
+            it("초대장 주인이 사용자가 아니면 false를 반환해야한다.") {
+                every { invitationUseCase.getOwnerId(any()) } answers {
+                    var randomUUID: UUID
+                    do {
+                        randomUUID = UUID.randomUUID()
+                    } while (randomUUID == memberId)
+                    randomUUID
+                }
+
+                val result = invitationFacade.verifySender(invitationId, authDetails)
+
+                result shouldBe false
+            }
+        }
     }
 })

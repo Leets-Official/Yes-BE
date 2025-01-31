@@ -36,21 +36,28 @@ class InvitationController(
 
     override fun deleteInvitation(
         @PathVariable invitationId: UUID,
-        @AuthenticationPrincipal authDetails: AuthDetails
+        @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<Unit> {
         invitationFacade.deleteInvitation(invitationId, authDetails)
         return ApiResponse.success(SuccessCode.REQUEST_OK)
     }
 
     override fun getInvitation(
-        @PathVariable invitationId: UUID
+        @PathVariable invitationId: UUID,
     ): ApiResponse<InvitationInfoResponse> = ApiResponse.success(
         SuccessCode.REQUEST_OK, invitationFacade.getInvitation(invitationId)
     )
 
     override fun getGuestsByInvitation(
-        @PathVariable invitationId: UUID
+        @PathVariable invitationId: UUID,
     ): ApiResponse<InvitationGuestResponse> = ApiResponse.success(
         SuccessCode.REQUEST_OK, invitationFacade.getInvitationGuests(invitationId)
+    )
+
+    override fun verifySender(
+        @PathVariable invitationId: UUID,
+        @AuthenticationPrincipal authDetails: AuthDetails,
+    ): ApiResponse<Boolean> = ApiResponse.success(
+        SuccessCode.REQUEST_OK, invitationFacade.verifySender(invitationId, authDetails)
     )
 }
