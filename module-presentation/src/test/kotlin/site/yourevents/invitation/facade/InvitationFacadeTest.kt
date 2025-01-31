@@ -45,14 +45,12 @@ class InvitationFacadeTest : DescribeSpec({
         )
 
         val createInvitationRequest = CreateInvitationRequest(
-            owner = CreateInvitationRequest.GuestRequestDto(nickname = "nickname"),
-            invitationThumbnail = CreateInvitationRequest.InvitationThumbnailRequestDto(thumbnailUrl = "http://example.com/"),
-            invitationInformation = CreateInvitationRequest.InvitationInformationRequestDto(
-                title = "title",
-                schedule = LocalDateTime.now(),
-                location = "location",
-                remark = "remark"
-            )
+            ownerNickname = "nickname",
+            thumbnailUrl = "http://example.com/",
+            title = "title",
+            schedule = LocalDateTime.now(),
+            location = "location",
+            remark = "remark"
         )
 
         val member = Member(
@@ -79,7 +77,7 @@ class InvitationFacadeTest : DescribeSpec({
             id = ownerId,
             member = member,
             invitation = invitation,
-            nickname = createInvitationRequest.owner.nickname,
+            nickname = createInvitationRequest.ownerNickname,
             attendance = true,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()
@@ -88,7 +86,7 @@ class InvitationFacadeTest : DescribeSpec({
         val invitationThumbnail = InvitationThumbnail(
             id = thumbnailId,
             invitation = invitation,
-            url = createInvitationRequest.invitationThumbnail.thumbnailUrl,
+            url = createInvitationRequest.thumbnailUrl,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()
         )
@@ -96,10 +94,10 @@ class InvitationFacadeTest : DescribeSpec({
         val invitationInformation = InvitationInformation(
             id = informationId,
             invitation = invitation,
-            title = createInvitationRequest.invitationInformation.title,
-            schedule = createInvitationRequest.invitationInformation.schedule,
-            location = createInvitationRequest.invitationInformation.location,
-            remark = createInvitationRequest.invitationInformation.remark,
+            title = createInvitationRequest.title,
+            schedule = createInvitationRequest.schedule,
+            location = createInvitationRequest.location,
+            remark = createInvitationRequest.remark,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()
         )

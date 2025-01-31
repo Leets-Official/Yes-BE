@@ -10,6 +10,7 @@ import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
 import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.principal.AuthDetails
+import java.time.LocalDateTime
 import java.util.UUID
 
 @Service
@@ -30,11 +31,17 @@ class InvitationFacade(
 
         val invitation = invitationUseCase.updateQrCode(generateInvitation(memberId).id)
 
-        val owner = generateOwner(memberId, invitation.id, createInvitationRequest)
+        val owner = generateOwner(memberId, invitation.id, createInvitationRequest.ownerNickname)
 
-        val invitationThumbnail = generateInvitationThumbnail(invitation.id, createInvitationRequest)
+        val invitationThumbnail = generateInvitationThumbnail(invitation.id, createInvitationRequest.thumbnailUrl)
 
-        val invitationInformation = generateInvitationInformation(invitation.id, createInvitationRequest)
+        val invitationInformation = generateInvitationInformation(
+            invitation.id,
+            title = createInvitationRequest.title,
+            schedule = createInvitationRequest.schedule,
+            location = createInvitationRequest.location,
+            remark = createInvitationRequest.remark
+        )
 
         return CreateInvitationResponse.of(invitation, owner, invitationThumbnail, invitationInformation)
     }
@@ -96,25 +103,30 @@ class InvitationFacade(
     private fun generateInvitation(memberId: UUID) =
         invitationUseCase.createInvitation(memberId, null.toString())
 
-    private fun generateOwner(memberId: UUID, invitationId: UUID, request: CreateInvitationRequest) =
+    private fun generateOwner(memberId: UUID, invitationId: UUID, ownerNickname: String) =
         guestUseCase.createGuest(
             memberId = memberId,
             invitationId = invitationId,
-            nickname = request.owner.nickname
+            nickname = ownerNickname
         )
 
-    private fun generateInvitationThumbnail(invitationId: UUID, request: CreateInvitationRequest) =
+    private fun generateInvitationThumbnail(invitationId: UUID, thumbUrl: String ) =
         invitationThumbnailUseCase.createInvitationThumbnail(
             invitationId = invitationId,
-            url = request.invitationThumbnail.thumbnailUrl
+            url = thumbUrl
         )
 
-    private fun generateInvitationInformation(invitationId: UUID, request: CreateInvitationRequest) =
-        invitationInformationUseCase.createInvitationInformation(
+    private fun generateInvitationInformation(
+        invitationId: UUID,
+        title: String,
+        schedule: LocalDateTime,
+        location: String,
+        remark: String
+    ) = invitationInformationUseCase.createInvitationInformation(
             invitationId = invitationId,
-            title = request.invitationInformation.title,
-            schedule = request.invitationInformation.schedule,
-            location = request.invitationInformation.location,
-            remark = request.invitationInformation.remark
+            title = title,
+            schedule = schedule,
+            location = location,
+            remark = remark
         )
 }
