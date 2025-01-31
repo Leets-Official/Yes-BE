@@ -34,19 +34,19 @@ interface InvitationApi {
     @PatchMapping("/{invitationId}")
     fun deleteInvitation(
         @PathVariable invitationId: UUID,
-        @AuthenticationPrincipal authDetails: AuthDetails
+        @AuthenticationPrincipal authDetails: AuthDetails,
     ): ApiResponse<Unit>
 
     @Operation(summary = "초대장 조회")
     @GetMapping("/{invitationId}")
     fun getInvitation(
-        @PathVariable invitationId: UUID
+        @PathVariable invitationId: UUID,
     ): ApiResponse<InvitationInfoResponse>
 
     @Operation(summary = "초대장별 참석자 목록 조회")
     @GetMapping("/{invitationId}/guests")
     fun getGuestsByInvitation(
-        @PathVariable invitationId: UUID
+        @PathVariable invitationId: UUID,
     ): ApiResponse<InvitationGuestResponse>
 
     @Operation(summary = "특정 초대장에 대한 본인 참석 여부 조회")
@@ -55,4 +55,11 @@ interface InvitationApi {
         @PathVariable invitationId: UUID,
         @AuthenticationPrincipal authDetails: AuthDetails
     ): ApiResponse<InvitationAttendanceResponse>
+  
+    @Operation(summary = "초대장 발송자가 사용자인지 확인")
+    @GetMapping("/{invitationId}/verify-sender")
+    fun verifySender(
+        @PathVariable invitationId: UUID,
+        @AuthenticationPrincipal authDetails: AuthDetails,
+    ): ApiResponse<Boolean>
 }

@@ -35,5 +35,5 @@ jobs:
             fi
             
             sudo docker rm $(sudo docker ps --filter 'status=exited' -a -q) 
-            sudo docker run -d --name yes_dev -p 8080:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=${{secrets.JASYPT_ENCRYPTOR_PASSWORD}} -e PROFILE=dev ${{secrets.DOCKER_USERNAME}}/yes:latest
+            sudo docker run -d --name yes_dev -p 8080:8080 -e JAVA_OPTS=-Djasypt.encryptor.password=${{secrets.JASYPT_ENCRYPTOR_PASSWORD}} -e PROFILE=dev --env-file ~/.env ${{secrets.DOCKER_USERNAME}}/yes:latest
             sudo docker image prune -a -f

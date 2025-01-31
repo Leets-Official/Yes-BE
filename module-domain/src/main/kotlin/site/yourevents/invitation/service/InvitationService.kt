@@ -64,4 +64,7 @@ class InvitationService(
         invitation.markAsDeleted()
         invitationPersistencePort.save(invitation)
     }
+
+    override fun getOwnerId(invitationId: UUID) =
+        invitationPersistencePort.getOwnerId(invitationId)
 }

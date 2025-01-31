@@ -15,4 +15,7 @@ interface InvitationJPARepository : JpaRepository<InvitationEntity, UUID> {
 
     @Query("SELECT i FROM invitation i where i.member = :member AND i.deleted = false")
     fun findByMember(member: MemberEntity): List<InvitationEntity>
+
+    @Query("SELECT i.member.id FROM invitation i where i.id = :invitationId AND i.deleted = false")
+    fun getOwnerId(invitationId: UUID): UUID
 }
