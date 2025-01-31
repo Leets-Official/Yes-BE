@@ -317,15 +317,7 @@ class GuestServiceTest : DescribeSpec({
             it("참석 여부가 true로 반환되어야 한다") {
                 val isAttending = true
 
-                every { guestPersistencePort.findByMemberAndInvitation(memberId, invitationId) } returns Guest(
-                    id = UUID.randomUUID(),
-                    member = member,
-                    invitation = invitation,
-                    nickname = "nickname",
-                    attendance = isAttending,
-                    createdAt = LocalDateTime.now(),
-                    modifiedAt = LocalDateTime.now()
-                )
+                every { guestPersistencePort.findByMemberAndInvitation(memberId, invitationId) } returns isAttending
 
                 val result = guestService.getInvitationAttendance(memberId, invitationId)
 
@@ -338,15 +330,7 @@ class GuestServiceTest : DescribeSpec({
             it("참석 여부가 false로 반환되어야 한다") {
                 val isAttending = false
 
-                every { guestPersistencePort.findByMemberAndInvitation(memberId, invitationId) } returns Guest(
-                    id = UUID.randomUUID(),
-                    member = member,
-                    invitation = invitation,
-                    nickname = "nickname",
-                    attendance = isAttending,
-                    createdAt = LocalDateTime.now(),
-                    modifiedAt = LocalDateTime.now()
-                )
+                every { guestPersistencePort.findByMemberAndInvitation(memberId, invitationId) } returns isAttending
 
                 val result = guestService.getInvitationAttendance(memberId, invitationId)
 

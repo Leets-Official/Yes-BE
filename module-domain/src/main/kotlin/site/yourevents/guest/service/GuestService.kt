@@ -84,7 +84,7 @@ class GuestService(
 
     override fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean? {
         val guest = guestPersistencePort.findByMemberAndInvitation(memberId, invitationId)
-        return guest?.attendance
+        return guest
     }
 
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {
