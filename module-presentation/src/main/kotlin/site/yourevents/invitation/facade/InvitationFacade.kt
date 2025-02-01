@@ -87,7 +87,9 @@ class InvitationFacade(
         )
     }
 
-    fun getInvitationAttendance(invitationId: UUID, memberId: UUID): InvitationAttendanceResponse{
+    fun getInvitationAttendance(invitationId: UUID, authDetails: AuthDetails): InvitationAttendanceResponse
+    {
+        val memberId = authDetails.uuid
         val invitationAttendance = guestUseCase.getInvitationAttendance(memberId, invitationId)
 
         return InvitationAttendanceResponse(
@@ -110,7 +112,7 @@ class InvitationFacade(
             nickname = ownerNickname
         )
 
-    private fun generateInvitationThumbnail(invitationId: UUID, invitationThumbUrl: String ) =
+    private fun generateInvitationThumbnail(invitationId: UUID, invitationThumbUrl: String) =
         invitationThumbnailUseCase.createInvitationThumbnail(
             invitationId = invitationId,
             url = invitationThumbUrl

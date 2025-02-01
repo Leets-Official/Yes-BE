@@ -226,7 +226,7 @@ class InvitationFacadeTest : DescribeSpec({
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
 
-                val response = invitationFacade.getInvitationAttendance(invitationId, memberId)
+                val response = invitationFacade.getInvitationAttendance(invitationId, authDetails)
 
                 response.invitationId shouldBe invitationId
                 response.memberId shouldBe memberId
@@ -241,7 +241,7 @@ class InvitationFacadeTest : DescribeSpec({
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
 
-                val response = invitationFacade.getInvitationAttendance(invitationId, memberId)
+                val response = invitationFacade.getInvitationAttendance(invitationId, authDetails)
 
                 response.invitationId shouldBe invitationId
                 response.memberId shouldBe memberId

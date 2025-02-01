@@ -55,7 +55,7 @@ class InvitationController(
         @PathVariable invitationId: UUID,
         @AuthenticationPrincipal authDetails: AuthDetails
     ): ApiResponse<InvitationAttendanceResponse> = ApiResponse.success(
-        SuccessCode.REQUEST_OK, invitationFacade.getInvitationAttendance(invitationId, authDetails.uuid)
+        SuccessCode.REQUEST_OK, invitationFacade.getInvitationAttendance(invitationId, authDetails)
     )
           
     override fun verifySender(
