@@ -45,5 +45,5 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
         "FROM guest g " +
         "WHERE g.member.id = :memberId " +
         "AND g.invitation.id = :invitationId")
-    fun findByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): Boolean?
+    fun findAttendanceByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): Boolean?
 }

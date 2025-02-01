@@ -110,10 +110,10 @@ class InvitationFacade(
             nickname = ownerNickname
         )
 
-    private fun generateInvitationThumbnail(invitationId: UUID, thumbUrl: String ) =
+    private fun generateInvitationThumbnail(invitationId: UUID, invitationThumbUrl: String ) =
         invitationThumbnailUseCase.createInvitationThumbnail(
             invitationId = invitationId,
-            url = thumbUrl
+            url = invitationThumbUrl
         )
 
     private fun generateInvitationInformation(

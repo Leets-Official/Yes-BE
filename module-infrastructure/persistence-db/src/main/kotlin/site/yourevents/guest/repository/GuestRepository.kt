@@ -46,7 +46,7 @@ class GuestRepository(
             .map(GuestEntity::toDomain)
     }
 
-    override fun findByMemberAndInvitation(memberId: UUID, invitationId: UUID): Boolean? {
-        return guestJPARepository.findByMemberIdAndInvitationId(memberId, invitationId)
+    override fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID): Boolean? {
+        return guestJPARepository.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
     }
 }

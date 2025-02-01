@@ -8,7 +8,6 @@ import site.yourevents.guest.exception.GuestNotFoundException
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.guest.port.out.GuestPersistencePort
 import site.yourevents.invitation.domain.Invitation
-import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.member.domain.Member
 import site.yourevents.member.exception.MemberNotFountException
@@ -82,10 +81,8 @@ class GuestService(
         return guestPersistencePort.findNotAttendGuestsByInvitation(invitation)
     }
 
-    override fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean? {
-        val guest = guestPersistencePort.findByMemberAndInvitation(memberId, invitationId)
-        return guest
-    }
+    override fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean? =
+        guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId)
 
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {
         val guest = guestPersistencePort.findById(guestId)
