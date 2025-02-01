@@ -31,4 +31,6 @@ interface GuestUseCase {
     fun getAttendGuestsByInvitation(invitation: Invitation): List<Guest>
 
     fun getNotAttendGuestsByInvitation(invitation: Invitation): List<Guest>
+
+    fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean?
 }

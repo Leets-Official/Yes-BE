@@ -263,7 +263,7 @@ class GuestServiceTest : DescribeSpec({
                 confirmVerified(memberUseCase, invitationUseCase, guestPersistencePort)
             }
         }
-        context("getGuestsByInvitation() 메서드를 통해서") {
+        context("findAttendGuestsByInvitation, findNotAttendGuestsByInvitation 메서드를 통해서") {
             it("참석하는 게스트와 참석하지 않는 게스트 목록이 반환되어야 한다.") {
                 val attendingGuest1 = Guest(
                     id = UUID.randomUUID(),
@@ -309,6 +309,34 @@ class GuestServiceTest : DescribeSpec({
 
                 verify(exactly = 1) { guestPersistencePort.findAttendGuestsByInvitation(invitation) }
                 verify(exactly = 1) { guestPersistencePort.findNotAttendGuestsByInvitation(invitation) }
+                confirmVerified(guestPersistencePort)
+            }
+        }
+
+        context("getInvitationAttendance 메서드를 통해서") {
+            it("참석 여부가 true로 반환되어야 한다") {
+                val isAttending = true
+
+                every { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) } returns isAttending
+
+                val result = guestService.getInvitationAttendance(memberId, invitationId)
+
+                result shouldBe isAttending
+
+                verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
+                confirmVerified(guestPersistencePort)
+            }
+
+            it("참석 여부가 false로 반환되어야 한다") {
+                val isAttending = false
+
+                every { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) } returns isAttending
+
+                val result = guestService.getInvitationAttendance(memberId, invitationId)
+
+                result shouldBe isAttending
+
+                verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
                 confirmVerified(guestPersistencePort)
             }
         }

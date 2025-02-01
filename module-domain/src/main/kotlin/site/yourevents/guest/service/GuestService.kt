@@ -81,6 +81,9 @@ class GuestService(
         return guestPersistencePort.findNotAttendGuestsByInvitation(invitation)
     }
 
+    override fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean? =
+        guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId)
+
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {
         val guest = guestPersistencePort.findById(guestId)
             ?: throw GuestNotFoundException()

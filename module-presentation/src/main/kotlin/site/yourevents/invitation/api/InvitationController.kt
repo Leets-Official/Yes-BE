@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
-import site.yourevents.invitation.dto.response.CreateInvitationResponse
-import site.yourevents.invitation.dto.response.InvitationGuestResponse
-import site.yourevents.invitation.dto.response.InvitationInfoResponse
-import site.yourevents.invitation.dto.response.InvitationQrResponse
+import site.yourevents.invitation.dto.response.*
 import site.yourevents.invitation.facade.InvitationFacade
 import site.yourevents.principal.AuthDetails
 import site.yourevents.response.ApiResponse
@@ -54,6 +51,13 @@ class InvitationController(
         SuccessCode.REQUEST_OK, invitationFacade.getInvitationGuests(invitationId)
     )
 
+    override fun getInvitationAttendance(
+        @PathVariable invitationId: UUID,
+        @AuthenticationPrincipal authDetails: AuthDetails
+    ): ApiResponse<InvitationAttendanceResponse> = ApiResponse.success(
+        SuccessCode.REQUEST_OK, invitationFacade.getInvitationAttendance(invitationId, authDetails)
+    )
+          
     override fun verifySender(
         @PathVariable invitationId: UUID,
         @AuthenticationPrincipal authDetails: AuthDetails,
