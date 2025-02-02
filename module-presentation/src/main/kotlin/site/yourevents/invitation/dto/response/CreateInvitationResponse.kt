@@ -52,7 +52,7 @@ data class CreateInvitationResponse(
 
             val invitationResponse = InvitationResponseDto(
                 invitationId = invitation.id,
-                memberId = invitation.member.getId(),
+                memberId = invitation.member.id,
                 qrUrl = invitation.qrUrl,
                 deleted = invitation.deleted
             )

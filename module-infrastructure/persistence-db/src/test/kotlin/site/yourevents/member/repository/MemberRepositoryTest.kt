@@ -43,9 +43,9 @@ class MemberRepositoryTest(
                 val member = memberRepository.findBySocialId(socialId)
 
                 member!!.apply {
-                    getSocialId() shouldBe socialId
-                    getNickname() shouldBe nickname
-                    getEmail() shouldBe email
+                    socialId shouldBe socialId
+                    nickname shouldBe nickname
+                    email shouldBe email
                 }
             }
 

@@ -28,15 +28,15 @@ class AuthFacade(
             ?: memberUseCase.createMember(kakaoProfile)
 
         val accessToken: String = tokenUseCase.generateAccessToken(
-            member.getId(),
-            member.getSocialId(),
+            member.id,
+            member.socialId,
             "ROLE_USER",
         )
 
         return LoginResponse.of(
-            member.getId(),
-            member.getSocialId(),
-            member.getNickname(),
+            member.id,
+            member.socialId,
+            member.nickname,
             accessToken,
         )
     }

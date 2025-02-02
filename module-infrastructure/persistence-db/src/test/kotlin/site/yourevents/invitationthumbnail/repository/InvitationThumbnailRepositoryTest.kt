@@ -66,9 +66,9 @@ class InvitationThumbnailRepositoryTest(
 
             savedThumbnail.url shouldBe invitationThumbnailVO.url
             savedThumbnail.invitation.id shouldBe invitationThumbnailVO.invitation.id
-            savedThumbnail.invitation.member.getSocialId() shouldBe memberEntity.toDomain().getSocialId()
-            savedThumbnail.invitation.member.getEmail() shouldBe memberEntity.toDomain().getEmail()
-            savedThumbnail.invitation.member.getNickname() shouldBe memberEntity.toDomain().getNickname()
+            savedThumbnail.invitation.member.socialId shouldBe memberEntity.toDomain().socialId
+            savedThumbnail.invitation.member.email shouldBe memberEntity.toDomain().email
+            savedThumbnail.invitation.member.nickname shouldBe memberEntity.toDomain().nickname
 
         }
     }

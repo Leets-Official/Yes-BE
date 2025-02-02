@@ -67,7 +67,7 @@ class GuestRepositoryTest(
                 savedGuest.nickname shouldBe guestVO.nickname
                 savedGuest.attendance shouldBe guestVO.attendance
 
-                savedGuest.member.getSocialId() shouldBe memberEntity.toDomain().getSocialId()
+                savedGuest.member.socialId shouldBe memberEntity.toDomain().socialId
                 savedGuest.invitation.id shouldBe invitationEntity.id
             }
         }

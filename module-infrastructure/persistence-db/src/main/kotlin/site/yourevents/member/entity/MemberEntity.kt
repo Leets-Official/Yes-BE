@@ -14,16 +14,16 @@ import java.util.UUID
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null,
+    val id: UUID? = null,
 
     @Column
-    private val socialId: String,
+    val socialId: String,
 
     @Column
-    private val nickname: String,
+    val nickname: String,
 
     @Column
-    private val email: String,
+    val email: String,
 ) : BaseTimeEntity() {
     fun toDomain(): Member = Member(
         id = id!!,
@@ -42,10 +42,10 @@ class MemberEntity(
         )
 
         fun from(member: Member): MemberEntity = MemberEntity(
-            id = member.getId(),
-            socialId = member.getSocialId(),
-            nickname = member.getNickname(),
-            email = member.getEmail()
+            id = member.id,
+            socialId = member.socialId,
+            nickname = member.nickname,
+            email = member.email
         )
     }
 }

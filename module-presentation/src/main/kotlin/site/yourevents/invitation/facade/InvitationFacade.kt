@@ -52,7 +52,7 @@ class InvitationFacade(
     ) {
         val invitation = invitationUseCase.findById(invitationId)
 
-        if (invitation.member.getId() != authDetails.uuid) {
+        if (invitation.member.id != authDetails.uuid) {
             throw UnauthorizedException()
         }
 
