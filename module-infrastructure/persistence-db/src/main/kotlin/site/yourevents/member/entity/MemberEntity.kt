@@ -14,16 +14,16 @@ import java.util.UUID
 class MemberEntity(
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    private val id: UUID? = null,
+    val id: UUID? = null,
 
     @Column
-    private val socialId: String,
+    val socialId: String,
 
     @Column
-    private val nickname: String,
+    val nickname: String,
 
     @Column
-    private val email: String,
+    val email: String,
 ) : BaseTimeEntity() {
     fun toDomain(): Member = Member(
         id = id!!,

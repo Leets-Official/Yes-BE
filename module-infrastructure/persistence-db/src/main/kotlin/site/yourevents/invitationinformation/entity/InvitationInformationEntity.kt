@@ -1,6 +1,5 @@
 package site.yourevents.invitationinformation.entity
 
-import jakarta.persistence.CascadeType
 import jakarta.persistence.Column
 import jakarta.persistence.Entity
 import jakarta.persistence.GeneratedValue
@@ -26,16 +25,16 @@ class InvitationInformationEntity(
     val invitation: InvitationEntity,
 
     @Column
-    var title: String,
+    val title: String,
 
     @Column
-    var schedule: LocalDateTime,
+    val schedule: LocalDateTime,
 
     @Column
-    var location: String,
+    val location: String,
 
     @Column
-    var remark: String,
+    val remark: String,
 ) : BaseTimeEntity() {
     fun toDomain(): InvitationInformation =
         InvitationInformation(
