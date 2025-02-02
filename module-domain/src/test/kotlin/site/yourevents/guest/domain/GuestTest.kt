@@ -27,12 +27,14 @@ class GuestTest : DescribeSpec({
 
                 val invitationId = UUID.randomUUID()
                 val qrUrl = "http://example.com"
+                val templateKey = "templateKey"
                 val deleted = false
 
                 val invitation = Invitation(
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
+                    templateKey = templateKey,
                     deleted = deleted,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()

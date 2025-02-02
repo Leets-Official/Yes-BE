@@ -76,6 +76,7 @@ class MemberFacadeTest : DescribeSpec({
                     UUID.randomUUID(),
                     member,
                     "https://sent.qr.com",
+                    "templateKey",
                     false,
                     LocalDateTime.now(),
                     LocalDateTime.now()
@@ -123,6 +124,7 @@ class MemberFacadeTest : DescribeSpec({
                     UUID.randomUUID(),
                     member,
                     "https://received.qr.com",
+                    "templateKey",
                     false,
                     LocalDateTime.now(),
                     LocalDateTime.now()

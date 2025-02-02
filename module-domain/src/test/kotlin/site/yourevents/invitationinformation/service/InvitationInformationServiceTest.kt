@@ -45,6 +45,7 @@ class InvitationInformationServiceTest : DescribeSpec({
             id = invitationId,
             member = member,
             qrUrl = "http://example.com",
+            templateKey = null,
             deleted = false,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()

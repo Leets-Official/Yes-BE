@@ -46,6 +46,7 @@ class InvitationFacadeTest : DescribeSpec({
 
         val createInvitationRequest = CreateInvitationRequest(
             ownerNickname = "nickname",
+            templateKey = "templateKey",
             thumbnailUrl = "http://example.com/",
             title = "title",
             schedule = LocalDateTime.now(),
@@ -66,6 +67,7 @@ class InvitationFacadeTest : DescribeSpec({
             id = invitationId,
             member = Member(memberId, "6316", "nickname", "email", LocalDateTime.now(), LocalDateTime.now()),
             qrUrl = null.toString(),
+            templateKey = "templateKey",
             deleted = false,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()
@@ -109,7 +111,7 @@ class InvitationFacadeTest : DescribeSpec({
         context("createInvitation 메서드가 호출되었을 때") {
             it("초대장을 생성하고 CreateInvitationResponse를 반환해야 한다") {
                 every {
-                    invitationUseCase.createInvitation(any(), any())
+                    invitationUseCase.createInvitation(any(), any(), any())
                 } answers {
                     invitationUseCase.updateQrCode(invitation.id)
                     invitation

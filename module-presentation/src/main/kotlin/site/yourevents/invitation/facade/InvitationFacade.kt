@@ -29,7 +29,9 @@ class InvitationFacade(
     ): CreateInvitationResponse {
         val memberId = authDetails.uuid
 
-        val invitation = invitationUseCase.updateQrCode(generateInvitation(memberId).id)
+        val invitation = invitationUseCase.updateQrCode(
+            generateInvitation(memberId, createInvitationRequest.templateKey).id
+        )
 
         generateOwner(memberId, invitation.id, createInvitationRequest.ownerNickname)
 
@@ -87,8 +89,7 @@ class InvitationFacade(
         )
     }
 
-    fun getInvitationAttendance(invitationId: UUID, authDetails: AuthDetails): InvitationAttendanceResponse
-    {
+    fun getInvitationAttendance(invitationId: UUID, authDetails: AuthDetails): InvitationAttendanceResponse {
         val memberId = authDetails.uuid
         val invitationAttendance = guestUseCase.getInvitationAttendance(memberId, invitationId)
 
@@ -98,12 +99,12 @@ class InvitationFacade(
             attendance = invitationAttendance
         )
     }
-    
+
     fun verifySender(invitationId: UUID, authDetails: AuthDetails) =
         invitationUseCase.getOwnerId(invitationId) == authDetails.uuid
 
-    private fun generateInvitation(memberId: UUID) =
-        invitationUseCase.createInvitation(memberId, null.toString())
+    private fun generateInvitation(memberId: UUID, templateKey: String?) =
+        invitationUseCase.createInvitation(memberId, null.toString(), templateKey)
 
     private fun generateOwner(memberId: UUID, invitationId: UUID, ownerNickname: String) =
         guestUseCase.createGuest(
@@ -123,12 +124,12 @@ class InvitationFacade(
         title: String,
         schedule: LocalDateTime,
         location: String,
-        remark: String
+        remark: String,
     ) = invitationInformationUseCase.createInvitationInformation(
-            invitationId = invitationId,
-            title = title,
-            schedule = schedule,
-            location = location,
-            remark = remark
-        )
+        invitationId = invitationId,
+        title = title,
+        schedule = schedule,
+        location = location,
+        remark = remark
+    )
 }

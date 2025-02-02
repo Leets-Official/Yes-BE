@@ -22,7 +22,7 @@ class InvitationService(
 
     override fun countByMember(member: Member) = invitationPersistencePort.countByMember(member)
 
-    override fun createInvitation(memberId: UUID, qrUrl: String): Invitation {
+    override fun createInvitation(memberId: UUID, qrUrl: String, templateKey: String?): Invitation {
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
@@ -31,6 +31,7 @@ class InvitationService(
             InvitationVO.of(
                 member = member,
                 qrUrl = qrUrl,
+                templateKey = templateKey,
                 deleted = false
             )
         )

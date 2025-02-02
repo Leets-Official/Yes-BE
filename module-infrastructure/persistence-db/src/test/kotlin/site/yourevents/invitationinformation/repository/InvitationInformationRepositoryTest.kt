@@ -43,6 +43,7 @@ class InvitationInformationRepositoryTest(
         invitationEntity = InvitationEntity(
             member = memberEntity,
             qrUrl = "http://example.com",
+            templateKey = null,
             deleted = false
         )
         invitationJPARepository.save(invitationEntity)
@@ -72,6 +73,7 @@ class InvitationInformationRepositoryTest(
             savedInfo.remark shouldBe invitationInformationVO.remark
             savedInfo.invitation.id shouldBe invitationEntity.id
             savedInfo.invitation.qrUrl shouldBe invitationEntity.qrUrl
+            savedInfo.invitation.templateKey shouldBe invitationEntity.templateKey
             savedInfo.invitation.deleted shouldBe invitationEntity.deleted
             savedInfo.invitation.member.socialId shouldBe memberEntity.toDomain().socialId
             savedInfo.invitation.member.nickname shouldBe memberEntity.toDomain().nickname

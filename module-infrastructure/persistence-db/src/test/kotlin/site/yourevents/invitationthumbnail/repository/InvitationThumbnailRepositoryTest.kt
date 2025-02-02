@@ -44,6 +44,7 @@ class InvitationThumbnailRepositoryTest(
         invitationEntity = InvitationEntity(
             member = memberEntity,
             qrUrl = "http://example.com",
+            templateKey = null,
             deleted = false
         )
         invitationJPARepository.save(invitationEntity)

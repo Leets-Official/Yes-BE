@@ -26,6 +26,7 @@ class InvitationRepositoryTest(
     lateinit var memberEntity: MemberEntity
     lateinit var invitationId: UUID
     val qrUrl = "http://example.com"
+    val templateKey = null
     val deleted = false
 
     beforeSpec {
@@ -43,6 +44,7 @@ class InvitationRepositoryTest(
         val invitationEntity = InvitationEntity(
             member = memberEntity,
             qrUrl = qrUrl,
+            templateKey = templateKey,
             deleted = deleted
         )
         invitationJPARepository.save(invitationEntity)
@@ -64,6 +66,7 @@ class InvitationRepositoryTest(
                     id shouldBe invitationId
                     member shouldBe invitation.member
                     qrUrl shouldBe invitation.qrUrl
+                    templateKey shouldBe invitation.templateKey
                     deleted shouldBe invitation.deleted
                 }
             }

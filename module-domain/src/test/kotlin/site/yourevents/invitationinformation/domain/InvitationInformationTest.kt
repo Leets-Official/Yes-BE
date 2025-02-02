@@ -23,6 +23,7 @@ class InvitationInformationTest : DescribeSpec({
                     id = UUID.randomUUID(),
                     member = member,
                     qrUrl = "http://example.com",
+                    templateKey = "templateKey",
                     deleted = false,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
