@@ -3,7 +3,6 @@ package site.yourevents.invitationthumnail.service
 import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.invitation.domain.Invitation
-import site.yourevents.invitation.exception.InvitationNotFoundException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail
 import site.yourevents.invitationthumnail.domain.InvitationThumbnailVO
@@ -24,7 +23,6 @@ class InvitationThumbnailService(
     ): InvitationThumbnail {
 
         val invitation = invitationUseCase.findById(invitationId)
-            ?: throw InvitationNotFoundException()
 
         return invitationThumbnailPersistencePort.save(
             InvitationThumbnailVO.of(
