@@ -42,10 +42,10 @@ class MemberEntity(
         )
 
         fun from(member: Member): MemberEntity = MemberEntity(
-            id = member.getId(),
-            socialId = member.getSocialId(),
-            nickname = member.getNickname(),
-            email = member.getEmail()
+            id = member.id,
+            socialId = member.socialId,
+            nickname = member.nickname,
+            email = member.email
         )
     }
 }

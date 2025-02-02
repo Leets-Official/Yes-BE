@@ -31,7 +31,7 @@ class MemberFacade(
         val sentInvitationCount = invitationUseCase.countByMember(member)
 
         return MemberInfoResponse.of(
-            member.getNickname(),
+            member.nickname,
             receivedInvitationCount,
             sentInvitationCount
         )

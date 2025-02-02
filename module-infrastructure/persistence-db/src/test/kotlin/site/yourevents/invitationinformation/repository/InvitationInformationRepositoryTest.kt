@@ -73,9 +73,9 @@ class InvitationInformationRepositoryTest(
             savedInfo.invitation.id shouldBe invitationEntity.id
             savedInfo.invitation.qrUrl shouldBe invitationEntity.qrUrl
             savedInfo.invitation.deleted shouldBe invitationEntity.deleted
-            savedInfo.invitation.member.getSocialId() shouldBe memberEntity.toDomain().getSocialId()
-            savedInfo.invitation.member.getNickname() shouldBe memberEntity.toDomain().getNickname()
-            savedInfo.invitation.member.getEmail() shouldBe memberEntity.toDomain().getEmail()
+            savedInfo.invitation.member.socialId shouldBe memberEntity.toDomain().socialId
+            savedInfo.invitation.member.nickname shouldBe memberEntity.toDomain().nickname
+            savedInfo.invitation.member.email shouldBe memberEntity.toDomain().email
         }
     }
 })

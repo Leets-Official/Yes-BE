@@ -15,8 +15,8 @@ class AuthDetailsService(
             ?: throw MemberNotFountException()
 
         return AuthDetails(
-            member.getId(),
-            member.getSocialId(),
+            member.id,
+            member.socialId,
             "ROLE_USER",
         )
     }

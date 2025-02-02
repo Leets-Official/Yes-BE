@@ -5,10 +5,10 @@ import java.time.LocalDateTime
 
 data class InvitationInformationVO(
     val invitation: Invitation,
-    var title: String,
-    var schedule: LocalDateTime,
-    var location: String,
-    var remark: String,
+    val title: String,
+    val schedule: LocalDateTime,
+    val location: String,
+    val remark: String,
 ) {
     companion object {
         fun of(invitation: Invitation, title: String, schedule: LocalDateTime, location: String, remark: String) =
