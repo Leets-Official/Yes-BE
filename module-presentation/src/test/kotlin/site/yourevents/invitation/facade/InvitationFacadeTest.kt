@@ -128,14 +128,7 @@ class InvitationFacadeTest : DescribeSpec({
 
                 val response = invitationFacade.createInvitation(createInvitationRequest, authDetails)
 
-                response.shouldBe(
-                    CreateInvitationResponse.of(
-                        invitation = invitation,
-                        owner = guest,
-                        invitationThumbnail = invitationThumbnail,
-                        invitationInformation = invitationInformation
-                    )
-                )
+                response.shouldBe(CreateInvitationResponse.from(invitation = invitation))
             }
         }
 

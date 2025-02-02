@@ -31,11 +31,11 @@ class InvitationFacade(
 
         val invitation = invitationUseCase.updateQrCode(generateInvitation(memberId).id)
 
-        val owner = generateOwner(memberId, invitation.id, createInvitationRequest.ownerNickname)
+        generateOwner(memberId, invitation.id, createInvitationRequest.ownerNickname)
 
-        val invitationThumbnail = generateInvitationThumbnail(invitation.id, createInvitationRequest.thumbnailUrl)
+        generateInvitationThumbnail(invitation.id, createInvitationRequest.thumbnailUrl)
 
-        val invitationInformation = generateInvitationInformation(
+        generateInvitationInformation(
             invitation.id,
             title = createInvitationRequest.title,
             schedule = createInvitationRequest.schedule,
@@ -43,7 +43,7 @@ class InvitationFacade(
             remark = createInvitationRequest.remark
         )
 
-        return CreateInvitationResponse.of(invitation, owner, invitationThumbnail, invitationInformation)
+        return CreateInvitationResponse.from(invitation)
     }
 
     fun deleteInvitation(
