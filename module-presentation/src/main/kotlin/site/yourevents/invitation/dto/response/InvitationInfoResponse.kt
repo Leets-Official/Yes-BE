@@ -8,6 +8,7 @@ import java.util.UUID
 
 data class InvitationInfoResponse(
     val invitationId: UUID,
+    val templateKey: String?,
     val createDate: LocalDateTime?,
     val title: String,
     val schedule: LocalDateTime,
@@ -23,6 +24,7 @@ data class InvitationInfoResponse(
             invitationThumbnail: InvitationThumbnail,
         ): InvitationInfoResponse = InvitationInfoResponse(
             invitation.id,
+            invitation.templateKey,
             invitation.createdAt,
             invitationInformation.title,
             invitationInformation.schedule,
