@@ -7,7 +7,6 @@ import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
-import site.yourevents.invitation.dto.response.CreateInvitationResponse
 import site.yourevents.invitation.dto.response.InvitationGuestResponse
 import site.yourevents.invitation.dto.response.InvitationInfoResponse
 import site.yourevents.invitation.port.`in`.InvitationUseCase
@@ -132,7 +131,7 @@ class InvitationFacadeTest : DescribeSpec({
 
                 val response = invitationFacade.createInvitation(createInvitationRequest, authDetails)
 
-                response.shouldBe(CreateInvitationResponse.from(invitation = invitation))
+                response.shouldBe(invitation.id)
             }
         }
 

@@ -22,7 +22,7 @@ interface InvitationApi {
     fun createInvitation(
         @RequestBody createInvitationRequest: CreateInvitationRequest,
         @AuthenticationPrincipal authDetails: AuthDetails,
-    ): ApiResponse<CreateInvitationResponse>
+    ): ApiResponse<UUID>
 
     @Operation(summary = "초대장 QR 코드 조회")
     @GetMapping("/qr")

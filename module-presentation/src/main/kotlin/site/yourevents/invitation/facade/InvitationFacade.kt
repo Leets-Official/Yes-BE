@@ -26,7 +26,7 @@ class InvitationFacade(
     fun createInvitation(
         createInvitationRequest: CreateInvitationRequest,
         authDetails: AuthDetails,
-    ): CreateInvitationResponse {
+    ): UUID {
         val memberId = authDetails.uuid
 
         val invitation = invitationUseCase.updateQrCode(
@@ -45,7 +45,7 @@ class InvitationFacade(
             remark = createInvitationRequest.remark
         )
 
-        return CreateInvitationResponse.from(invitation)
+        return invitation.id
     }
 
     fun deleteInvitation(
