@@ -9,6 +9,7 @@ import java.util.UUID
 class InvitationVOTest : DescribeSpec({
     lateinit var member: Member
     lateinit var qrUrl: String
+    lateinit var templateKey: String
     var deleted = false
 
     beforeTest {
@@ -22,6 +23,7 @@ class InvitationVOTest : DescribeSpec({
             modifiedAt = LocalDateTime.now()
         )
         qrUrl = "http://example.com"
+        templateKey = "templateKey"
         deleted = false
     }
 
@@ -31,6 +33,7 @@ class InvitationVOTest : DescribeSpec({
                 val invitationVO = InvitationVO(
                     member = member,
                     qrUrl = qrUrl,
+                    templateKey = templateKey,
                     deleted = deleted
                 )
 
@@ -46,10 +49,16 @@ class InvitationVOTest : DescribeSpec({
                 val originalInvitationVO = InvitationVO(
                     member = member,
                     qrUrl = qrUrl,
+                    templateKey = templateKey,
                     deleted = deleted
                 )
 
-                val transformedInvitationVO = InvitationVO.of( originalInvitationVO.member, originalInvitationVO.qrUrl, originalInvitationVO.deleted)
+                val transformedInvitationVO = InvitationVO.of(
+                    originalInvitationVO.member,
+                    originalInvitationVO.qrUrl,
+                    originalInvitationVO.templateKey,
+                    originalInvitationVO.deleted
+                )
 
                 transformedInvitationVO.apply {
                     member shouldBe originalInvitationVO.member

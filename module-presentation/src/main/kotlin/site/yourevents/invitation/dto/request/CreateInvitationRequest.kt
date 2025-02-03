@@ -4,6 +4,7 @@ import java.time.LocalDateTime
 
 data class CreateInvitationRequest(
     val ownerNickname: String,
+    val templateKey: String?,
     val thumbnailUrl: String,
     val title: String,
     val schedule: LocalDateTime,

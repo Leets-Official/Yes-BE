@@ -26,6 +26,7 @@ class InvitationServiceTest : DescribeSpec({
     lateinit var nickname: String
     lateinit var email: String
     lateinit var qrUrl: String
+    lateinit var templateKey: String
     lateinit var member: Member
     var deleted = false
 
@@ -36,6 +37,7 @@ class InvitationServiceTest : DescribeSpec({
         nickname = "seunghyun"
         email = "seunghyun@naver.com"
         qrUrl = "http://example.com"
+        templateKey = "templateKey"
         deleted = false
 
         member = Member(
@@ -63,6 +65,7 @@ class InvitationServiceTest : DescribeSpec({
                         id = invitationId,
                         member = member,
                         qrUrl = qrUrl,
+                        templateKey = templateKey,
                         deleted = deleted,
                         createdAt = LocalDateTime.now(),
                         modifiedAt = LocalDateTime.now()
@@ -101,13 +104,14 @@ class InvitationServiceTest : DescribeSpec({
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
+                    templateKey = templateKey,
                     deleted = deleted,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
                 )
                 every { invitationPersistencePort.save(any<InvitationVO>()) } returns savedInvitation
 
-                val result = invitationService.createInvitation(memberId, qrUrl)
+                val result = invitationService.createInvitation(memberId, qrUrl, templateKey)
 
                 result shouldBe savedInvitation
 
@@ -127,6 +131,7 @@ class InvitationServiceTest : DescribeSpec({
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
+                    templateKey = templateKey,
                     deleted = deleted,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()
@@ -163,6 +168,7 @@ class InvitationServiceTest : DescribeSpec({
                     id = invitationId,
                     member = member,
                     qrUrl = qrUrl,
+                    templateKey = templateKey,
                     deleted = false,
                     createdAt = LocalDateTime.now(),
                     modifiedAt = LocalDateTime.now()

@@ -19,11 +19,11 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
 
     @Query(
         "SELECT DISTINCT i " +
-                "FROM guest g " +
-                "JOIN g.invitation i " +
-                "WHERE g.member = :memberEntity " +
-                "AND i.member <> :memberEntity " +
-                "AND i.deleted = false"
+            "FROM guest g " +
+            "JOIN g.invitation i " +
+            "WHERE g.member = :memberEntity " +
+            "AND i.member <> :memberEntity " +
+            "AND i.deleted = false"
     )
     fun getReceivedInvitations(memberEntity: MemberEntity): List<InvitationEntity>
 
@@ -46,4 +46,10 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
         "WHERE g.member.id = :memberId " +
         "AND g.invitation.id = :invitationId")
     fun findAttendanceByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): Boolean?
+
+    @Query("SELECT g.nickname " +
+        "FROM guest g " +
+        "WHERE g.member.id = :memberId " +
+        "AND g.invitation.id = :invitationId")
+    fun findOwnerNickname(invitationId: UUID, memberId: UUID): String
 }

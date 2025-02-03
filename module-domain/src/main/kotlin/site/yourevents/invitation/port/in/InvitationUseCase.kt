@@ -9,7 +9,7 @@ interface InvitationUseCase {
 
     fun countByMember(member: Member): Int
 
-    fun createInvitation(memberId: UUID, qrUrl: String): Invitation
+    fun createInvitation(memberId: UUID, qrUrl: String, templateKey: String?): Invitation
 
     fun updateQrCode(invitationId: UUID): Invitation
 

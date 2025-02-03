@@ -76,10 +76,14 @@ class MemberFacadeTest : DescribeSpec({
                     UUID.randomUUID(),
                     member,
                     "https://sent.qr.com",
+                    "templateKey",
                     false,
                     LocalDateTime.now(),
                     LocalDateTime.now()
                 )
+
+                val ownerNickname = "ownerNickname"
+
                 val invitationInfo = InvitationInformation(
                     UUID.randomUUID(),
                     invitation,
@@ -101,6 +105,7 @@ class MemberFacadeTest : DescribeSpec({
                 val expectedResponse = listOf(
                     InvitationInfoResponse.of(
                         invitation,
+                        ownerNickname,
                         invitationInfo,
                         invitationThumbnail
                     )
@@ -108,6 +113,7 @@ class MemberFacadeTest : DescribeSpec({
 
                 every { memberUseCase.findById(authDetails.uuid) } returns member
                 every { invitationUseCase.findByMember(member) } returns listOf(invitation)
+                every { guestUseCase.getOwnerNickname(invitation.id, invitation.member.id) } returns ownerNickname
                 every { invitationInformationUseCase.findByInvitation(invitation) } returns invitationInfo
                 every { invitationThumbnailUseCase.findByInvitation(invitation) } returns invitationThumbnail
 
@@ -123,10 +129,12 @@ class MemberFacadeTest : DescribeSpec({
                     UUID.randomUUID(),
                     member,
                     "https://received.qr.com",
+                    "templateKey",
                     false,
                     LocalDateTime.now(),
                     LocalDateTime.now()
                 )
+                val ownerNickname = "ownerNickname"
                 val invitationInfo = InvitationInformation(
                     UUID.randomUUID(),
                     invitation,
@@ -147,6 +155,7 @@ class MemberFacadeTest : DescribeSpec({
                 val expectedResponse = listOf(
                     InvitationInfoResponse.of(
                         invitation,
+                        ownerNickname,
                         invitationInfo,
                         invitationThumbnail
                     )
@@ -154,6 +163,7 @@ class MemberFacadeTest : DescribeSpec({
 
                 every { memberUseCase.findById(authDetails.uuid) } returns member
                 every { guestUseCase.getReceivedInvitations(member) } returns listOf(invitation)
+                every { guestUseCase.getOwnerNickname(invitation.id, invitation.member.id) } returns ownerNickname
                 every { invitationInformationUseCase.findByInvitation(invitation) } returns invitationInfo
                 every { invitationThumbnailUseCase.findByInvitation(invitation) } returns invitationThumbnail
 

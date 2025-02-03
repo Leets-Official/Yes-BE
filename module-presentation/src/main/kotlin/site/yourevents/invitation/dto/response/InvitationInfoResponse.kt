@@ -8,7 +8,9 @@ import java.util.UUID
 
 data class InvitationInfoResponse(
     val invitationId: UUID,
+    val templateKey: String?,
     val createDate: LocalDateTime?,
+    val ownerNickname: String,
     val title: String,
     val schedule: LocalDateTime,
     val location: String,
@@ -19,11 +21,14 @@ data class InvitationInfoResponse(
     companion object {
         fun of(
             invitation: Invitation,
+            ownerNickname: String,
             invitationInformation: InvitationInformation,
             invitationThumbnail: InvitationThumbnail,
         ): InvitationInfoResponse = InvitationInfoResponse(
             invitation.id,
+            invitation.templateKey,
             invitation.createdAt,
+            ownerNickname,
             invitationInformation.title,
             invitationInformation.schedule,
             invitationInformation.location,

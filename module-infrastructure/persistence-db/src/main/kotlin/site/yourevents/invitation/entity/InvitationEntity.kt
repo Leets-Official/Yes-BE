@@ -27,12 +27,16 @@ class InvitationEntity(
     val qrUrl: String,
 
     @Column
+    val templateKey: String?,
+
+    @Column
     val deleted: Boolean,
 ) : BaseTimeEntity() {
     fun toDomain(): Invitation = Invitation(
         id = id!!,
         member = member.toDomain(),
         qrUrl = qrUrl,
+        templateKey = templateKey,
         deleted = deleted,
         createdAt = createdAt,
         modifiedAt = modifiedAt
@@ -43,12 +47,14 @@ class InvitationEntity(
             id = invitation.id,
             member = MemberEntity.from(invitation.member),
             qrUrl = invitation.qrUrl,
+            templateKey = invitation.templateKey,
             deleted = invitation.deleted
         )
 
         fun from(invitationVO: InvitationVO): InvitationEntity = InvitationEntity(
             member = MemberEntity.from(invitationVO.member),
             qrUrl = invitationVO.qrUrl,
+            templateKey = invitationVO.templateKey,
             deleted = invitationVO.deleted
         )
     }

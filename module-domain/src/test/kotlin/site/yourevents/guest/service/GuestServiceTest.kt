@@ -42,6 +42,7 @@ class GuestServiceTest : DescribeSpec({
             id = invitationId,
             member = member,
             qrUrl = "https://qrUrl.com",
+            templateKey = null,
             deleted = false,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()

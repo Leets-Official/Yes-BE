@@ -21,7 +21,7 @@ class InvitationController(
     override fun createInvitation(
         @RequestBody createInvitationRequest: CreateInvitationRequest,
         @AuthenticationPrincipal authDetails: AuthDetails,
-    ): ApiResponse<CreateInvitationResponse> = ApiResponse.success(
+    ): ApiResponse<UUID> = ApiResponse.success(
         SuccessCode.REQUEST_OK, invitationFacade.createInvitation(createInvitationRequest, authDetails)
     )
 

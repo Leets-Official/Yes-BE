@@ -26,12 +26,14 @@ class GuestVOTest : DescribeSpec({
 
         val invitationId = UUID.randomUUID()
         val qrUrl = "http://example.com"
+        val templateKey = "templateKey"
         val deleted = false
         invitation = Invitation(
             id = invitationId,
             member = member,
             qrUrl = qrUrl,
-            deleted = false,
+            templateKey = templateKey,
+            deleted = deleted,
             createdAt = LocalDateTime.now(),
             modifiedAt = LocalDateTime.now()
         )
