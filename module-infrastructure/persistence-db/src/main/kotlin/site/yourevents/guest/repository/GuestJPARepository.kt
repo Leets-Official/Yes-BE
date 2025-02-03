@@ -52,4 +52,10 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
         "WHERE g.member.id = :memberId " +
         "AND g.invitation.id = :invitationId")
     fun findOwnerNickname(invitationId: UUID, memberId: UUID): String
+
+    @Query("SELECT g.id " +
+            "FROM guest g " +
+            "WHERE g.member.id = :memberId " +
+            "AND g.invitation.id = :invitationId")
+    fun findIdByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): UUID?
 }

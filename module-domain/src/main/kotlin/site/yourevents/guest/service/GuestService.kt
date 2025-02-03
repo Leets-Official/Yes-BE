@@ -58,6 +58,8 @@ class GuestService(
 
         val invitation = invitationUseCase.findById(invitationId)
 
+        val guestId = guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
+
         if (guestId == null) {
             guestPersistencePort.save(
                 GuestVO(

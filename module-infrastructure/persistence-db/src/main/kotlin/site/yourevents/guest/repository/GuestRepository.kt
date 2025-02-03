@@ -16,10 +16,9 @@ import kotlin.jvm.optionals.getOrNull
 class GuestRepository(
     private val guestJPARepository: GuestJPARepository,
 ) : GuestPersistencePort {
-    override fun save(guestVo: GuestVO): Guest {
-        return guestJPARepository.save(GuestEntity.from(guestVo))
+    override fun save(guestVo: GuestVO) =
+        guestJPARepository.save(GuestEntity.from(guestVo))
             .toDomain()
-    }
 
     override fun save(guest: Guest) {
         guestJPARepository.save(GuestEntity.from(guest))
@@ -46,10 +45,12 @@ class GuestRepository(
             .map(GuestEntity::toDomain)
     }
 
-    override fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID): Boolean? {
-        return guestJPARepository.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
-    }
+    override fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID) =
+        guestJPARepository.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
 
     override fun findOwnerNickname(invitationId: UUID, memberId: UUID): String =
         guestJPARepository.findOwnerNickname(invitationId, memberId)
+
+    override fun findIdByMemberAndInvitation(memberId: UUID, invitationId: UUID) =
+        guestJPARepository.findIdByMemberIdAndInvitationId(memberId, invitationId)
 }
