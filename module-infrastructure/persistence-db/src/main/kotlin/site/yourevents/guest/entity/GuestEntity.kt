@@ -31,7 +31,7 @@ class GuestEntity(
     @Column
     val nickname: String,
 
-    @Column(nullable = false)
+    @Column
     val attendance: Boolean,
 ) : BaseTimeEntity() {
     fun toDomain(): Guest =
