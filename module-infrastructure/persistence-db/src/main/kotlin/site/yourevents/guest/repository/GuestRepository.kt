@@ -49,4 +49,7 @@ class GuestRepository(
     override fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID): Boolean? {
         return guestJPARepository.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
     }
+
+    override fun findByInvitationAndMember(invitationId: UUID, memberId: UUID): String =
+        guestJPARepository.findByInvitationAndMember(invitationId, memberId)
 }

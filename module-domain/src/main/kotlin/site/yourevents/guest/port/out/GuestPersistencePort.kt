@@ -22,4 +22,6 @@ interface GuestPersistencePort {
     fun findNotAttendGuestsByInvitation(invitation: Invitation): List<Guest>
 
     fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID): Boolean?
+
+    fun findByInvitationAndMember(invitationId: UUID, memberId: UUID): String
 }

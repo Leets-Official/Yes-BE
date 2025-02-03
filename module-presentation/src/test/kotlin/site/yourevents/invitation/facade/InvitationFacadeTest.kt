@@ -85,6 +85,8 @@ class InvitationFacadeTest : DescribeSpec({
             modifiedAt = LocalDateTime.now()
         )
 
+        val ownerNickname = "nickname"
+
         val invitationThumbnail = InvitationThumbnail(
             id = thumbnailId,
             invitation = invitation,
@@ -151,6 +153,7 @@ class InvitationFacadeTest : DescribeSpec({
         context("getInvitation 메서드가 호출되었을 때") {
             it("존재하는 초대장 정보를 반환해야 한다") {
                 every { invitationUseCase.findById(invitationId) } returns invitation
+                every{ guestUseCase.getOwnerNickname(invitationId, invitation.member.id) } returns ownerNickname
                 every { invitationInformationUseCase.findByInvitation(invitation) } returns invitationInformation
                 every { invitationThumbnailUseCase.findByInvitation(invitation) } returns invitationThumbnail
 
@@ -159,6 +162,7 @@ class InvitationFacadeTest : DescribeSpec({
                 response.shouldBe(
                     InvitationInfoResponse.of(
                         invitation = invitation,
+                        ownerNickname = ownerNickname,
                         invitationInformation = invitationInformation,
                         invitationThumbnail = invitationThumbnail
                     )

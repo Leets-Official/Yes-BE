@@ -26,7 +26,6 @@ class InvitationService(
         val member = memberUseCase.findById(memberId)
             ?: throw MemberNotFountException()
 
-
         return invitationPersistencePort.save(
             InvitationVO.of(
                 member = member,
