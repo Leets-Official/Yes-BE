@@ -27,7 +27,7 @@ class InvitationEntity(
     val qrUrl: String,
 
     @Column
-    val templateKey: String? = null,
+    val templateKey: String?,
 
     @Column
     val deleted: Boolean,

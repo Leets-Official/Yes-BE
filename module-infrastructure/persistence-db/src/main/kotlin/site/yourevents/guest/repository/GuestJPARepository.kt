@@ -19,11 +19,11 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
 
     @Query(
         "SELECT DISTINCT i " +
-                "FROM guest g " +
-                "JOIN g.invitation i " +
-                "WHERE g.member = :memberEntity " +
-                "AND i.member <> :memberEntity " +
-                "AND i.deleted = false"
+            "FROM guest g " +
+            "JOIN g.invitation i " +
+            "WHERE g.member = :memberEntity " +
+            "AND i.member <> :memberEntity " +
+            "AND i.deleted = false"
     )
     fun getReceivedInvitations(memberEntity: MemberEntity): List<InvitationEntity>
 
