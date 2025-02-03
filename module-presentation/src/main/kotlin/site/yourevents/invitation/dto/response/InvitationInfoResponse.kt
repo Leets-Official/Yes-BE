@@ -1,6 +1,5 @@
 package site.yourevents.invitation.dto.response
 
-import site.yourevents.guest.domain.Guest
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitationinformation.domain.InvitationInformation
 import site.yourevents.invitationthumnail.domain.InvitationThumbnail

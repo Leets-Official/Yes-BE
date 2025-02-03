@@ -35,5 +35,4 @@ interface GuestUseCase {
     fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean?
 
     fun getOwnerNickname(invitationId: UUID, memberId: UUID): String
-
 }

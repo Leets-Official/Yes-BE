@@ -85,7 +85,7 @@ class GuestService(
         guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId)
 
     override fun getOwnerNickname(invitationId: UUID, memberId: UUID): String =
-        guestPersistencePort.findByInvitationAndMember(invitationId, memberId)
+        guestPersistencePort.findOwnerNickname(invitationId, memberId)
 
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {
         val guest = guestPersistencePort.findById(guestId)
