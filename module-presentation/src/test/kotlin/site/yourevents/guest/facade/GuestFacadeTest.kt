@@ -25,12 +25,10 @@ class GuestFacadeTest : DescribeSpec({
                         any(),
                         any(),
                         any(),
-                        any()
                     )
                 } just runs
 
                 val request = InvitationRespondRequest(
-                    guestId = UUID.randomUUID(),
                     invitationId = UUID.randomUUID(),
                     nickname = "nickname",
                     attendance = true
@@ -49,7 +47,6 @@ class GuestFacadeTest : DescribeSpec({
                         any(),
                         any(),
                         any(),
-                        any()
                     )
                 }
                 confirmVerified(guestUseCase)

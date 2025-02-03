@@ -28,7 +28,7 @@ class GuestRepositoryTest(
     lateinit var invitationEntity: InvitationEntity
     lateinit var memberEntity: MemberEntity
 
-    beforeSpec {
+    beforeEach {
         memberEntity = MemberEntity.from(
             MemberVO(
                 socialId = "6316",
@@ -54,7 +54,7 @@ class GuestRepositoryTest(
         )
     }
 
-    afterSpec {
+    afterEach {
         guestJPARepository.deleteAllInBatch()
         invitationJPARepository.deleteAllInBatch()
         memberJPARepository.deleteAllInBatch()
@@ -70,6 +70,28 @@ class GuestRepositoryTest(
 
                 savedGuest.member.socialId shouldBe memberEntity.toDomain().socialId
                 savedGuest.invitation.id shouldBe invitationEntity.id
+            }
+        }
+
+        context("findIdByMemberIdAndInvitationId() 메서드에서") {
+            it("Guest가 존재하면 guestId를 반환해야 한다.") {
+                val savedGuest = guestRepository.save(guestVO)
+
+                val memberId = memberEntity.id!!
+                val invitationId = invitationEntity.id!!
+
+                val guestId = guestRepository.findIdByMemberAndInvitation(memberId, invitationId)
+
+                guestId shouldBe savedGuest.id
+            }
+
+            it("Guest가 존재하지 않으면 null을 반환해야 한다.") {
+                val memberId = memberEntity.id!!
+                val invitationId = invitationEntity.id!!
+
+                val guestId = guestRepository.findIdByMemberAndInvitation(memberId, invitationId)
+
+                guestId shouldBe null
             }
         }
     }
