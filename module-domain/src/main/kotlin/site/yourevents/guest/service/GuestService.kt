@@ -48,7 +48,6 @@ class GuestService(
     }
 
     override fun respondInvitation(
-        guestId: UUID?,
         invitationId: UUID,
         memberId: UUID,
         nickname: String,
