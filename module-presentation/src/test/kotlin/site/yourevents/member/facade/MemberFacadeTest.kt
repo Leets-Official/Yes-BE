@@ -1,4 +1,4 @@
-package site.yourevents.memeber.facade
+package site.yourevents.member.facade
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
@@ -15,6 +15,7 @@ import site.yourevents.invitationthumnail.port.`in`.InvitationThumbnailUseCase
 import site.yourevents.member.domain.Member
 import site.yourevents.member.port.`in`.MemberUseCase
 import site.yourevents.memeber.dto.response.MemberInfoResponse
+import site.yourevents.memeber.facade.MemberFacade
 import site.yourevents.principal.AuthDetails
 import java.time.LocalDateTime
 import java.util.UUID
