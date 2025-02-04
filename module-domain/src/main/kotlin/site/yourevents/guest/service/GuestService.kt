@@ -87,7 +87,6 @@ class GuestService(
 
     override fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID) =
         guestPersistencePort.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
-            ?: throw GuestNotFoundException()
 
 
     private fun updateAttendance(guestId: UUID, attendance: Boolean) {
