@@ -48,7 +48,7 @@ class GuestRepository(
     override fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID) =
         guestJPARepository.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
 
-    override fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID): String =
+    override fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID) =
         guestJPARepository.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
     override fun findIdByMemberAndInvitation(memberId: UUID, invitationId: UUID) =
