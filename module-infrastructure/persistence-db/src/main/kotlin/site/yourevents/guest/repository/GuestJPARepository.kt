@@ -19,43 +19,53 @@ interface GuestJPARepository : JpaRepository<GuestEntity, UUID> {
 
     @Query(
         "SELECT DISTINCT i " +
-            "FROM guest g " +
-            "JOIN g.invitation i " +
-            "WHERE g.member = :memberEntity " +
-            "AND i.member <> :memberEntity " +
-            "AND i.deleted = false"
+                "FROM guest g " +
+                "JOIN g.invitation i " +
+                "WHERE g.member = :memberEntity " +
+                "AND i.member <> :memberEntity " +
+                "AND i.deleted = false"
     )
     fun getReceivedInvitations(memberEntity: MemberEntity): List<InvitationEntity>
 
-    @Query("SELECT g " +
-            "FROM guest g " +
-            "WHERE g.invitation = :invitationEntity " +
-            "AND g.attendance = true " +
-            "AND g.invitation.deleted = false")
+    @Query(
+        "SELECT g " +
+                "FROM guest g " +
+                "WHERE g.invitation = :invitationEntity " +
+                "AND g.attendance = true " +
+                "AND g.invitation.deleted = false"
+    )
     fun findAttendGuestsByInvitation(invitationEntity: InvitationEntity): List<GuestEntity>
 
-    @Query("SELECT g " +
+    @Query(
+        "SELECT g " +
                 "FROM guest g " +
                 "WHERE g.invitation = :invitationEntity " +
                 "AND g.attendance = false " +
-                "AND g.invitation.deleted = false")
+                "AND g.invitation.deleted = false"
+    )
     fun findNotAttendGuestsByInvitation(invitationEntity: InvitationEntity): List<GuestEntity>
 
-    @Query("SELECT g.attendance " +
-        "FROM guest g " +
-        "WHERE g.member.id = :memberId " +
-        "AND g.invitation.id = :invitationId")
+    @Query(
+        "SELECT g.attendance " +
+                "FROM guest g " +
+                "WHERE g.member.id = :memberId " +
+                "AND g.invitation.id = :invitationId"
+    )
     fun findAttendanceByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): Boolean?
 
-    @Query("SELECT g.nickname " +
-        "FROM guest g " +
-        "WHERE g.member.id = :memberId " +
-        "AND g.invitation.id = :invitationId")
-    fun findOwnerNickname(invitationId: UUID, memberId: UUID): String
+    @Query(
+        "SELECT g.nickname " +
+                "FROM guest g " +
+                "WHERE g.member.id = :memberId " +
+                "AND g.invitation.id = :invitationId"
+    )
+    fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID): String?
 
-    @Query("SELECT g.id " +
-            "FROM guest g " +
-            "WHERE g.member.id = :memberId " +
-            "AND g.invitation.id = :invitationId")
+    @Query(
+        "SELECT g.id " +
+                "FROM guest g " +
+                "WHERE g.member.id = :memberId " +
+                "AND g.invitation.id = :invitationId"
+    )
     fun findIdByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID): UUID?
 }

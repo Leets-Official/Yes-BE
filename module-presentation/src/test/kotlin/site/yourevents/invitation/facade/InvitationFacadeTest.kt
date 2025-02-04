@@ -152,7 +152,12 @@ class InvitationFacadeTest : DescribeSpec({
         context("getInvitation 메서드가 호출되었을 때") {
             it("존재하는 초대장 정보를 반환해야 한다") {
                 every { invitationUseCase.findById(invitationId) } returns invitation
-                every { guestUseCase.getOwnerNickname(invitationId, invitation.member.id) } returns ownerNickname
+                every {
+                    guestUseCase.getNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        invitation.member.id
+                    )
+                } returns ownerNickname
                 every { invitationInformationUseCase.findByInvitation(invitation) } returns invitationInformation
                 every { invitationThumbnailUseCase.findByInvitation(invitation) } returns invitationThumbnail
 
@@ -217,12 +222,13 @@ class InvitationFacadeTest : DescribeSpec({
                 confirmVerified(guestUseCase)
             }
         }
-        
+
         context("getInvitationAttendance 메서드가 호출되었을 때") {
             it("참석 여부가 true로 반환되어야 한다") {
                 val isAttending = true
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
+                every { guestUseCase.getNicknameByInvitationIdAndMemberId(any(), any()) } returns ownerNickname
 
                 val response = invitationFacade.getInvitationAttendance(invitationId, authDetails)
 
@@ -231,6 +237,7 @@ class InvitationFacadeTest : DescribeSpec({
                 response.attendance shouldBe isAttending
 
                 verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
+                verify(exactly = 1) { guestUseCase.getNicknameByInvitationIdAndMemberId(any(), any()) }
                 confirmVerified(invitationUseCase, guestUseCase)
             }
 
@@ -238,6 +245,7 @@ class InvitationFacadeTest : DescribeSpec({
                 val isAttending = false
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
+                every { guestUseCase.getNicknameByInvitationIdAndMemberId(any(), any()) } returns ownerNickname
 
                 val response = invitationFacade.getInvitationAttendance(invitationId, authDetails)
 
@@ -246,10 +254,11 @@ class InvitationFacadeTest : DescribeSpec({
                 response.attendance shouldBe isAttending
 
                 verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
+                verify(exactly = 1) { guestUseCase.getNicknameByInvitationIdAndMemberId(any(), any()) }
                 confirmVerified(invitationUseCase, guestUseCase)
             }
         }
-        
+
         context("verifySender 메서드가 호출되었을 때") {
             it("초대장 주인이 사용자이면 true를 반환해야한다.") {
                 every { invitationUseCase.getOwnerId(any()) } returns memberId

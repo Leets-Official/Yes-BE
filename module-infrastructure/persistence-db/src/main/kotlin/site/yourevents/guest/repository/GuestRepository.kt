@@ -45,12 +45,12 @@ class GuestRepository(
             .map(GuestEntity::toDomain)
     }
 
-    override fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID) =
+    override fun findAttendanceByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID) =
         guestJPARepository.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
 
-    override fun findOwnerNickname(invitationId: UUID, memberId: UUID): String =
-        guestJPARepository.findOwnerNickname(invitationId, memberId)
+    override fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID) =
+        guestJPARepository.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
-    override fun findIdByMemberAndInvitation(memberId: UUID, invitationId: UUID) =
+    override fun findIdByMemberIdAndInvitationId(memberId: UUID, invitationId: UUID) =
         guestJPARepository.findIdByMemberIdAndInvitationId(memberId, invitationId)
 }

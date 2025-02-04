@@ -2,7 +2,6 @@ package site.yourevents.guest.service
 
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.confirmVerified
 import io.mockk.*
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
@@ -83,7 +82,7 @@ class GuestServiceTest : DescribeSpec({
                 result shouldBe expectedCount
 
                 verify(exactly = 1) { guestPersistencePort.getReceivedInvitationCount(member) }
-                }
+            }
         }
 
         context("createGuest() 메서드를 통해서") {
@@ -133,7 +132,7 @@ class GuestServiceTest : DescribeSpec({
                     modifiedAt = LocalDateTime.now()
                 )
 
-                every { guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId) } returns null
+                every { guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId) } returns null
 
                 guestService.respondInvitation(
                     invitationId = invitationId,
@@ -145,7 +144,7 @@ class GuestServiceTest : DescribeSpec({
                 verify(exactly = 1) { memberUseCase.findById(memberId) }
                 verify(exactly = 1) { invitationUseCase.findById(invitationId) }
                 verify(exactly = 1) {
-                    guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
+                    guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId)
                 }
                 verify(exactly = 1) {
                     guestPersistencePort.save(match<GuestVO> { guestVO ->
@@ -171,7 +170,7 @@ class GuestServiceTest : DescribeSpec({
                 )
 
                 every { guestPersistencePort.findById(any()) } returns expectedGuest
-                every { guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId) } returns guestId
+                every { guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId) } returns guestId
 
                 val updatedAttendance = false
                 expectedGuest.updateAttendance(updatedAttendance)
@@ -193,7 +192,7 @@ class GuestServiceTest : DescribeSpec({
                 verify(exactly = 1) { guestPersistencePort.findById(any()) }
                 verify(exactly = 1) { guestPersistencePort.save(any<Guest>()) }
                 verify(exactly = 1) {
-                    guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
+                    guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId)
                 }
                 confirmVerified(memberUseCase, invitationUseCase, guestPersistencePort)
             }
@@ -253,26 +252,71 @@ class GuestServiceTest : DescribeSpec({
             it("참석 여부가 true로 반환되어야 한다") {
                 val isAttending = true
 
-                every { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) } returns isAttending
+                every {
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
+                        memberId,
+                        invitationId
+                    )
+                } returns isAttending
 
                 val result = guestService.getInvitationAttendance(memberId, invitationId)
 
                 result shouldBe isAttending
 
-                verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
+                verify(exactly = 1) {
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
+                        memberId,
+                        invitationId
+                    )
+                }
                 confirmVerified(guestPersistencePort)
             }
 
             it("참석 여부가 false로 반환되어야 한다") {
                 val isAttending = false
 
-                every { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) } returns isAttending
+                every {
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
+                        memberId,
+                        invitationId
+                    )
+                } returns isAttending
 
                 val result = guestService.getInvitationAttendance(memberId, invitationId)
 
                 result shouldBe isAttending
 
-                verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
+                verify(exactly = 1) {
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
+                        memberId,
+                        invitationId
+                    )
+                }
+                confirmVerified(guestPersistencePort)
+            }
+        }
+
+        context("findNicknameByInvitationIdAndMemberId 메서드를 통해서") {
+            it("정상적으로 nickname이 반환되어야 한다") {
+                val expectedNickname = "nickname"
+
+                every {
+                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        memberId
+                    )
+                } returns expectedNickname
+
+                val result = guestService.getNicknameByInvitationIdAndMemberId(invitationId, memberId)
+
+                result shouldBe expectedNickname
+
+                verify(exactly = 1) {
+                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        memberId
+                    )
+                }
                 confirmVerified(guestPersistencePort)
             }
         }
