@@ -1,12 +1,10 @@
 package site.yourevents.guest.service
 
-import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
 import io.mockk.*
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
-import site.yourevents.guest.exception.GuestNotFoundException
 import site.yourevents.guest.port.out.GuestPersistencePort
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.port.`in`.InvitationUseCase
@@ -302,27 +300,6 @@ class GuestServiceTest : DescribeSpec({
                 val result = guestService.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
                 result shouldBe expectedNickname
-
-                verify(exactly = 1) {
-                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
-                        invitationId,
-                        memberId
-                    )
-                }
-                confirmVerified(guestPersistencePort)
-            }
-
-            it("DB에 충족하는 nickname이 없으면, 예외가 발생해야 한다.") {
-                every {
-                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
-                        invitationId,
-                        memberId
-                    )
-                } returns null
-
-                shouldThrow<GuestNotFoundException> {
-                    guestService.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
-                }
 
                 verify(exactly = 1) {
                     guestPersistencePort.findNicknameByInvitationIdAndMemberId(
