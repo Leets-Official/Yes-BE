@@ -1,11 +1,12 @@
 package site.yourevents.guest.service
 
+import io.kotest.assertions.throwables.shouldThrow
 import io.kotest.core.spec.style.DescribeSpec
 import io.kotest.matchers.shouldBe
-import io.mockk.confirmVerified
 import io.mockk.*
 import site.yourevents.guest.domain.Guest
 import site.yourevents.guest.domain.GuestVO
+import site.yourevents.guest.exception.GuestNotFoundException
 import site.yourevents.guest.port.out.GuestPersistencePort
 import site.yourevents.invitation.domain.Invitation
 import site.yourevents.invitation.port.`in`.InvitationUseCase
@@ -83,7 +84,7 @@ class GuestServiceTest : DescribeSpec({
                 result shouldBe expectedCount
 
                 verify(exactly = 1) { guestPersistencePort.getReceivedInvitationCount(member) }
-                }
+            }
         }
 
         context("createGuest() 메서드를 통해서") {
@@ -253,7 +254,12 @@ class GuestServiceTest : DescribeSpec({
             it("참석 여부가 true로 반환되어야 한다") {
                 val isAttending = true
 
-                every { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) } returns isAttending
+                every {
+                    guestPersistencePort.findAttendanceByMemberAndInvitation(
+                        memberId,
+                        invitationId
+                    )
+                } returns isAttending
 
                 val result = guestService.getInvitationAttendance(memberId, invitationId)
 
@@ -266,13 +272,64 @@ class GuestServiceTest : DescribeSpec({
             it("참석 여부가 false로 반환되어야 한다") {
                 val isAttending = false
 
-                every { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) } returns isAttending
+                every {
+                    guestPersistencePort.findAttendanceByMemberAndInvitation(
+                        memberId,
+                        invitationId
+                    )
+                } returns isAttending
 
                 val result = guestService.getInvitationAttendance(memberId, invitationId)
 
                 result shouldBe isAttending
 
                 verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
+                confirmVerified(guestPersistencePort)
+            }
+        }
+
+        context("findNicknameByInvitationIdAndMemberId 메서드를 통해서") {
+            it("정상적으로 nickname이 반환되어야 한다") {
+                val expectedNickname = "nickname"
+
+                every {
+                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        memberId
+                    )
+                } returns expectedNickname
+
+                val result = guestService.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
+
+                result shouldBe expectedNickname
+
+                verify(exactly = 1) {
+                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        memberId
+                    )
+                }
+                confirmVerified(guestPersistencePort)
+            }
+
+            it("DB에 충족하는 nickname이 없으면, 예외가 발생해야 한다.") {
+                every {
+                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        memberId
+                    )
+                } returns null
+
+                shouldThrow<GuestNotFoundException> {
+                    guestService.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
+                }
+
+                verify(exactly = 1) {
+                    guestPersistencePort.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        memberId
+                    )
+                }
                 confirmVerified(guestPersistencePort)
             }
         }
