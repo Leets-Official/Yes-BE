@@ -48,7 +48,6 @@ class GuestService(
     }
 
     override fun respondInvitation(
-        guestId: UUID?,
         invitationId: UUID,
         memberId: UUID,
         nickname: String,
@@ -58,6 +57,8 @@ class GuestService(
             ?: throw MemberNotFountException()
 
         val invitation = invitationUseCase.findById(invitationId)
+
+        val guestId = guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
 
         if (guestId == null) {
             guestPersistencePort.save(

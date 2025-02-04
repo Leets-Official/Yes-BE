@@ -16,7 +16,6 @@ class GuestFacade(
         val memberId = authDetails.uuid
 
         guestUseCase.respondInvitation(
-            invitationRespondRequest.guestId,
             invitationRespondRequest.invitationId,
             memberId,
             invitationRespondRequest.nickname,
