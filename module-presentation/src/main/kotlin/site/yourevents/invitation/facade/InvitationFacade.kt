@@ -98,10 +98,12 @@ class InvitationFacade(
     fun getInvitationAttendance(invitationId: UUID, authDetails: AuthDetails): InvitationAttendanceResponse {
         val memberId = authDetails.uuid
         val invitationAttendance = guestUseCase.getInvitationAttendance(memberId, invitationId)
+        val nickname = guestUseCase.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
         return InvitationAttendanceResponse(
             invitationId = invitationId,
             memberId = memberId,
+            nickname = nickname,
             attendance = invitationAttendance
         )
     }
