@@ -20,7 +20,7 @@ import site.yourevents.member.repository.MemberJPARepository
 class GuestRepositoryTest(
     @Autowired private val guestJPARepository: GuestJPARepository,
     @Autowired private val memberJPARepository: MemberJPARepository,
-    @Autowired private val invitationJPARepository: InvitationJPARepository
+    @Autowired private val invitationJPARepository: InvitationJPARepository,
 ) : DescribeSpec({
     val guestRepository = GuestRepository(guestJPARepository)
 
@@ -80,7 +80,7 @@ class GuestRepositoryTest(
                 val memberId = memberEntity.id!!
                 val invitationId = invitationEntity.id!!
 
-                val guestId = guestRepository.findIdByMemberAndInvitation(memberId, invitationId)
+                val guestId = guestRepository.findIdByMemberIdAndInvitationId(memberId, invitationId)
 
                 guestId shouldBe savedGuest.id
             }
@@ -89,7 +89,7 @@ class GuestRepositoryTest(
                 val memberId = memberEntity.id!!
                 val invitationId = invitationEntity.id!!
 
-                val guestId = guestRepository.findIdByMemberAndInvitation(memberId, invitationId)
+                val guestId = guestRepository.findIdByMemberIdAndInvitationId(memberId, invitationId)
 
                 guestId shouldBe null
             }

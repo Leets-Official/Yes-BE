@@ -58,7 +58,7 @@ class GuestService(
 
         val invitation = invitationUseCase.findById(invitationId)
 
-        val guestId = guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
+        val guestId = guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId)
 
         if (guestId == null) {
             guestPersistencePort.save(
@@ -83,9 +83,9 @@ class GuestService(
     }
 
     override fun getInvitationAttendance(memberId: UUID, invitationId: UUID): Boolean? =
-        guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId)
+        guestPersistencePort.findAttendanceByMemberIdAndInvitationId(memberId, invitationId)
 
-    override fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID) =
+    override fun getNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID) =
         guestPersistencePort.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
 

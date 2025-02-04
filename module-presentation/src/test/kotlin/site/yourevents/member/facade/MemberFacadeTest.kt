@@ -115,7 +115,7 @@ class MemberFacadeTest : DescribeSpec({
                 every { memberUseCase.findById(authDetails.uuid) } returns member
                 every { invitationUseCase.findByMember(member) } returns listOf(invitation)
                 every {
-                    guestUseCase.findNicknameByInvitationIdAndMemberId(
+                    guestUseCase.getNicknameByInvitationIdAndMemberId(
                         invitation.id,
                         invitation.member.id
                     )
@@ -170,7 +170,7 @@ class MemberFacadeTest : DescribeSpec({
                 every { memberUseCase.findById(authDetails.uuid) } returns member
                 every { guestUseCase.getReceivedInvitations(member) } returns listOf(invitation)
                 every {
-                    guestUseCase.findNicknameByInvitationIdAndMemberId(
+                    guestUseCase.getNicknameByInvitationIdAndMemberId(
                         invitation.id,
                         invitation.member.id
                     )

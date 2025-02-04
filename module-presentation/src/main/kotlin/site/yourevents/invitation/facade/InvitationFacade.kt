@@ -67,7 +67,7 @@ class InvitationFacade(
     fun getInvitation(invitationId: UUID): InvitationInfoResponse {
         val invitation = invitationUseCase.findById(invitationId)
 
-        val ownerNickname = guestUseCase.findNicknameByInvitationIdAndMemberId(invitationId, invitation.member.id)
+        val ownerNickname = guestUseCase.getNicknameByInvitationIdAndMemberId(invitationId, invitation.member.id)
 
         val invitationInformation = invitationInformationUseCase.findByInvitation(invitation)
 
@@ -98,7 +98,7 @@ class InvitationFacade(
     fun getInvitationAttendance(invitationId: UUID, authDetails: AuthDetails): InvitationAttendanceResponse {
         val memberId = authDetails.uuid
         val invitationAttendance = guestUseCase.getInvitationAttendance(memberId, invitationId)
-        val nickname = guestUseCase.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
+        val nickname = guestUseCase.getNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
         return InvitationAttendanceResponse(
             invitationId = invitationId,

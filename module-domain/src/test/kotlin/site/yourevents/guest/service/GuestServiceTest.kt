@@ -132,7 +132,7 @@ class GuestServiceTest : DescribeSpec({
                     modifiedAt = LocalDateTime.now()
                 )
 
-                every { guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId) } returns null
+                every { guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId) } returns null
 
                 guestService.respondInvitation(
                     invitationId = invitationId,
@@ -144,7 +144,7 @@ class GuestServiceTest : DescribeSpec({
                 verify(exactly = 1) { memberUseCase.findById(memberId) }
                 verify(exactly = 1) { invitationUseCase.findById(invitationId) }
                 verify(exactly = 1) {
-                    guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
+                    guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId)
                 }
                 verify(exactly = 1) {
                     guestPersistencePort.save(match<GuestVO> { guestVO ->
@@ -170,7 +170,7 @@ class GuestServiceTest : DescribeSpec({
                 )
 
                 every { guestPersistencePort.findById(any()) } returns expectedGuest
-                every { guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId) } returns guestId
+                every { guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId) } returns guestId
 
                 val updatedAttendance = false
                 expectedGuest.updateAttendance(updatedAttendance)
@@ -192,7 +192,7 @@ class GuestServiceTest : DescribeSpec({
                 verify(exactly = 1) { guestPersistencePort.findById(any()) }
                 verify(exactly = 1) { guestPersistencePort.save(any<Guest>()) }
                 verify(exactly = 1) {
-                    guestPersistencePort.findIdByMemberAndInvitation(memberId, invitationId)
+                    guestPersistencePort.findIdByMemberIdAndInvitationId(memberId, invitationId)
                 }
                 confirmVerified(memberUseCase, invitationUseCase, guestPersistencePort)
             }
@@ -253,7 +253,7 @@ class GuestServiceTest : DescribeSpec({
                 val isAttending = true
 
                 every {
-                    guestPersistencePort.findAttendanceByMemberAndInvitation(
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
                         memberId,
                         invitationId
                     )
@@ -263,7 +263,12 @@ class GuestServiceTest : DescribeSpec({
 
                 result shouldBe isAttending
 
-                verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
+                verify(exactly = 1) {
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
+                        memberId,
+                        invitationId
+                    )
+                }
                 confirmVerified(guestPersistencePort)
             }
 
@@ -271,7 +276,7 @@ class GuestServiceTest : DescribeSpec({
                 val isAttending = false
 
                 every {
-                    guestPersistencePort.findAttendanceByMemberAndInvitation(
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
                         memberId,
                         invitationId
                     )
@@ -281,7 +286,12 @@ class GuestServiceTest : DescribeSpec({
 
                 result shouldBe isAttending
 
-                verify(exactly = 1) { guestPersistencePort.findAttendanceByMemberAndInvitation(memberId, invitationId) }
+                verify(exactly = 1) {
+                    guestPersistencePort.findAttendanceByMemberIdAndInvitationId(
+                        memberId,
+                        invitationId
+                    )
+                }
                 confirmVerified(guestPersistencePort)
             }
         }
@@ -297,7 +307,7 @@ class GuestServiceTest : DescribeSpec({
                     )
                 } returns expectedNickname
 
-                val result = guestService.findNicknameByInvitationIdAndMemberId(invitationId, memberId)
+                val result = guestService.getNicknameByInvitationIdAndMemberId(invitationId, memberId)
 
                 result shouldBe expectedNickname
 
