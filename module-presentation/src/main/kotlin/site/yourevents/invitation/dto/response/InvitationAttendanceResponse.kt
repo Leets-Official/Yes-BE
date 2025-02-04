@@ -5,5 +5,6 @@ import java.util.UUID
 data class InvitationAttendanceResponse(
     val invitationId: UUID,
     val memberId: UUID,
-    val attendance: Boolean?
+    val nickname: String,
+    val attendance: Boolean?,
 )
