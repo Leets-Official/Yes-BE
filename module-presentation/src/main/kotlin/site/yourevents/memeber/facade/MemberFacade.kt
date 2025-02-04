@@ -74,7 +74,7 @@ class MemberFacade(
 
         return InvitationInfoResponse.of(
             invitation,
-            ownerNickname,
+            ownerNickname!!,
             invitationInfo,
             invitationThumbnail
         )
