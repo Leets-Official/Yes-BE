@@ -228,6 +228,7 @@ class InvitationFacadeTest : DescribeSpec({
                 val isAttending = true
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
+                every { guestUseCase.findNicknameByInvitationIdAndMemberId(any(), any()) } returns ownerNickname
 
                 val response = invitationFacade.getInvitationAttendance(invitationId, authDetails)
 
@@ -236,6 +237,7 @@ class InvitationFacadeTest : DescribeSpec({
                 response.attendance shouldBe isAttending
 
                 verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
+                verify(exactly = 1) { guestUseCase.findNicknameByInvitationIdAndMemberId(any(), any()) }
                 confirmVerified(invitationUseCase, guestUseCase)
             }
 
@@ -243,6 +245,7 @@ class InvitationFacadeTest : DescribeSpec({
                 val isAttending = false
 
                 every { guestUseCase.getInvitationAttendance(memberId, invitationId) } returns isAttending
+                every { guestUseCase.findNicknameByInvitationIdAndMemberId(any(), any()) } returns ownerNickname
 
                 val response = invitationFacade.getInvitationAttendance(invitationId, authDetails)
 
@@ -251,6 +254,7 @@ class InvitationFacadeTest : DescribeSpec({
                 response.attendance shouldBe isAttending
 
                 verify(exactly = 1) { guestUseCase.getInvitationAttendance(memberId, invitationId) }
+                verify(exactly = 1) { guestUseCase.findNicknameByInvitationIdAndMemberId(any(), any()) }
                 confirmVerified(invitationUseCase, guestUseCase)
             }
         }
