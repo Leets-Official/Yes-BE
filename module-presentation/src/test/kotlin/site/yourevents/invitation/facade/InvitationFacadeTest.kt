@@ -152,7 +152,12 @@ class InvitationFacadeTest : DescribeSpec({
         context("getInvitation 메서드가 호출되었을 때") {
             it("존재하는 초대장 정보를 반환해야 한다") {
                 every { invitationUseCase.findById(invitationId) } returns invitation
-                every { guestUseCase.getOwnerNickname(invitationId, invitation.member.id) } returns ownerNickname
+                every {
+                    guestUseCase.findNicknameByInvitationIdAndMemberId(
+                        invitationId,
+                        invitation.member.id
+                    )
+                } returns ownerNickname
                 every { invitationInformationUseCase.findByInvitation(invitation) } returns invitationInformation
                 every { invitationThumbnailUseCase.findByInvitation(invitation) } returns invitationThumbnail
 
@@ -217,7 +222,7 @@ class InvitationFacadeTest : DescribeSpec({
                 confirmVerified(guestUseCase)
             }
         }
-        
+
         context("getInvitationAttendance 메서드가 호출되었을 때") {
             it("참석 여부가 true로 반환되어야 한다") {
                 val isAttending = true
@@ -249,7 +254,7 @@ class InvitationFacadeTest : DescribeSpec({
                 confirmVerified(invitationUseCase, guestUseCase)
             }
         }
-        
+
         context("verifySender 메서드가 호출되었을 때") {
             it("초대장 주인이 사용자이면 true를 반환해야한다.") {
                 every { invitationUseCase.getOwnerId(any()) } returns memberId

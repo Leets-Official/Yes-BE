@@ -68,7 +68,7 @@ class MemberFacade(
     private fun createInvitationInfoResponse(invitation: Invitation): InvitationInfoResponse {
         val invitationInfo = invitationInformationUseCase.findByInvitation(invitation)
 
-        val ownerNickname = guestUseCase.getOwnerNickname(invitation.id, invitation.member.id)
+        val ownerNickname = guestUseCase.findNicknameByInvitationIdAndMemberId(invitation.id, invitation.member.id)
 
         val invitationThumbnail = invitationThumbnailUseCase.findByInvitation(invitation)
 

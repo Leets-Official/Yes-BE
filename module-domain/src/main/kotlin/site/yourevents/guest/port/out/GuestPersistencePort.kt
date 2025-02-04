@@ -23,7 +23,7 @@ interface GuestPersistencePort {
 
     fun findAttendanceByMemberAndInvitation(memberId: UUID, invitationId: UUID): Boolean?
 
-    fun findOwnerNickname(invitationId: UUID, memberId: UUID): String
+    fun findNicknameByInvitationIdAndMemberId(invitationId: UUID, memberId: UUID): String
 
     fun findIdByMemberAndInvitation(memberId: UUID, invitationId: UUID): UUID?
 }

@@ -4,7 +4,10 @@ import jakarta.transaction.Transactional
 import org.springframework.stereotype.Service
 import site.yourevents.guest.port.`in`.GuestUseCase
 import site.yourevents.invitation.dto.request.CreateInvitationRequest
-import site.yourevents.invitation.dto.response.*
+import site.yourevents.invitation.dto.response.InvitationAttendanceResponse
+import site.yourevents.invitation.dto.response.InvitationGuestResponse
+import site.yourevents.invitation.dto.response.InvitationInfoResponse
+import site.yourevents.invitation.dto.response.InvitationQrResponse
 import site.yourevents.invitation.exception.UnauthorizedException
 import site.yourevents.invitation.port.`in`.InvitationUseCase
 import site.yourevents.invitationinformation.port.`in`.InvitationInformationUseCase
@@ -64,7 +67,7 @@ class InvitationFacade(
     fun getInvitation(invitationId: UUID): InvitationInfoResponse {
         val invitation = invitationUseCase.findById(invitationId)
 
-        val ownerNickname = guestUseCase.getOwnerNickname(invitationId, invitation.member.id)
+        val ownerNickname = guestUseCase.findNicknameByInvitationIdAndMemberId(invitationId, invitation.member.id)
 
         val invitationInformation = invitationInformationUseCase.findByInvitation(invitation)
 
