@@ -48,7 +48,7 @@ class SecurityConfig(
                 whiteList.forEach { authorize(it, permitAll) }
 
                 // login
-                authorize(HttpMethod.POST, "/login", permitAll) // POST 허용
+                authorize(HttpMethod.POST, "/login", permitAll)
                 authorize("/login", denyAll)
 
                 // presigned url
