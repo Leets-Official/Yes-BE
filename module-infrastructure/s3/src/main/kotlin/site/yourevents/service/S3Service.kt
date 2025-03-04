@@ -19,20 +19,21 @@ class S3Service(
     private val bucketName: String,
 ) : PreSignedUrlPort {
 
-    override fun uploadQrCode(imageName: String, qrCodeBytes: ByteArray): String {
+    override fun uploadQrCode(invitationId: UUID, invitationTitle: String, qrCodeBytes: ByteArray): String {
+        val path = "qr/$invitationId/$invitationTitle"
         val inputStream = qrCodeBytes.inputStream()
         val metadata = ObjectMetadata().apply {
             this.contentType = "image/png"
             this.contentLength = qrCodeBytes.size.toLong()
-            this.contentDisposition = "attachment; filename=\"$imageName.png\""
+            this.contentDisposition = "attachment; filename=\"$invitationTitle.png\""
         }
 
-        amazonS3.putObject(bucketName, imageName, inputStream, metadata)
-        return amazonS3.getUrl(bucketName, imageName).toString()
+        amazonS3.putObject(bucketName, path, inputStream, metadata)
+        return amazonS3.getUrl(bucketName, path).toString()
     }
 
     override fun getPreSignedUrl(imageName: String): String {
-        val fileName = createPath(imageName)
+        val fileName = String.format("thumbnail/%S", UUID.randomUUID().toString() + imageName)
         val getGeneratePresignedUrlRequest = getGeneratePreSignedUrlRequest(bucketName, fileName)
         val preSignedUrl: URL = amazonS3.generatePresignedUrl(getGeneratePresignedUrlRequest)
 
@@ -50,7 +51,4 @@ class S3Service(
         expiration.time = expTimeMillis
         return expiration
     }
-
-    private fun createPath(fileName: String): String =
-        String.format("%S", UUID.randomUUID().toString() + fileName)
 }

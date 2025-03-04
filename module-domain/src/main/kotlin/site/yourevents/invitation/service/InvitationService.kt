@@ -36,12 +36,10 @@ class InvitationService(
         )
     }
 
-    override fun updateQrCode(invitationId: UUID): Invitation {
-        val invitation = findById(invitationId)
+    override fun updateQrCode(invitation: Invitation, invitationTitle: String): Invitation {
+        val qrCode = qrCodeUseCase.generateQrCode(invitation.id)
 
-        val qrCode = qrCodeUseCase.generateQrCode(invitationId)
-
-        val qrUrl = qrCodeUseCase.uploadQrCode(invitationId.toString(), qrCode)
+        val qrUrl = qrCodeUseCase.uploadQrCode(invitation.id, invitationTitle, qrCode)
 
         invitation.updateQrCode(qrUrl)
 

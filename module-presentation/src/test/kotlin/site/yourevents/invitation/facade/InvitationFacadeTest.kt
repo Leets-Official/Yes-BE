@@ -72,7 +72,7 @@ class InvitationFacadeTest : DescribeSpec({
             modifiedAt = LocalDateTime.now()
         )
 
-        every { invitationUseCase.updateQrCode(any()) } returns invitation
+        every { invitationUseCase.updateQrCode(any(), any()) } returns invitation
 
         val guest = Guest(
             id = ownerId,
@@ -114,7 +114,7 @@ class InvitationFacadeTest : DescribeSpec({
                 every {
                     invitationUseCase.createInvitation(any(), any(), any())
                 } answers {
-                    invitationUseCase.updateQrCode(invitation.id)
+                    invitationUseCase.updateQrCode(invitation, invitationInformation.title)
                     invitation
                 }
                 every { guestUseCase.createGuest(any(), any(), any()) } returns guest

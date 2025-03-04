@@ -5,5 +5,5 @@ import java.util.UUID
 interface QrCodeUseCase {
     fun generateQrCode(invitationId: UUID): ByteArray
 
-    fun uploadQrCode(imageName: String, qrCodeBytes: ByteArray): String
+    fun uploadQrCode(invitationId: UUID, invitationTitle: String, qrCodeBytes: ByteArray): String
 }

@@ -39,7 +39,6 @@ class SecurityConfig(
         "/v3/**",
         "/health-check",
         "$actuatorEndPoint/**",
-        "/login"
     )
 
     @Bean
@@ -47,6 +46,10 @@ class SecurityConfig(
         http {
             authorizeHttpRequests {
                 whiteList.forEach { authorize(it, permitAll) }
+
+                // login
+                authorize(HttpMethod.POST, "/login", permitAll)
+                authorize("/login", denyAll)
 
                 // presigned url
                 authorize("/presignedurl", authenticated)

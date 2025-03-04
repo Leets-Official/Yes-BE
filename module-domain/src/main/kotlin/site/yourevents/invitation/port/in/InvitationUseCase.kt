@@ -11,7 +11,7 @@ interface InvitationUseCase {
 
     fun createInvitation(memberId: UUID, qrUrl: String, templateKey: String?): Invitation
 
-    fun updateQrCode(invitationId: UUID): Invitation
+    fun updateQrCode(invitation: Invitation, invitationTitle: String): Invitation
 
     fun findById(id: UUID): Invitation
 

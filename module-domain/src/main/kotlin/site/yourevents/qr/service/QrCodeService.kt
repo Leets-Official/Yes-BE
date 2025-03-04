@@ -14,6 +14,6 @@ class QrCodeService(
     override fun generateQrCode(invitationId: UUID): ByteArray =
         qrCodePort.generate(invitationId)
 
-    override fun uploadQrCode(imageName: String, qrCodeBytes: ByteArray): String =
-        preSignedPort.uploadQrCode(imageName, qrCodeBytes)
+    override fun uploadQrCode(invitationId: UUID, invitationTitle: String, qrCodeBytes: ByteArray): String =
+        preSignedPort.uploadQrCode(invitationId, invitationTitle, qrCodeBytes)
 }

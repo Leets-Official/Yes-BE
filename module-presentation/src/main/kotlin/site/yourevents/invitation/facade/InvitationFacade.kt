@@ -32,15 +32,13 @@ class InvitationFacade(
     ): UUID {
         val memberId = authDetails.uuid
 
-        val invitation = invitationUseCase.updateQrCode(
-            generateInvitation(memberId, createInvitationRequest.templateKey).id
-        )
+        val invitation = generateInvitation(memberId, createInvitationRequest.templateKey)
 
         generateOwner(memberId, invitation.id, createInvitationRequest.ownerNickname)
 
         generateInvitationThumbnail(invitation.id, createInvitationRequest.thumbnailUrl)
 
-        generateInvitationInformation(
+        val invitationInfo = generateInvitationInformation(
             invitation.id,
             title = createInvitationRequest.title,
             schedule = createInvitationRequest.schedule,
@@ -48,7 +46,7 @@ class InvitationFacade(
             remark = createInvitationRequest.remark
         )
 
-        return invitation.id
+        return invitationUseCase.updateQrCode(invitation, invitationInfo.title).id
     }
 
     fun deleteInvitation(
