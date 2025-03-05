@@ -7,9 +7,8 @@ import com.amazonaws.services.s3.model.ObjectMetadata
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.stereotype.Service
 import site.yourevents.s3.port.out.PreSignedUrlPort
+import java.net.URI
 import java.net.URL
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 import java.util.Date
 import java.util.UUID
 
@@ -27,7 +26,8 @@ class S3Service(
         val metadata = ObjectMetadata().apply {
             contentType = "image/png"
             contentLength = qrCodeBytes.size.toLong()
-            contentDisposition = "attachment; filename=\"${encodeFileName(invitationTitle)}.png\""
+            contentDisposition =
+                "attachment; filename=\"${URI(null, null, invitationTitle, null).toASCIIString()}.png\""
         }
 
         amazonS3.putObject(bucketName, path, inputStream, metadata)
@@ -46,8 +46,4 @@ class S3Service(
         GeneratePresignedUrlRequest(bucket, fileName)
             .withMethod(HttpMethod.PUT)
             .withExpiration(Date(System.currentTimeMillis() + (1000 * 60 * 2)))
-
-    private fun encodeFileName(fileName: String): String =
-        URLEncoder.encode(fileName, StandardCharsets.UTF_8)
-            .replace("+", "%20")
 }
