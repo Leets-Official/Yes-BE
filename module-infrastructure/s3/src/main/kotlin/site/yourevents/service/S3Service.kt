@@ -27,8 +27,7 @@ class S3Service(
         val metadata = ObjectMetadata().apply {
             contentType = "image/png"
             contentLength = qrCodeBytes.size.toLong()
-            contentDisposition =
-                "attachment; filename=\"${URLEncoder.encode(invitationTitle, StandardCharsets.UTF_8)}.png\""
+            contentDisposition = "attachment; filename=\"${encodeFileName(invitationTitle)}.png\""
         }
 
         amazonS3.putObject(bucketName, path, inputStream, metadata)
@@ -47,4 +46,8 @@ class S3Service(
         GeneratePresignedUrlRequest(bucket, fileName)
             .withMethod(HttpMethod.PUT)
             .withExpiration(Date(System.currentTimeMillis() + (1000 * 60 * 2)))
+
+    private fun encodeFileName(fileName: String): String =
+        URLEncoder.encode(fileName, StandardCharsets.UTF_8)
+            .replace("+", "%20")
 }
