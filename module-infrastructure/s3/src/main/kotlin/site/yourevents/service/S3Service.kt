@@ -22,13 +22,12 @@ class S3Service(
 ) : PreSignedUrlPort {
 
     override fun uploadQrCode(invitationId: UUID, invitationTitle: String, qrCodeBytes: ByteArray): String {
-        val safeTitle = encodeFileName(invitationTitle)
-        val path = "qr/$invitationId/$safeTitle.png"
+        val path = "qr/$invitationId/$invitationTitle.png"
         val inputStream = qrCodeBytes.inputStream()
         val metadata = ObjectMetadata().apply {
             contentType = "image/png"
             contentLength = qrCodeBytes.size.toLong()
-            contentDisposition = "attachment; filename=\"$safeTitle.png\""
+            contentDisposition = "attachment; filename=\"${encodeFileName(invitationTitle)}.png\""
         }
 
         amazonS3.putObject(bucketName, path, inputStream, metadata)
