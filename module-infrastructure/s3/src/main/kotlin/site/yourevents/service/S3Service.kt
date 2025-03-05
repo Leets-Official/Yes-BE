@@ -36,7 +36,7 @@ class S3Service(
     }
 
     override fun getPreSignedUrl(imageName: String): String {
-        val fileName = String.format("thumbnail/%S", UUID.randomUUID().toString() + imageName)
+        val fileName = "thumbnail/${UUID.randomUUID()}-$imageName"
         val getGeneratePresignedUrlRequest = getGeneratePreSignedUrlRequest(bucketName, fileName)
         val preSignedUrl: URL = amazonS3.generatePresignedUrl(getGeneratePresignedUrlRequest)
 
@@ -46,14 +46,7 @@ class S3Service(
     private fun getGeneratePreSignedUrlRequest(bucket: String, fileName: String): GeneratePresignedUrlRequest =
         GeneratePresignedUrlRequest(bucket, fileName)
             .withMethod(HttpMethod.PUT)
-            .withExpiration(getPreSignedUrlExpiration())
-
-    private fun getPreSignedUrlExpiration(): Date {
-        val expiration = Date()
-        val expTimeMillis = expiration.time + (1000 * 60 * 2)
-        expiration.time = expTimeMillis
-        return expiration
-    }
+            .withExpiration(Date(System.currentTimeMillis() + (1000 * 60 * 2)))
 
     private fun encodeFileName(fileName: String): String =
         URLEncoder.encode(fileName, StandardCharsets.UTF_8.toString())
