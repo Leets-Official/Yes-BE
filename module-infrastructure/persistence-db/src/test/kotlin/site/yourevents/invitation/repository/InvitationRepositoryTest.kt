@@ -111,6 +111,24 @@ class InvitationRepositoryTest(
             }
         }
 
+        context("findByMember() 메서드에서") {
+            it("주어진 member에 해당하는 Invitation 목록을 반환해야 한다") {
+                val invitations = invitationRepository.findByMember(memberEntity.toDomain())
+                invitations.size shouldBe 2
+
+                val newInvitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = "http://new-example.com",
+                    templateKey = "newTemplate",
+                    deleted = false
+                )
+                invitationRepository.save(newInvitationVO)
+
+                val updatedInvitations = invitationRepository.findByMember(memberEntity.toDomain())
+                updatedInvitations.size shouldBe 3
+            }
+        }
+
         context("delete() 메서드에서") {
             it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
                 val invitationBeforeDelete = invitationRepository.findById(invitationId)
