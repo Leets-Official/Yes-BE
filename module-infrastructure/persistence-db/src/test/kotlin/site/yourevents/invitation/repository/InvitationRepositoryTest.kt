@@ -80,23 +80,8 @@ class InvitationRepositoryTest(
             }
         }
 
-        context("delete() 메서드에서") {
-            it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
-                val invitationBeforeDelete = invitationRepository.findById(invitationId)
-                invitationBeforeDelete shouldNotBe null
-                invitationBeforeDelete!!.deleted shouldBe false
-
-                invitationBeforeDelete.markAsDeleted()
-                invitationRepository.save(invitationBeforeDelete)
-
-                val invitationAfterDelete = invitationRepository.findById(invitationId)
-                invitationAfterDelete shouldBe null
-            }
-        }
-
         context("save(invitationVO) 메서드에서") {
             it("InvitationVO를 받아 Invitation을 저장해야 한다") {
-                // 새로운 InvitationVO 생성
                 val newQrUrl = "http://new-example.com"
                 val newTemplateKey = "newTemplate"
                 val invitationVO = InvitationVO.of(
@@ -111,6 +96,32 @@ class InvitationRepositoryTest(
                 savedInvitation.qrUrl shouldBe newQrUrl
                 savedInvitation.templateKey shouldBe newTemplateKey
                 savedInvitation.deleted shouldBe false
+            }
+        }
+
+        context("save(invitation) 메서드에서") {
+            it("Invitation 객체를 받아 저장 및 업데이트가 가능해야 한다") {
+                val invitation = invitationRepository.findById(invitationId)
+                invitation shouldNotBe null
+
+                val updatedQrUrl = "http://updated.com"
+                invitation!!.updateQrCode(updatedQrUrl)
+                val updatedInvitation = invitationRepository.save(invitation)
+                updatedInvitation.qrUrl shouldBe updatedQrUrl
+            }
+        }
+
+        context("delete() 메서드에서") {
+            it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
+                val invitationBeforeDelete = invitationRepository.findById(invitationId)
+                invitationBeforeDelete shouldNotBe null
+                invitationBeforeDelete!!.deleted shouldBe false
+
+                invitationBeforeDelete.markAsDeleted()
+                invitationRepository.save(invitationBeforeDelete)
+
+                val invitationAfterDelete = invitationRepository.findById(invitationId)
+                invitationAfterDelete shouldBe null
             }
         }
     }
