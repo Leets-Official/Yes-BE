@@ -8,6 +8,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.ActiveProfiles
+import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
@@ -19,7 +20,7 @@ import java.util.*
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
 class InvitationRepositoryTest(
     @Autowired private val invitationJPARepository: InvitationJPARepository,
-    @Autowired private val memberJPARepository: MemberJPARepository
+    @Autowired private val memberJPARepository: MemberJPARepository,
 ) : DescribeSpec({
     val invitationRepository = InvitationRepository(invitationJPARepository)
 
@@ -90,6 +91,26 @@ class InvitationRepositoryTest(
 
                 val invitationAfterDelete = invitationRepository.findById(invitationId)
                 invitationAfterDelete shouldBe null
+            }
+        }
+
+        context("save(invitationVO) 메서드에서") {
+            it("InvitationVO를 받아 Invitation을 저장해야 한다") {
+                // 새로운 InvitationVO 생성
+                val newQrUrl = "http://new-example.com"
+                val newTemplateKey = "newTemplate"
+                val invitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = newQrUrl,
+                    templateKey = newTemplateKey,
+                    deleted = false
+                )
+
+                val savedInvitation = invitationRepository.save(invitationVO)
+                savedInvitation shouldNotBe null
+                savedInvitation.qrUrl shouldBe newQrUrl
+                savedInvitation.templateKey shouldBe newTemplateKey
+                savedInvitation.deleted shouldBe false
             }
         }
     }
