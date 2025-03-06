@@ -129,6 +129,23 @@ class InvitationRepositoryTest(
             }
         }
 
+        context("countByMember() 메서드에서") {
+            it("주어진 member에 해당하는 Invitation 개수를 반환해야 한다") {
+                val countBefore = invitationRepository.countByMember(memberEntity.toDomain())
+
+                val newInvitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = "http://count-example.com",
+                    templateKey = "countTemplate",
+                    deleted = false
+                )
+                invitationRepository.save(newInvitationVO)
+
+                val countAfter = invitationRepository.countByMember(memberEntity.toDomain())
+                countAfter shouldBe (countBefore + 1)
+            }
+        }
+
         context("delete() 메서드에서") {
             it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
                 val invitationBeforeDelete = invitationRepository.findById(invitationId)
