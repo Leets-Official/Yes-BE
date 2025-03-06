@@ -146,6 +146,21 @@ class InvitationRepositoryTest(
             }
         }
 
+        context("getOwnerId() 메서드에서") {
+            it("주어진 invitationId에 대해 올바른 ownerId(memberId)를 반환해야 한다") {
+                val invitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = "http://owner-example.com",
+                    templateKey = "ownerTemplate",
+                    deleted = false
+                )
+                val savedInvitation = invitationRepository.save(invitationVO)
+
+                val ownerId = invitationRepository.getOwnerId(savedInvitation.id)
+                ownerId shouldBe memberEntity.id
+            }
+        }
+
         context("delete() 메서드에서") {
             it("존재하는 Invitation을 삭제(soft delete)해야 한다") {
                 val invitationBeforeDelete = invitationRepository.findById(invitationId)
