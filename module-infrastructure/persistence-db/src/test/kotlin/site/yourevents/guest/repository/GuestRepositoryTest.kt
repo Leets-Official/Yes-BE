@@ -14,7 +14,7 @@ import site.yourevents.invitation.repository.InvitationJPARepository
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
 import site.yourevents.member.repository.MemberJPARepository
-import java.util.*
+import java.util.UUID
 
 @ActiveProfiles("test")
 @DataJpaTest
