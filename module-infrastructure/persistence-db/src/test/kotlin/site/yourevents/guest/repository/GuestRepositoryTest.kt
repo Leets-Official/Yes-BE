@@ -241,6 +241,46 @@ class GuestRepositoryTest(
             }
         }
 
+        context("findAttendanceByMemberIdAndInvitationId() 메서드에서") {
+            it("Guest가 존재하면 attendance 값을 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                val attendance = guestRepository.findAttendanceByMemberIdAndInvitationId(
+                    savedGuest.member.id,
+                    savedGuest.invitation.id
+                )
+                attendance.shouldNotBeNull()
+                attendance shouldBe savedGuest.attendance
+            }
+
+            it("Guest가 존재하지 않으면 null을 반환해야 한다") {
+                val attendance = guestRepository.findAttendanceByMemberIdAndInvitationId(
+                    UUID.randomUUID(),
+                    UUID.randomUUID()
+                )
+                attendance shouldBe null
+            }
+        }
+
+        context("findNicknameByInvitationIdAndMemberId() 메서드에서") {
+            it("Guest가 존재하면 nickname을 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                val nickname = guestRepository.findNicknameByInvitationIdAndMemberId(
+                    savedGuest.invitation.id,
+                    savedGuest.member.id
+                )
+                nickname.shouldNotBeNull()
+                nickname shouldBe savedGuest.nickname
+            }
+
+            it("Guest가 존재하지 않으면 null을 반환해야 한다") {
+                val nickname = guestRepository.findNicknameByInvitationIdAndMemberId(
+                    invitationEntity.id!!,
+                    memberEntity.id!!
+                )
+                nickname shouldBe null
+            }
+        }
+
         context("findIdByMemberIdAndInvitationId() 메서드에서") {
             it("Guest가 존재하면 guestId를 반환해야 한다.") {
                 val savedGuest = guestRepository.save(guestVO)
