@@ -1,6 +1,7 @@
 package site.yourevents.guest.repository
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
@@ -13,6 +14,7 @@ import site.yourevents.invitation.repository.InvitationJPARepository
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
 import site.yourevents.member.repository.MemberJPARepository
+import java.util.*
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -61,7 +63,7 @@ class GuestRepositoryTest(
     }
 
     describe("GuestRepository") {
-        context("save() 메서드에서") {
+        context("save(GuestVo) 메서드에서") {
             it("GuestVO를 저장하고 반환해야 한다") {
                 val savedGuest = guestRepository.save(guestVO)
 
@@ -70,6 +72,32 @@ class GuestRepositoryTest(
 
                 savedGuest.member.socialId shouldBe memberEntity.toDomain().socialId
                 savedGuest.invitation.id shouldBe invitationEntity.id
+            }
+        }
+
+        context("save(Guest) 메서드에서") {
+            it("Guest를 저장한 후 findById로 조회 가능해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                guestRepository.save(savedGuest)
+
+                val foundGuest = guestRepository.findById(savedGuest.id)
+                foundGuest.shouldNotBeNull()
+                foundGuest.id shouldBe savedGuest.id
+            }
+        }
+
+        context("findById() 메서드에서") {
+            it("저장된 Guest의 id로 조회 시 Guest를 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                val foundGuest = guestRepository.findById(savedGuest.id)
+                foundGuest.shouldNotBeNull()
+                foundGuest.id shouldBe savedGuest.id
+            }
+
+            it("존재하지 않는 id로 조회 시 null을 반환해야 한다") {
+                val nothing = UUID.randomUUID()
+                val foundGuest = guestRepository.findById(nothing)
+                foundGuest shouldBe null
             }
         }
 
