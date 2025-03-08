@@ -202,6 +202,45 @@ class GuestRepositoryTest(
             }
         }
 
+        context("findNotAttendGuestsByInvitation() 메서드에서") {
+            it("초대에 참석하지 않는 Guest 목록을 반환해야 한다") {
+                val guestMember1 = MemberEntity.from(
+                    MemberVO("1", "1", "1")
+                )
+                val guestMember2 = MemberEntity.from(
+                    MemberVO("2", "2", "2")
+                )
+                memberJPARepository.save(guestMember1)
+                memberJPARepository.save(guestMember2)
+
+                val guestVO1 = GuestVO(
+                    member = guestMember1.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "1",
+                    attendance = false
+                )
+                val guestVO2 = GuestVO(
+                    member = guestMember2.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "2",
+                    attendance = false
+                )
+                val guestVO3 = GuestVO(
+                    member = memberEntity.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "yes",
+                    attendance = true
+                )
+                guestRepository.save(guestVO1)
+                guestRepository.save(guestVO2)
+                guestRepository.save(guestVO3)
+
+                val notAttendGuests = guestRepository.findNotAttendGuestsByInvitation(invitationEntity.toDomain())
+                notAttendGuests.size shouldBe 2
+                notAttendGuests.all { !it.attendance } shouldBe true
+            }
+        }
+
         context("findIdByMemberIdAndInvitationId() 메서드에서") {
             it("Guest가 존재하면 guestId를 반환해야 한다.") {
                 val savedGuest = guestRepository.save(guestVO)
