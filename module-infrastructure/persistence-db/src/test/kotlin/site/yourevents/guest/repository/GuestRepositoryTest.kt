@@ -138,6 +138,31 @@ class GuestRepositoryTest(
             }
         }
 
+        context("getReceivedInvitations() 메서드에서") {
+            it("member가 받은 초대 목록을 반환해야 한다") {
+                val guestMemberEntity = MemberEntity.from(
+                    MemberVO(
+                        socialId = "6316",
+                        nickname = "seunghyun",
+                        email = "seunghyun@example.com"
+                    )
+                )
+                memberJPARepository.save(guestMemberEntity)
+
+                val guestVOForInvitation = GuestVO(
+                    member = guestMemberEntity.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "nickname",
+                    attendance = true
+                )
+                guestRepository.save(guestVOForInvitation)
+
+                val invitations = guestRepository.getReceivedInvitations(guestMemberEntity.toDomain())
+                invitations.size shouldBe 1
+                invitations.first().id shouldBe invitationEntity.id
+            }
+        }
+
         context("findIdByMemberIdAndInvitationId() 메서드에서") {
             it("Guest가 존재하면 guestId를 반환해야 한다.") {
                 val savedGuest = guestRepository.save(guestVO)
