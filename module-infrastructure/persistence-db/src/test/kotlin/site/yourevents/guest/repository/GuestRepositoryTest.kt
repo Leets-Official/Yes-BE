@@ -1,6 +1,7 @@
 package site.yourevents.guest.repository
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
@@ -13,6 +14,7 @@ import site.yourevents.invitation.repository.InvitationJPARepository
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
 import site.yourevents.member.repository.MemberJPARepository
+import java.util.UUID
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -61,7 +63,7 @@ class GuestRepositoryTest(
     }
 
     describe("GuestRepository") {
-        context("save() 메서드에서") {
+        context("save(GuestVo) 메서드에서") {
             it("GuestVO를 저장하고 반환해야 한다") {
                 val savedGuest = guestRepository.save(guestVO)
 
@@ -70,6 +72,212 @@ class GuestRepositoryTest(
 
                 savedGuest.member.socialId shouldBe memberEntity.toDomain().socialId
                 savedGuest.invitation.id shouldBe invitationEntity.id
+            }
+        }
+
+        context("save(Guest) 메서드에서") {
+            it("Guest를 저장한 후 findById로 조회 가능해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                guestRepository.save(savedGuest)
+
+                val foundGuest = guestRepository.findById(savedGuest.id)
+                foundGuest.shouldNotBeNull()
+                foundGuest.id shouldBe savedGuest.id
+            }
+        }
+
+        context("findById() 메서드에서") {
+            it("저장된 Guest의 id로 조회 시 Guest를 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                val foundGuest = guestRepository.findById(savedGuest.id)
+                foundGuest.shouldNotBeNull()
+                foundGuest.id shouldBe savedGuest.id
+            }
+
+            it("존재하지 않는 id로 조회 시 null을 반환해야 한다") {
+                val nothing = UUID.randomUUID()
+                val foundGuest = guestRepository.findById(nothing)
+                foundGuest shouldBe null
+            }
+        }
+
+        context("getReceivedInvitationCount() 메서드에서") {
+            it("member가 받은 초대 수를 반환해야 한다") {
+                val guestMemberEntity = MemberEntity.from(
+                    MemberVO(
+                        socialId = "6316",
+                        nickname = "seunghyun",
+                        email = "seunghyun@example.com"
+                    )
+                )
+                memberJPARepository.save(guestMemberEntity)
+
+                val guestVOForCount = GuestVO(
+                    member = guestMemberEntity.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "nickname",
+                    attendance = true
+                )
+                guestRepository.save(guestVOForCount)
+
+                val count = guestRepository.getReceivedInvitationCount(guestMemberEntity.toDomain())
+                count shouldBe 1
+            }
+
+            it("member가 받은 초대가 없으면 0을 반환해야 한다") {
+                val otherMemberEntity = MemberEntity.from(
+                    MemberVO(
+                        socialId = "2002",
+                        nickname = "otherUser",
+                        email = "other@example.com"
+                    )
+                )
+                memberJPARepository.save(otherMemberEntity)
+                val count = guestRepository.getReceivedInvitationCount(otherMemberEntity.toDomain())
+                count shouldBe 0
+            }
+        }
+
+        context("getReceivedInvitations() 메서드에서") {
+            it("member가 받은 초대 목록을 반환해야 한다") {
+                val guestMemberEntity = MemberEntity.from(
+                    MemberVO(
+                        socialId = "6316",
+                        nickname = "seunghyun",
+                        email = "seunghyun@example.com"
+                    )
+                )
+                memberJPARepository.save(guestMemberEntity)
+
+                val guestVOForInvitation = GuestVO(
+                    member = guestMemberEntity.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "nickname",
+                    attendance = true
+                )
+                guestRepository.save(guestVOForInvitation)
+
+                val invitations = guestRepository.getReceivedInvitations(guestMemberEntity.toDomain())
+                invitations.size shouldBe 1
+                invitations.first().id shouldBe invitationEntity.id
+            }
+        }
+
+        context("findAttendGuestsByInvitation() 메서드에서") {
+            it("초대에 참석하는 Guest 목록을 반환해야 한다") {
+                val guestMember1 = MemberEntity.from(
+                    MemberVO("1", "1", "1")
+                )
+                val guestMember2 = MemberEntity.from(
+                    MemberVO("2", "2", "2")
+                )
+                memberJPARepository.save(guestMember1)
+                memberJPARepository.save(guestMember2)
+
+                val guestVO1 = GuestVO(
+                    member = guestMember1.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "1",
+                    attendance = true
+                )
+                val guestVO2 = GuestVO(
+                    member = guestMember2.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "2",
+                    attendance = true
+                )
+                val guestVO3 = GuestVO(
+                    member = memberEntity.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "not",
+                    attendance = false
+                )
+                guestRepository.save(guestVO1)
+                guestRepository.save(guestVO2)
+                guestRepository.save(guestVO3)
+
+                val attendGuests = guestRepository.findAttendGuestsByInvitation(invitationEntity.toDomain())
+                attendGuests.size shouldBe 2
+                attendGuests.all { it.attendance } shouldBe true
+            }
+        }
+
+        context("findNotAttendGuestsByInvitation() 메서드에서") {
+            it("초대에 참석하지 않는 Guest 목록을 반환해야 한다") {
+                val guestMember1 = MemberEntity.from(
+                    MemberVO("1", "1", "1")
+                )
+                val guestMember2 = MemberEntity.from(
+                    MemberVO("2", "2", "2")
+                )
+                memberJPARepository.save(guestMember1)
+                memberJPARepository.save(guestMember2)
+
+                val guestVO1 = GuestVO(
+                    member = guestMember1.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "1",
+                    attendance = false
+                )
+                val guestVO2 = GuestVO(
+                    member = guestMember2.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "2",
+                    attendance = false
+                )
+                val guestVO3 = GuestVO(
+                    member = memberEntity.toDomain(),
+                    invitation = invitationEntity.toDomain(),
+                    nickname = "yes",
+                    attendance = true
+                )
+                guestRepository.save(guestVO1)
+                guestRepository.save(guestVO2)
+                guestRepository.save(guestVO3)
+
+                val notAttendGuests = guestRepository.findNotAttendGuestsByInvitation(invitationEntity.toDomain())
+                notAttendGuests.size shouldBe 2
+                notAttendGuests.all { !it.attendance } shouldBe true
+            }
+        }
+
+        context("findAttendanceByMemberIdAndInvitationId() 메서드에서") {
+            it("Guest가 존재하면 attendance 값을 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                val attendance = guestRepository.findAttendanceByMemberIdAndInvitationId(
+                    savedGuest.member.id,
+                    savedGuest.invitation.id
+                )
+                attendance.shouldNotBeNull()
+                attendance shouldBe savedGuest.attendance
+            }
+
+            it("Guest가 존재하지 않으면 null을 반환해야 한다") {
+                val attendance = guestRepository.findAttendanceByMemberIdAndInvitationId(
+                    UUID.randomUUID(),
+                    UUID.randomUUID()
+                )
+                attendance shouldBe null
+            }
+        }
+
+        context("findNicknameByInvitationIdAndMemberId() 메서드에서") {
+            it("Guest가 존재하면 nickname을 반환해야 한다") {
+                val savedGuest = guestRepository.save(guestVO)
+                val nickname = guestRepository.findNicknameByInvitationIdAndMemberId(
+                    savedGuest.invitation.id,
+                    savedGuest.member.id
+                )
+                nickname.shouldNotBeNull()
+                nickname shouldBe savedGuest.nickname
+            }
+
+            it("Guest가 존재하지 않으면 null을 반환해야 한다") {
+                val nickname = guestRepository.findNicknameByInvitationIdAndMemberId(
+                    invitationEntity.id!!,
+                    memberEntity.id!!
+                )
+                nickname shouldBe null
             }
         }
 

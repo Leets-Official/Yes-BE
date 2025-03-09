@@ -8,6 +8,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest
 import org.springframework.test.context.ActiveProfiles
+import site.yourevents.invitation.domain.InvitationVO
 import site.yourevents.invitation.entity.InvitationEntity
 import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
@@ -19,7 +20,7 @@ import java.util.*
 @AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2, replace = AutoConfigureTestDatabase.Replace.NONE)
 class InvitationRepositoryTest(
     @Autowired private val invitationJPARepository: InvitationJPARepository,
-    @Autowired private val memberJPARepository: MemberJPARepository
+    @Autowired private val memberJPARepository: MemberJPARepository,
 ) : DescribeSpec({
     val invitationRepository = InvitationRepository(invitationJPARepository)
 
@@ -76,6 +77,87 @@ class InvitationRepositoryTest(
                 val invitation = invitationRepository.findById(nonExistentId)
 
                 invitation shouldBe null
+            }
+        }
+
+        context("save(invitationVO) 메서드에서") {
+            it("InvitationVO를 받아 Invitation을 저장해야 한다") {
+                val newQrUrl = "http://new-example.com"
+                val newTemplateKey = "newTemplate"
+                val invitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = newQrUrl,
+                    templateKey = newTemplateKey,
+                    deleted = false
+                )
+
+                val savedInvitation = invitationRepository.save(invitationVO)
+                savedInvitation shouldNotBe null
+                savedInvitation.qrUrl shouldBe newQrUrl
+                savedInvitation.templateKey shouldBe newTemplateKey
+                savedInvitation.deleted shouldBe false
+            }
+        }
+
+        context("save(invitation) 메서드에서") {
+            it("Invitation 객체를 받아 저장 및 업데이트가 가능해야 한다") {
+                val invitation = invitationRepository.findById(invitationId)
+                invitation shouldNotBe null
+
+                val updatedQrUrl = "http://updated.com"
+                invitation!!.updateQrCode(updatedQrUrl)
+                val updatedInvitation = invitationRepository.save(invitation)
+                updatedInvitation.qrUrl shouldBe updatedQrUrl
+            }
+        }
+
+        context("findByMember() 메서드에서") {
+            it("주어진 member에 해당하는 Invitation 목록을 반환해야 한다") {
+                val invitations = invitationRepository.findByMember(memberEntity.toDomain())
+                invitations.size shouldBe 2
+
+                val newInvitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = "http://new-example.com",
+                    templateKey = "newTemplate",
+                    deleted = false
+                )
+                invitationRepository.save(newInvitationVO)
+
+                val updatedInvitations = invitationRepository.findByMember(memberEntity.toDomain())
+                updatedInvitations.size shouldBe 3
+            }
+        }
+
+        context("countByMember() 메서드에서") {
+            it("주어진 member에 해당하는 Invitation 개수를 반환해야 한다") {
+                val countBefore = invitationRepository.countByMember(memberEntity.toDomain())
+
+                val newInvitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = "http://count-example.com",
+                    templateKey = "countTemplate",
+                    deleted = false
+                )
+                invitationRepository.save(newInvitationVO)
+
+                val countAfter = invitationRepository.countByMember(memberEntity.toDomain())
+                countAfter shouldBe (countBefore + 1)
+            }
+        }
+
+        context("getOwnerId() 메서드에서") {
+            it("주어진 invitationId에 대해 올바른 ownerId(memberId)를 반환해야 한다") {
+                val invitationVO = InvitationVO.of(
+                    member = memberEntity.toDomain(),
+                    qrUrl = "http://owner-example.com",
+                    templateKey = "ownerTemplate",
+                    deleted = false
+                )
+                val savedInvitation = invitationRepository.save(invitationVO)
+
+                val ownerId = invitationRepository.getOwnerId(savedInvitation.id)
+                ownerId shouldBe memberEntity.id
             }
         }
 
