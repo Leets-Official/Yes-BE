@@ -76,6 +76,19 @@ class InvitationInformationRepositoryTest(
                 foundInfo.remark shouldBe invitationInformationVO.remark
                 foundInfo.invitation.id shouldBe invitationEntity.id
             }
+
+            it("InvitationInformation이 없는 경우 null을 반환해야 한다") {
+                val example = InvitationEntity(
+                    member = memberEntity,
+                    qrUrl = "http://example.org",
+                    templateKey = "newTemplate",
+                    deleted = false
+                )
+                invitationJPARepository.save(example)
+
+                val foundInfo = invitationInformationRepository.findByInvitation(example.toDomain())
+                foundInfo shouldBe null
+            }
         }
         context("save() 메서드에서") {
             it("InvitationInformation을 저장하고 반환해야 한다") {
