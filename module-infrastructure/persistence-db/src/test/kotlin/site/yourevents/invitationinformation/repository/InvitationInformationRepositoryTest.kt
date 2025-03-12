@@ -15,6 +15,7 @@ import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
 import site.yourevents.member.repository.MemberJPARepository
 import java.time.LocalDateTime
+import java.time.temporal.ChronoUnit
 
 @ActiveProfiles("test")
 @DataJpaTest
@@ -73,6 +74,7 @@ class InvitationInformationRepositoryTest(
                 foundInfo.shouldNotBeNull()
 
                 foundInfo.title shouldBe invitationInformationVO.title
+                foundInfo.schedule.truncatedTo(ChronoUnit.MICROS) shouldBe invitationInformationVO.schedule.truncatedTo(ChronoUnit.MICROS)
                 foundInfo.location shouldBe invitationInformationVO.location
                 foundInfo.remark shouldBe invitationInformationVO.remark
                 foundInfo.invitation.id shouldBe invitationEntity.id
