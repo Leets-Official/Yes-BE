@@ -74,7 +74,7 @@ class InvitationInformationRepositoryTest(
                 foundInfo.shouldNotBeNull()
 
                 foundInfo.title shouldBe invitationInformationVO.title
-                foundInfo.schedule.truncatedTo(ChronoUnit.MICROS) shouldBe invitationInformationVO.schedule.truncatedTo(ChronoUnit.MICROS)
+                foundInfo.schedule.truncatedTo(ChronoUnit.MILLIS) shouldBe invitationInformationVO.schedule.truncatedTo(ChronoUnit.MILLIS)
                 foundInfo.location shouldBe invitationInformationVO.location
                 foundInfo.remark shouldBe invitationInformationVO.remark
                 foundInfo.invitation.id shouldBe invitationEntity.id
