@@ -15,7 +15,6 @@ import site.yourevents.member.domain.MemberVO
 import site.yourevents.member.entity.MemberEntity
 import site.yourevents.member.repository.MemberJPARepository
 import java.time.LocalDateTime
-import java.time.temporal.ChronoUnit
 
 @ActiveProfiles("test")
 @DataJpaTest
