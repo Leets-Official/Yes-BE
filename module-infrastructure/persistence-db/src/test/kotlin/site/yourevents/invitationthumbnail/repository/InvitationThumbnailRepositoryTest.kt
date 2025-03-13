@@ -1,6 +1,7 @@
 package site.yourevents.invitationthumbnail.repository
 
 import io.kotest.core.spec.style.DescribeSpec
+import io.kotest.matchers.nulls.shouldNotBeNull
 import io.kotest.matchers.shouldBe
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection
@@ -22,7 +23,7 @@ import site.yourevents.member.repository.MemberJPARepository
 class InvitationThumbnailRepositoryTest(
     @Autowired private val invitationThumbnailJPARepository: InvitationThumbnailJPARepository,
     @Autowired private val invitationJPARepository: InvitationJPARepository,
-    @Autowired private val memberJPARepository: MemberJPARepository
+    @Autowired private val memberJPARepository: MemberJPARepository,
 ) : DescribeSpec({
 
     val invitationThumbnailRepository = InvitationThumbnailRepository(invitationThumbnailJPARepository)
@@ -62,15 +63,41 @@ class InvitationThumbnailRepositoryTest(
     }
 
     describe("InvitationThumbnailRepository") {
-        it("save() 메서드를 통해 InvitationThumbnail을 저장하고 반환해야 한다") {
-            val savedThumbnail = invitationThumbnailRepository.save(invitationThumbnailVO)
+        context("findByInvitation() 메서드에서") {
+            it("저장된 InvitationThumbnail을 조회해야 한다") {
+                val savedThumbnail = invitationThumbnailRepository.save(invitationThumbnailVO)
+                val foundThumbnail = invitationThumbnailRepository.findByInvitation(savedThumbnail.invitation)
+                foundThumbnail.shouldNotBeNull()
 
-            savedThumbnail.url shouldBe invitationThumbnailVO.url
-            savedThumbnail.invitation.id shouldBe invitationThumbnailVO.invitation.id
-            savedThumbnail.invitation.member.socialId shouldBe memberEntity.toDomain().socialId
-            savedThumbnail.invitation.member.email shouldBe memberEntity.toDomain().email
-            savedThumbnail.invitation.member.nickname shouldBe memberEntity.toDomain().nickname
+                foundThumbnail.url shouldBe invitationThumbnailVO.url
+                foundThumbnail.invitation.id shouldBe invitationThumbnailVO.invitation.id
+            }
 
+            it("InvitationThumbnail이 없는 경우 null을 반환해야 한다") {
+                val newInvitationEntity = InvitationEntity(
+                    member = memberEntity,
+                    qrUrl = "http://example.org",
+                    templateKey = "newTemplate",
+                    deleted = false
+                )
+                invitationJPARepository.save(newInvitationEntity)
+
+                val foundThumbnail = invitationThumbnailRepository.findByInvitation(newInvitationEntity.toDomain())
+                foundThumbnail shouldBe null
+            }
+        }
+
+        context("save() 메서드에서") {
+            it("InvitationThumbnail을 저장하고 반환해야 한다") {
+                val savedThumbnail = invitationThumbnailRepository.save(invitationThumbnailVO)
+
+                savedThumbnail.url shouldBe invitationThumbnailVO.url
+                savedThumbnail.invitation.id shouldBe invitationThumbnailVO.invitation.id
+                savedThumbnail.invitation.member.socialId shouldBe memberEntity.toDomain().socialId
+                savedThumbnail.invitation.member.email shouldBe memberEntity.toDomain().email
+                savedThumbnail.invitation.member.nickname shouldBe memberEntity.toDomain().nickname
+
+            }
         }
     }
 })
