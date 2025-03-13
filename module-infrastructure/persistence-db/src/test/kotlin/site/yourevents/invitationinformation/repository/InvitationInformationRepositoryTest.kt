@@ -53,7 +53,7 @@ class InvitationInformationRepositoryTest(
         invitationInformationVO = InvitationInformationVO(
             invitation = invitationEntity.toDomain(),
             title = "title",
-            schedule = LocalDateTime.now(),
+            schedule = LocalDateTime.of(2025, 3, 14, 12, 0, 0),
             location = "location",
             remark = "remark"
         )
@@ -74,7 +74,7 @@ class InvitationInformationRepositoryTest(
                 foundInfo.shouldNotBeNull()
 
                 foundInfo.title shouldBe invitationInformationVO.title
-                foundInfo.schedule.truncatedTo(ChronoUnit.MILLIS) shouldBe invitationInformationVO.schedule.truncatedTo(ChronoUnit.MILLIS)
+                foundInfo.schedule shouldBe invitationInformationVO.schedule
                 foundInfo.location shouldBe invitationInformationVO.location
                 foundInfo.remark shouldBe invitationInformationVO.remark
                 foundInfo.invitation.id shouldBe invitationEntity.id
